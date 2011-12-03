@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+    version="2.0">
+
+
+    <!-- simply all annotated persistent entities will be part of this unit-->
+    <persistence-unit name="CaroLine">
+        <provider>org.apache.openjpa.persistence.PersistenceProviderImpl</provider>
+
+        <class>de.jaxenter.eesummit.caroline.entities.CaroLineUser</class>
+        <class>de.jaxenter.eesummit.caroline.entities.Customer</class>
+        <class>de.jaxenter.eesummit.caroline.entities.Employee</class>
+        <class>de.jaxenter.eesummit.caroline.entities.Tyre</class>
+        <class>de.jaxenter.eesummit.caroline.entities.Warehouse</class>
+        <class>de.jaxenter.eesummit.caroline.entities.StorageSlot</class>
+        <class>de.jaxenter.eesummit.caroline.entities.MenuItem</class>
+
+        <validation-mode>CALLBACK</validation-mode>
+
+        <properties>
+            <property name="openjpa.ConnectionDriverName"
+                      value="org.apache.myfaces.extensions.cdi.jpa.impl.datasource.ConfigurableDataSource"/>
+            <property name="openjpa.ConnectionProperties"
+                      value="connectionId=core"/>
+
+            <!-- disable runtime instrumentation -->
+            <property name="openjpa.DynamicEnhancementAgent" value="false"/>
+
+            <property name="openjpa.Log" value="DefaultLevel=WARN, Runtime=INFO, Tool=INFO, SQL=TRACE"/>
+            <property name="openjpa.DetachState" value="loaded(DetachedStateField=true)"/>
+            <property name="openjpa.Compatibility" value="IgnoreDetachedStateFieldForProxySerialization=true"/>
+            <property name="openjpa.jdbc.MappingDefaults"
+                      value="ForeignKeyDeleteAction=restrict, JoinForeignKeyDeleteAction=restrict"/>
+
+            <!-- use class per table strategy -->
+            <property name="openjpa.Sequence" value="class-table(Table=SEQUENCES, Increment=20, InitialValue=10000)"/>
+        </properties>
+
+    </persistence-unit>
+
+</persistence>

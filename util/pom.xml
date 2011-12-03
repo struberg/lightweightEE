@@ -1,0 +1,52 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>de.jaxenter.eesummit.caroline</groupId>
+        <artifactId>caroline</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <groupId>de.jaxenter.eesummit.caroline</groupId>
+    <artifactId>util</artifactId>
+
+    <name>CaroLine Utils</name>
+    <description>
+        Lightweight EE Sample Utils.
+        We do dirty and tricky stuff in this module.
+        The main intent is to not pull in compile time dependencies
+        of some implementation details into our 'real' project modules.
+    </description>
+
+    <dependencies>
+        <dependency>
+            <groupId>de.jaxenter.eesummit.caroline</groupId>
+            <artifactId>backend-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.myfaces.extensions.cdi.core</groupId>
+            <artifactId>myfaces-extcdi-core-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.myfaces.extensions.cdi.core</groupId>
+            <artifactId>myfaces-extcdi-core-impl</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.myfaces.extensions.cdi.modules</groupId>
+            <artifactId>myfaces-extcdi-jpa1-module-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.myfaces.extensions.cdi.modules</groupId>
+            <artifactId>myfaces-extcdi-jpa1-module-impl</artifactId>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+
+    </build>
+
+</project>    

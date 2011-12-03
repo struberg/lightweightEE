@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="/WEB-INF/templates/layout.xhtml">
+    <ui:define name="title">Edit Customer Page</ui:define>
+
+    <ui:define name="content">
+        <h:form>
+            <div id="overview">
+                <h1>Admin - Edit Customer</h1>
+
+                <h:panelGrid columns="3">
+                    <h:outputLabel for="firstName" value="Vorname"/>
+                    <h:inputText id="firstName" maxlength="50"
+                                 value="#{editCustomerView.firstName}"
+                                 required="true"
+                                 label="Vorname"/>
+                    <h:message for="firstName" errorClass="invalid" />
+
+                    <h:outputLabel for="lastName" value="Nachname"/>
+                    <h:inputText id="lastName" maxlength="50"
+                                 value="#{editCustomerView.lastName}"
+                                 required="true"
+                                 label="Nachname"/>
+                    <h:message for="lastName" errorClass="invalid" />
+
+                    <h:outputLabel for="msisdn" value="MSISDN"/>
+                    <h:inputText id="msisdn" maxlength="20"
+                                 value="#{editCustomerView.msisdn}"
+                                 required="true"
+                                 label="MSISDN"/>
+                    <h:message for="msisdn" errorClass="invalid" />
+
+                    <h:outputLabel for="cardid" value="CardID"/>
+                    <h:inputText id="cardid" maxlength="20"
+                                 value="#{editCustomerView.cardId}"
+                                 required="true"
+                                 label="CardID"/>
+                    <h:message for="cardid" errorClass="invalid" />
+
+                    <h:outputLabel for="dayLimit" value="Day Limit" rendered="#{editCustomerView.edit}"/>
+                    <h:selectOneMenu id="dayLimit" name="floorvalue" value="#{editCustomerView.dayLimit}"
+                                     rendered="#{editCustomerView.edit}">
+                        <f:selectItem itemLabel="20 EUR" itemValue="2000"/>
+                        <f:selectItem itemLabel="30 EUR" itemValue="3000"/>
+                        <f:selectItem itemLabel="50 EUR" itemValue="5000"/>
+                    </h:selectOneMenu>
+                    <h:message for="dayLimit" errorClass="invalid" />
+
+                    <h:outputLabel for="cardLocked" value="Card Locked" rendered="#{editCustomerView.edit}"/>
+                    <h:selectBooleanCheckbox id="cardLocked" rendered="#{editCustomerView.edit}"
+                                 value="#{editCustomerView.cardLocked}"
+                                 label="cardLocked"/>
+                    <h:message for="cardLocked" errorClass="invalid" />
+
+                </h:panelGrid>
+                <h:commandButton value="Speichern" action="#{editCustomerView.saveCustomer}"/>
+                <h:commandButton value="Abbrechen" action="#{editCustomerView.cancel}" immediate="true"/>
+
+                <hr/>
+
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>
+</html>

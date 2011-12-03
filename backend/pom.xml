@@ -1,0 +1,51 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>de.jaxenter.eesummit.caroline</groupId>
+        <artifactId>caroline</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <groupId>de.jaxenter.eesummit.caroline</groupId>
+    <artifactId>backend</artifactId>
+
+    <name>CaroLine Backend</name>
+    <description>
+        Lightweight EE Sample Backend contains all the service implementations
+        with our business logic. It also contains 3rd party and
+        legacy system connectors.
+    </description>
+
+    <dependencies>
+        <dependency>
+            <groupId>de.jaxenter.eesummit.caroline</groupId>
+            <artifactId>backend-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.jaxenter.eesummit.caroline</groupId>
+            <artifactId>util</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.apache.myfaces.extensions.cdi.modules</groupId>
+            <artifactId>myfaces-extcdi-jpa1-module-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.myfaces.extensions.cdi.modules</groupId>
+            <artifactId>myfaces-extcdi-jpa1-module-impl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.geronimo.specs</groupId>
+            <artifactId>geronimo-servlet_2.5_spec</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+
+    </build>
+
+</project>    

@@ -1,0 +1,127 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>de.jaxenter.eesummit.caroline</groupId>
+        <artifactId>caroline</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <groupId>de.jaxenter.eesummit.caroline</groupId>
+    <artifactId>backend-api</artifactId>
+
+    <name>CaroLine Backend API</name>
+    <description>
+        Lightweight EE Sample Backend contains all the service definition interfaces
+        and database entities needed for our business logic.
+    </description>
+
+    <properties>
+        <!-- This might get changed to 'refresh' for creating schema-delta.sql -->
+        <openjpa.sql.action>build</openjpa.sql.action>
+    </properties>
+
+    <dependencies>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>sql-maven-plugin</artifactId>
+                <version>1.4</version>
+                <configuration>
+                    <driver>com.mysql.jdbc.Driver</driver>
+                    <url>jdbc:mysql://localhost/</url>
+                    <username>root</username>
+                    <password />
+                    <escapeProcessing>false</escapeProcessing>
+                    <srcFiles>
+                        <srcFile>src/main/sql/mysql/createdb.sql</srcFile>
+                        <srcFile>src/main/sql/mysql/database.sql</srcFile>
+                        <srcFile>src/main/sql/mysql/schema_delta.sql</srcFile>
+                        <srcFile>src/main/sql/mysql/createindex.sql</srcFile>
+                        <srcFile>src/test/sql/mysql/testdata.sql</srcFile>
+                    </srcFiles>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>setup-test-database</id>
+                        <phase>process-test-resources</phase>
+                        <goals>
+                            <goal>execute</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>mysql</groupId>
+                        <artifactId>mysql-connector-java</artifactId>
+                        <version>${mysql-connector.version}</version>
+                        <scope>runtime</scope>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>openjpa-maven-plugin</artifactId>
+                <version>1.2</version>
+                <configuration>
+                    <includes>
+                        de/jaxenter/eesummit/caroline/entities/*
+                    </includes>
+                    <addDefaultConstructor>true</addDefaultConstructor>
+                    <enforcePropertyRestrictions>true</enforcePropertyRestrictions>
+                    <sqlAction>${openjpa.sql.action}</sqlAction>
+                    <sqlFile>${project.build.directory}/database.sql</sqlFile>
+                    <connectionDriverName>com.mchange.v2.c3p0.ComboPooledDataSource</connectionDriverName>
+                    <connectionProperties>
+                        driverClass=${database.driver.name},
+                        jdbcUrl=${database.connection.url},
+                        user=${database.user},
+                        password=${database.password},
+                        minPoolSize=5,
+                        acquireRetryAttempts=3,
+                        maxPoolSize=20
+                    </connectionProperties>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>mappingtool</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>enhance</goal>
+                        </goals>
+                    </execution>
+                </executions>
+
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.openjpa</groupId>
+                        <artifactId>openjpa</artifactId>
+                        <version>${openjpa.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>net.sourceforge.cobertura</groupId>
+                        <artifactId>cobertura</artifactId>
+                        <version>1.9.2</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>c3p0</groupId>
+                        <artifactId>c3p0</artifactId>
+                        <version>0.9.1</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>mysql</groupId>
+                        <artifactId>mysql-connector-java</artifactId>
+                        <version>${mysql-connector.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
+
+        </plugins>
+    </build>
+
+</project>    

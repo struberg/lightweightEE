@@ -1,0 +1,214 @@
+
+HTML {
+    BORDER-TOP-WIDTH: 0px;
+    PADDING-RIGHT: 0px;
+    PADDING-LEFT: 0px;
+    BORDER-LEFT-WIDTH: 0px;
+    BORDER-BOTTOM-WIDTH: 0px;
+    PADDING-BOTTOM: 0px;
+    MARGIN: 0px;
+    PADDING-TOP: 0px;
+    BORDER-RIGHT-WIDTH: 0px;
+    background-color: #ffffff;
+    FONT-FAMILY: Verdana, Helvetica, Geneva, sans-serif;
+    color: #000000;
+}
+
+BODY {
+    BORDER-TOP-WIDTH: 0px;
+    PADDING-RIGHT: 0px;
+    PADDING-LEFT: 0px;
+    BORDER-LEFT-WIDTH: 0px;
+    BORDER-BOTTOM-WIDTH: 0px;
+    PADDING-BOTTOM: 0px;
+    MARGIN: 0px;
+    PADDING-TOP: 0px;
+    BORDER-RIGHT-WIDTH: 0px;
+}
+
+IMG {
+    BORDER-TOP-WIDTH: 0px;
+    PADDING-RIGHT: 0px;
+    PADDING-LEFT: 0px;
+    BORDER-LEFT-WIDTH: 0px;
+    BORDER-BOTTOM-WIDTH: 0px;
+    PADDING-BOTTOM: 0px;
+    MARGIN: 0px;
+    PADDING-TOP: 0px;
+    BORDER-RIGHT-WIDTH: 0px
+}
+
+#caroline {
+    BACKGROUND-POSITION: center top;
+    MIN-WIDTH: 790px;
+    Z-INDEX: 1;
+    MIN-HEIGHT: 500px;
+    BACKGROUND-IMAGE: url(#{resource[ 'images:imgs_global_bg_01.png' ]});
+    WIDTH: 100%;
+    BACKGROUND-REPEAT: repeat-x;
+    POSITION: relative;
+    HEIGHT: 100%;
+}
+
+#mainContainer {
+    Z-INDEX: 3;
+    MARGIN-LEFT: 10px;
+    WIDTH: 890px;
+    POSITION: absolute;
+    TOP: 0px;
+}
+
+#headContainer {
+    BORDER-TOP-WIDTH: 0px;
+    BORDER-LEFT-WIDTH: 0px;
+    MARGIN: 0px 5px 15px;
+    WIDTH: 780px;
+    HEIGHT: 90px;
+    top: 0px;
+    position: relative;
+    BORDER-RIGHT-WIDTH: 0px;
+}
+
+#mainNavigation {
+    float: right;
+    BOTTOM: 0px;
+    HEIGHT: 16px;
+    position: relative;
+    top: 80px;
+    color: #000000;
+    font-size: 14px;
+    font-weight: normal;
+    padding-right: 25px;
+}
+
+#menuContainer {
+    MARGIN: 15px 2px 2px 2px;
+    FLOAT: left;
+    display: block;
+    left: 0px;
+    width: 200px;
+    position: relative;
+    z-index: 1;
+    font-size: 10px;
+}
+
+#contentContainer {
+    MARGIN: 15px 5px 5px 205px;
+    position: relative;
+    WIDTH: 690px;
+    display: block;
+    border: none;
+    border-color: #666666;
+    border-width: 2px;
+    padding: 10px 15px;
+    background-color: #ffffff;
+}
+
+#overview {
+
+    top: 0px;
+    left: 0px;
+    width: 350px;
+    z-index: 4;
+}
+
+#mainlogo {
+    float: right;
+    top: 0px;
+    left: 0px;
+    width: 450px;
+    z-index: 4;
+}
+
+h1 {
+    font-size: 18px;
+    font-weight: normal;
+    color: #559902;
+}
+
+/* --------------- /toolBarGroup --------------- */
+
+/* this is rquired for the top-switch, where there are images in the anchors */
+a img {
+    border: none;
+}
+
+/* --------------- /topswitch images --------------- */
+
+.toggle {
+    background-color: #ffffff;
+}
+
+/* formating of the input boxes */
+
+input[type=submit], input[type=button] {
+    font-size: 10px;
+    margin: 5px 5px 5px 0;
+    cursor: pointer;
+}
+
+input[type=select], textarea {
+    font-size: 9px;
+    padding-left: 1px;
+}
+
+input[type=text], input[type=password] {
+    font-size: 14px;
+    padding-left: 1px;
+
+}
+
+select {
+    font-size: 13px;
+}
+
+/* --------------- /inputbox  --------------- */
+
+table, p {
+    font-size: 11px;
+    padding: 0px;
+    border: 0px;
+
+}
+
+.date {
+    width: 100px;
+}
+
+.description {
+    width: 300px;
+}
+
+.credit {
+    text-align: right;
+    color: #00FF00;
+    width: 100px;
+}
+
+.debit {
+    text-align: right;
+    color: #Ff0000;
+    width: 100px;
+}
+
+.saldo {
+    text-align: right;
+    color: #000000;
+    font-weight: bold;
+    width: 100px;
+
+    border-top-width: 1px;
+    border-top-color: #000000;
+    border-top-style: solid;
+
+    border-bottom-width: 3px;
+    border-bottom-color: #000000;
+    border-bottom-style: double;
+
+}
+
+.pending {
+    text-align: right;
+    color: #DDDDDD;
+    width: 100px;
+}

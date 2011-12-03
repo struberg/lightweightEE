@@ -1,0 +1,25 @@
+<faces-config version="2.0"
+    xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
+
+    <application>
+        <locale-config>
+            <supported-locale>de</supported-locale>
+            <default-locale>de</default-locale>
+        </locale-config>
+
+        <message-bundle>de.jaxenter.eesummit.caroline.messages</message-bundle>
+
+        <resource-bundle>
+            <base-name>de.jaxenter.eesummit.caroline.pages</base-name>
+            <var>txt</var>
+        </resource-bundle>
+        <resource-bundle>
+            <base-name>de.jaxenter.eesummit.caroline.employee</base-name>
+            <var>emp</var>
+        </resource-bundle>
+    </application>
+
+</faces-config>

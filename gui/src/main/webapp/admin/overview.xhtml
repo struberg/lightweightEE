@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="/WEB-INF/templates/layout.xhtml">
+    <ui:define name="title">Admin Overview Page</ui:define>
+
+    <ui:define name="content">
+        <h:form>
+            <div id="overview">
+                <h1>Admin Overview</h1>
+
+                <h2>Kunden</h2>
+
+                <h:dataTable id="customers" value="#{adminView.customers}" var="customer"
+                             columnClasses="description, description, description">
+                    <h:column>
+                        <f:facet name="header">Vorname</f:facet>
+                        <h:outputText value="#{customer.firstName}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Nachname</f:facet>
+                        <h:outputText value="#{customer.lastName}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">MSISDN</f:facet>
+                        <h:commandLink action="#{editCustomerView.editCustomer(customer)}">
+                            <h:outputText value="#{customer.msisdn}"/>
+                        </h:commandLink>
+                    </h:column>
+                </h:dataTable>
+
+                <h:commandButton value="Neuer Kunde" action="#{editCustomerView.editCustomer(null)}"/>
+
+                <hr/>
+
+                <h2>Verkäufer</h2>
+
+                <h:dataTable id="merchants" value="#{adminView.merchants}" var="merchant"
+                             columnClasses="description, description, description">
+                    <h:column>
+                        <f:facet name="header">Company Name</f:facet>
+                        <h:commandLink action="#{editMerchantView.editMerchant(merchant)}">
+                            <h:outputText value="#{merchant.companyName}"/>
+                        </h:commandLink>
+                    </h:column>
+                </h:dataTable>
+
+                <h:commandButton value="Neuer Partner" action="#{editMerchantView.editMerchant(null)}"/>
+
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>
+</html>

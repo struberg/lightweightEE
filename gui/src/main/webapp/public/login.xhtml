@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="/WEB-INF/templates/layout.xhtml">
+    <ui:define name="title">Login</ui:define>
+
+    <ui:define name="content">
+        <div id="mainlogo">
+            <h:graphicImage value="/resources/images/owb_image.png" width="450"/>
+
+        </div>
+        <div id="overview">
+            <h1>Login</h1>
+
+            <table>
+                <h:form id="loginForm">
+                    <h:panelGrid columns="3">
+                        <h:outputLabel for="loginId" value="#{txt.username}"/>
+                        <h:inputText id="loginId" size="20" maxlength="20"
+                                     value="#{user.login}"
+                                     required="true"
+                                     label="#{txt.username}"/>
+                        <h:message for="loginId" errorClass="invalid" />
+
+                        <h:outputLabel for="pwd" value="#{txt.password}"/>
+                        <h:inputSecret id="pwd" value="#{user.password}"
+                                       size="20" maxlength="20"
+                                       required="true"
+                                       label="#{txt.password}"/>
+                        <h:message for="pwd" errorClass="invalid" />
+
+                        <h:commandButton action="#{user.login}" value="#{txt.login}"/>
+
+                    </h:panelGrid>
+                </h:form>
+            </table>
+        </div>
+
+    </ui:define>
+</ui:composition>
+</html>

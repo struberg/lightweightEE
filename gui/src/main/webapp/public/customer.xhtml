@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="/WEB-INF/templates/layout.xhtml">
+    <ui:define name="title">Customer Page</ui:define>
+
+    <ui:define name="content">
+        <h:form>
+            <div id="topup">
+                <h1>Konfiguration</h1>
+
+                <p>Tageslimit:
+                    <h:selectOneMenu name="floorvalue" value="#{customerView.customer.dayLimit}">
+                        <f:selectItem itemLabel="20 EUR" itemValue="2000"/>
+                        <f:selectItem itemLabel="30 EUR" itemValue="3000"/>
+                        <f:selectItem itemLabel="50 EUR" itemValue="5000"/>
+                    </h:selectOneMenu>
+                </p>
+
+                <p>Im Moment erfolgt die Abbuchung über einen Einziehungsauftrag.</p>
+
+                <p>
+                    <h:commandButton action="#{customerView.storePreferences}" value="Einstellungen Speichern"/>
+                </p>
+            </div>
+
+            <div id="overview">
+                <h1>Kontoübersicht</h1>
+
+                <h:dataTable id="transactions" value="#{customerView.transactions}" var="trans"
+                             columnClasses="date, description, credit">
+                    <h:column footerClass="date saldo">
+                        <f:facet name="header">Datum</f:facet>
+                        <h:outputText value="#{trans.transTst}">
+                            <f:convertDateTime pattern="dd.MM.yyyy HH:mm:ss" timeZone="CET" />
+                        </h:outputText>
+                        <f:facet name="footer">&#0160;</f:facet>
+                    </h:column>
+                    <h:column footerClass="description saldo">
+                        <f:facet name="header">Buchungstext</f:facet>
+                        <h:outputText value="#{trans.accountingViewTxt}"/>
+                        <f:facet name="footer">Saldo</f:facet>
+                    </h:column>
+                    <h:column footerClass="saldo">
+                        <f:facet name="header">Betrag</f:facet>
+                        <span class="#{trans.type=='TOP_UP' ? trans.topupPending ? 'pending' :'credit' : 'debit'}">
+                            <h:outputText value="#{trans.priceCents/100}">
+                                <f:convertNumber pattern="#0.00 EUR"/>
+                            </h:outputText>
+                        </span>
+                        <f:facet name="footer">
+                            <h:outputText value="#{customerView.saldo/100}">
+                                <f:convertNumber pattern="#0.00 EUR"/>
+                            </h:outputText>
+                        </f:facet>
+                    </h:column>
+                </h:dataTable>
+            </div>
+        </h:form>
+
+    </ui:define>
+</ui:composition>
+</html>

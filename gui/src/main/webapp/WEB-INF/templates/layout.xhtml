@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <f:view locale="de-at">
+        <ui:insert name="metadata"/>
+<!--
+TODO MENU
+        <ui:insert name="activeMenu">#{menu.activateMenuItem(activeMenu)}</ui:insert>
+-->
+        <h:head>
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            <link href="#{resource['images:favicon.ico']}" rel="shortcut icon" type="image/vnd.microsoft.icon"/>
+            <link href="#{resource['css:theme.css']}" rel="stylesheet" type="text/css" media="all"/>
+            <ui:insert name="header"></ui:insert>
+            <title><h:outputText value="Car ó Line - "/><ui:insert name="title"></ui:insert></title>
+        </h:head>
+        <h:body>
+            <div id="caroline">
+                <div id="home">
+                    <div id="mainContainer">
+                        <div id="headContainer">
+                            <!-- TODO: Links + Datum! -->
+                            <div id="mainNavigation">
+                                <h:form rendered="#{user.loggedIn}">
+                                    <h:outputText value="#{user.viewName}"/>&#0160;
+                                    <h:commandLink value="logout" action="#{user.logout}" />
+                                </h:form>
+                            </div>
+                            <!-- /MainNavigation -->
+                        </div>
+                        <!-- /headContainer -->
+
+                        <div id="appContainer">
+                            <div id="menuContainer">
+                                <ui:include src="menu.xhtml"/>
+                            </div>
+                            <!-- real content on the white-board. -->
+                            <div id="contentContainer">
+                                <h:messages id="globalMessagesPanel" globalOnly="true" errorClass="errorMessage"
+                                            infoClass="infoMessage" warnClass="warnMessage" fatalClass="errorMessage"/>
+                                <ui:insert name="content"/>
+                            </div>
+                            <!-- /contentContainer -->
+                        </div>
+                    </div>
+                    <!-- /contentContainer -->
+                </div>
+                <!-- /mainContainer -->
+            </div>
+
+        </h:body>
+    </f:view>
+</html>
+
+
+
+
+
