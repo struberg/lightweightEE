@@ -10,7 +10,7 @@ import org.apache.myfaces.extensions.cdi.message.api.Message;
 import org.apache.myfaces.extensions.cdi.message.api.MessageContext;
 import org.apache.myfaces.extensions.cdi.message.api.payload.MessageSeverity;
 
-import javax.faces.bean.ViewScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.event.ComponentSystemEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -21,7 +21,7 @@ import java.io.Serializable;
  *
  * @author <a href="mailto:struberg@yahoo.de">Mark Struberg</a> 
  */
-@ViewScoped
+@RequestScoped
 @Named("editCustomer")
 public class EditCustomerView implements Serializable
 {
@@ -76,7 +76,8 @@ public class EditCustomerView implements Serializable
     {
         if (!edit)
         {
-            customerSvc.createCustomer(customer);
+            customer = customerSvc.createCustomer(customer);
+            customerId = customer.getId();
         }
         else
         {

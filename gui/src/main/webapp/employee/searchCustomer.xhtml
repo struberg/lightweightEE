@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.prime.com.tr/ui">
 
 <ui:composition template="/WEB-INF/templates/layout.xhtml">
     <!-- declare the menu item which should get highlighted -->
@@ -13,7 +14,7 @@
 
     <ui:define name="content">
         <h:form id="searchCustomer">
-            <div id="overview">
+            <div>
                 <h1>Employee - Search Customer</h1>
 
                 <h:panelGroup>
@@ -44,7 +45,35 @@
                     </fieldset>
                 </h:panelGroup>
 
-                <hr/>
+                <h:panelGroup rendered="#{not empty customerSearch.customers}">
+                    <hr/>
+                    <p:dataTable id="customerTable" value="#{customerSearch.customers}" var="cust">
+                        <p:column sortBy="#{cust.lastName}">
+                            <f:facet name="header">Name</f:facet>
+                            <h:link outcome="editCustomer.xhtml">
+                                 <f:param id="coursenr" name="customerId" value="#{cust.id}"/>
+                                <h:outputText value="#{cust.lastName} #{cust.firstName}"/>
+                            </h:link>
+                        </p:column>
+                        <p:column sortBy="#{cust.carVendor}">
+                            <f:facet name="header">Car Vendor</f:facet>
+                            <h:outputText value="#{cust.carVendor}"/>
+                        </p:column>
+                        <p:column sortBy="#{cust.carType}">
+                            <f:facet name="header">Car Vendor</f:facet>
+                            <h:outputText value="#{cust.carType}"/>
+                        </p:column>
+                        <p:column sortBy="#{cust.storageSlot.warehouse.name}">
+                            <f:facet name="header">Warehouse</f:facet>
+                            <h:outputText value="#{cust.storageSlot.warehouse.name}"/>
+                        </p:column>
+                        <p:column sortBy="#{cust.storageSlot.slotNumber}">
+                            <f:facet name="header">Storage</f:facet>
+                            <h:outputText value="#{cust.storageSlot.slotNumber}"/>
+                        </p:column>
+
+                    </p:dataTable>
+                </h:panelGroup>
 
             </div>
         </h:form>

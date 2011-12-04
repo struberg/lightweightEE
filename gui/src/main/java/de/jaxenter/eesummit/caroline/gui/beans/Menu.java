@@ -33,6 +33,13 @@ import javax.inject.Named;
 import java.io.Serializable;
 
 /**
+ * This menu is self-made for demonstration purpose.
+ *
+ * You could also use PrimeFaces {@link org.primefaces.model.MenuModel},
+ * or the Menu from Trinidad or RichFaces.
+ *
+ * @see PrimeMenu for the PrimeFaces version of the menu
+ *
  * @author <a href="mailto:struberg@yahoo.de">Mark Struberg</a> 
  */
 @SessionScoped

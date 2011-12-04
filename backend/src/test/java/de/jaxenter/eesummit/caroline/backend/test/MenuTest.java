@@ -79,7 +79,7 @@ public class MenuTest extends CarolineTest
             // create the employee menu part
             MenuItem employeeMenu = menuAdminSvc.createMenuItem(1, rootMenu, "MENU_EMP", 1, "employee",
                                      "/employee/overview.xhtml");
-            MenuItem employeeCustomer = menuAdminSvc.createMenuItem(1, rootMenu, "MENU_EMP_CUSTOMER", 1, "employee",
+            MenuItem employeeCustomer = menuAdminSvc.createMenuItem(2, employeeMenu, "MENU_EMP_CUSTOMER", 1, "employee",
                                      "/employee/searchCustomer.xhtml");
 
 

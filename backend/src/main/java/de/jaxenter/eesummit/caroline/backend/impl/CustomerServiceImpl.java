@@ -80,11 +80,11 @@ public class CustomerServiceImpl extends AbstractService<Customer> implements Cu
         
         if (lastName != null && lastName.length()>0)
         {
-            qb.addQueryPart("lastName=:lastName", "lastName", lastName + "%");
+            qb.addQueryPart("c.lastName like :lastName", "lastName", lastName + "%");
         }
         if (firstName != null && firstName.length()>0)
         {
-            qb.addQueryPart("firstName=:firstName", "firstName", firstName + "%");
+            qb.addQueryPart("c.firstName like :firstName", "firstName", firstName + "%");
         }
 
         Query q = qb.getQuery(em);

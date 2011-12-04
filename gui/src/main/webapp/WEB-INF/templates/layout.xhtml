@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.prime.com.tr/ui">
     <f:view locale="de-at">
         <ui:insert name="metadata"/>
         <ui:insert name="activeMenu">#{menu.activateMenuItem(activeMenu)}</ui:insert>
@@ -32,7 +33,10 @@
 
                         <div id="appContainer">
                             <div id="menuContainer">
+<!--
                                 <ui:include src="menu.xhtml"/>
+-->
+                                <p:menu model="#{primeMenu.model}" rendered="#{primeMenu.showMenu}"/>
                             </div>
                             <!-- real content on the white-board. -->
                             <div id="contentContainer">

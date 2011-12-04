@@ -23,8 +23,8 @@ import de.jaxenter.eesummit.caroline.backend.api.CustomerService;
 import de.jaxenter.eesummit.caroline.entities.Customer;
 import de.jaxenter.eesummit.caroline.gui.viewconfig.EmployeePages;
 import org.apache.myfaces.extensions.cdi.core.api.config.view.ViewConfig;
+import org.apache.myfaces.extensions.cdi.core.api.scope.conversation.WindowScoped;
 
-import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
@@ -33,7 +33,7 @@ import java.util.List;
 /**
  * @author <a href="mailto:struberg@yahoo.de">Mark Struberg</a>
  */
-@ViewScoped
+@WindowScoped
 @Named("customerSearch")
 public class SearchCustomerView implements Serializable
 {
@@ -80,12 +80,9 @@ public class SearchCustomerView implements Serializable
      */
     public Class<? extends ViewConfig> searchCustomer()
     {
-        if (customers == null)
-        {
-            customers = custSvc.getCustomers();
-        }
+        customers = custSvc.searchCustomers(lastName, firstName);
 
-        return EmployeePages.SearchCustomer.class;
+        return null;
     }
 
     /**

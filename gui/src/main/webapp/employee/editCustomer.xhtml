@@ -22,27 +22,22 @@
                 <h1>Employee - Edit Customer</h1>
                 <h:panelGroup>
                     <fieldset>
-                        <legend>Name</legend>
+                        <legend>Kontaktdaten</legend>
                         <ol>
                             <li>
-                                <h:outputLabel for="lastName" value="Nachname"/>
+                                <h:outputLabel for="lastName" value="Nachname" styleClass="required"/>
                                 <h:inputText id="lastName" maxlength="50" required="true"
                                              value="#{editCustomer.customer.lastName}"
                                              label="Nachname"/>
-                                <h:message for="lastName" errorClass="invalid" />
+                                <h:message for="lastName" errorClass="invalid"/>
                             </li>
                             <li>
-                                <h:outputLabel for="firstName" value="Vorname"/>
+                                <h:outputLabel for="firstName" value="Vorname" styleClass="required"/>
                                 <h:inputText id="firstName" maxlength="50" required="true"
                                              value="#{editCustomer.customer.firstName}"
                                              label="Vorname"/>
                                 <h:message for="firstName" errorClass="invalid" />
                             </li>
-                        </ol>
-                    </fieldset>
-                    <fieldset>
-                        <legend>Kontaktdaten</legend>
-                        <ol>
                             <li>
                                 <h:outputLabel for="email" value="Email"/>
                                 <h:inputText id="email" maxlength="50"
@@ -56,6 +51,13 @@
                                              value="#{editCustomer.customer.loginId}"
                                              label="Login-ID"/>
                                 <h:message for="login" errorClass="invalid" />
+                            </li>
+                            <li>
+                                <h:outputLabel for="pwd" value="Password"/>
+                                <h:inputText id="pwd" maxlength="50"
+                                             value="#{editCustomer.customer.loginHash}"
+                                             label="Login-ID"/>
+                                <h:message for="pwd" errorClass="invalid" />
                             </li>
                         </ol>
                     </fieldset>

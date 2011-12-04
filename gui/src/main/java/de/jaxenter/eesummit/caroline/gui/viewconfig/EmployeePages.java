@@ -43,7 +43,7 @@ public interface EmployeePages extends ViewConfig {
     {
     }
 
-    @Page(navigation = Page.NavigationMode.REDIRECT)
+    @Page(navigation = Page.NavigationMode.REDIRECT, viewParams = Page.ViewParameterMode.INCLUDE)
     @Secured(EmployeeAccessVoter.class)
     public class EditCustomer implements EmployeePages
     {

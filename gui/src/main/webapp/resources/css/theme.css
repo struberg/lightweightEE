@@ -88,10 +88,13 @@ IMG {
     display: block;
     left: 0px;
     width: 200px;
+    min-height: 350px;
     position: relative;
     text-decoration: none;
     z-index: 1;
     font-size: 10px;
+    border-right-width: 1px;
+    border-right-style: solid;
 }
 
 #contentContainer {
@@ -267,6 +270,71 @@ fieldset li label.required:after {
     padding-bottom: 3px;
     padding-top: 3px;
 }
+
+/* Input & Textarea]
+-------------------------------------------------------------------*/
+
+input,
+select,
+textarea {
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-size: 1em !important;
+    margin-right: 5px !important;
+}
+
+select {
+    max-width: 350px;
+}
+
+input[type=radio],
+input[type=checkbox] {
+    margin-right: 10px !important;
+}
+
+input[type=text],
+textarea,
+input[type=password]{
+    color: #494949;
+    font-family: Arial, Helvetica, sans-serif !important;
+    margin-bottom: 2px;
+    border: 1px solid silver !important;
+    padding: 3px 0px 2px 3px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+textarea:focus {
+    border-color: gray !important;
+    -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.2) !important;
+    -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.2) !important;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.2) !important;
+}
+
+input[type=text].ui-state-hover,
+textarea.ui-state-hover,
+input[type=password].ui-state-hover {
+    border: 1px solid silver !important;
+}
+
+input[type=text].ui-state-focus,
+textarea.ui-state-focus,
+input[type=password].ui-state-focus {
+    border: 1px solid gray !important;
+}
+
+input[type=text].invalidInput {
+    background: #ffdddd !important;
+}
+
+input[type=text][disabled=disabled],
+textarea[disabled=disabled],
+input[type=password][disabled=disabled] {
+    background-color: #f7f7f7 !important;
+}
+
 
 /* --------------- /toolBarGroup --------------- */
 
