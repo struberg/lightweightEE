@@ -18,6 +18,7 @@
  */
 package de.jaxenter.eesummit.caroline.entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -46,6 +47,9 @@ public class StorageSlot implements BaseEntity
 
     @ManyToOne(optional=false)
     private Warehouse warehouse;
+
+    @Column(length=10, nullable = false)
+    private String slotNumber;
 
     @OneToOne(optional = true)
     @JoinColumn
@@ -93,5 +97,15 @@ public class StorageSlot implements BaseEntity
     public void setStoredTyres(List<Tyre> storedTyres)
     {
         this.storedTyres = storedTyres;
+    }
+
+    public String getSlotNumber()
+    {
+        return slotNumber;
+    }
+
+    public void setSlotNumber(String slotNumber)
+    {
+        this.slotNumber = slotNumber;
     }
 }

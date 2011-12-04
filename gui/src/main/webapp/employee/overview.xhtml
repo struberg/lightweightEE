@@ -6,6 +6,10 @@
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <ui:composition template="/WEB-INF/templates/layout.xhtml">
+
+    <!-- declare the menu item which should get highlighted -->
+    <ui:param name="activeMenu" value="MENU_EMP"/>
+
     <ui:define name="title">#{emp.ov_title}</ui:define>
 
     <ui:define name="content">

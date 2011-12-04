@@ -24,6 +24,7 @@ BODY {
     MARGIN: 0px;
     PADDING-TOP: 0px;
     BORDER-RIGHT-WIDTH: 0px;
+    border-collapse: separate;
 }
 
 IMG {
@@ -88,6 +89,7 @@ IMG {
     left: 0px;
     width: 200px;
     position: relative;
+    text-decoration: none;
     z-index: 1;
     font-size: 10px;
 }
@@ -105,7 +107,6 @@ IMG {
 }
 
 #overview {
-
     top: 0px;
     left: 0px;
     width: 350px;
@@ -120,11 +121,70 @@ IMG {
     z-index: 4;
 }
 
+.aktiv {
+    color: #559902;
+}
+
 h1 {
     font-size: 18px;
     font-weight: normal;
     color: #559902;
 }
+
+/* --------------- nice dialogues without tables --------------- */
+
+fieldset.styledFieldset {
+    background: #F5FAFD;
+    border-bottom: 1px solid #E6E6E6;
+    border-top: 1px solid #E6E6E6;
+    margin-bottom: 18px;
+}
+
+fieldset ul, fieldset ol {
+    padding: 6px 0 0 225px;
+}
+
+ol, ul {
+    list-style: none outside none;
+}
+
+fieldset li label:first-child {
+    width: 195px;
+    min-height: 1px;
+    padding-right: 30px;
+    margin-left: -225px;
+    margin-top: 1px;
+    margin-bottom: 3px;
+    display: block;
+    text-align: right;
+    position: relative;
+    float: left;
+    vertical-align: top;
+    line-height: 16px;
+}
+
+fieldset li:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+fieldset li label.required:after {
+    content: "*";
+    display: inline;
+    *display: inline; /* =Hack */
+    position: relative;
+    font-weight: bold;
+    margin-left: 0.1em;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 10px;
+    color: #004f77;
+}
+
+
 
 /* --------------- /toolBarGroup --------------- */
 
