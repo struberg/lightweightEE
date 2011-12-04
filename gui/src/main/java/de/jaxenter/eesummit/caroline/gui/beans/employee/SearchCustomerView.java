@@ -21,6 +21,8 @@ package de.jaxenter.eesummit.caroline.gui.beans.employee;
 
 import de.jaxenter.eesummit.caroline.backend.api.CustomerService;
 import de.jaxenter.eesummit.caroline.entities.Customer;
+import de.jaxenter.eesummit.caroline.gui.viewconfig.EmployeePages;
+import org.apache.myfaces.extensions.cdi.core.api.config.view.ViewConfig;
 
 import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
@@ -65,12 +67,33 @@ public class SearchCustomerView implements Serializable
 
     public List<Customer> getCustomers()
     {
+        return customers;
+    }
+
+    public void setCustomers(List<Customer> customers)
+    {
+        this.customers = customers;
+    }
+
+    /**
+     * Typesafe navigation sample for searching customers.
+     */
+    public Class<? extends ViewConfig> searchCustomer()
+    {
         if (customers == null)
         {
             customers = custSvc.getCustomers();
         }
 
-        return customers;
+        return EmployeePages.SearchCustomer.class;
+    }
+
+    /**
+     * Typesafe navigation sample for searching customers.
+     */
+    public Class<? extends ViewConfig> createCustomer()
+    {
+        return EmployeePages.EditCustomer.class;
     }
 
 }

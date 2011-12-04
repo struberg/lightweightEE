@@ -10,7 +10,7 @@
 
     <ui:define name="content">
         <div id="mainlogo">
-            <h:graphicImage value="/resources/images/owb_image.png" width="450"/>
+            <h:graphicImage value="/resources/images/owb_image.png" width="300"/>
 
         </div>
         <div id="overview">
@@ -18,24 +18,30 @@
 
             <table>
                 <h:form id="loginForm">
-                    <h:panelGrid columns="3">
-                        <h:outputLabel for="loginId" value="#{txt.username}"/>
-                        <h:inputText id="loginId" size="20" maxlength="20"
-                                     value="#{user.login}"
-                                     required="true"
-                                     label="#{txt.username}"/>
-                        <h:message for="loginId" errorClass="invalid" />
+                    <h:panelGroup>
+                        <ol>
+                            <li>
+                                <h:outputLabel for="loginId" value="#{txt.username}"/>
+                                <h:inputText id="loginId" size="20" maxlength="20"
+                                             value="#{user.login}"
+                                             required="true"
+                                             label="#{txt.username}"/>
+                                <h:message for="loginId" errorClass="invalid" />
+                            </li>
+                            <li>
+                                <h:outputLabel for="pwd" value="#{txt.password}"/>
+                                <h:inputSecret id="pwd" value="#{user.password}"
+                                               size="20" maxlength="20"
+                                               required="true"
+                                               label="#{txt.password}"/>
+                                <h:message for="pwd" errorClass="invalid" />
+                            </li>
 
-                        <h:outputLabel for="pwd" value="#{txt.password}"/>
-                        <h:inputSecret id="pwd" value="#{user.password}"
-                                       size="20" maxlength="20"
-                                       required="true"
-                                       label="#{txt.password}"/>
-                        <h:message for="pwd" errorClass="invalid" />
-
-                        <h:commandButton action="#{user.login}" value="#{txt.login}"/>
-
-                    </h:panelGrid>
+                            <li>
+                                <h:commandButton action="#{user.login}" value="#{txt.login}"/>
+                            </li>
+                        </ol>
+                    </h:panelGroup>
                 </h:form>
             </table>
         </div>

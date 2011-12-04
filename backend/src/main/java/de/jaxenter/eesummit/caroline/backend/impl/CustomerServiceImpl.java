@@ -20,12 +20,14 @@ package de.jaxenter.eesummit.caroline.backend.impl;
 
 
 import de.jaxenter.eesummit.caroline.backend.api.CustomerService;
+import de.jaxenter.eesummit.caroline.backend.tools.QueryBuilder;
 import de.jaxenter.eesummit.caroline.entities.Customer;
 import org.apache.myfaces.extensions.cdi.jpa.api.Transactional;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.util.List;
 
 /**
@@ -68,7 +70,25 @@ public class CustomerServiceImpl extends AbstractService<Customer> implements Cu
     @Override
     public List<Customer> getCustomers()
     {
-        //X TODO
-        return null;
+        return searchCustomers(null, null);
+    }
+
+    @Override
+    public List<Customer> searchCustomers(String lastName, String firstName)
+    {
+        QueryBuilder qb = new QueryBuilder("SELECT c from Customer AS c");
+        
+        if (lastName != null && lastName.length()>0)
+        {
+            qb.addQueryPart("lastName=:lastName", "lastName", lastName + "%");
+        }
+        if (firstName != null && firstName.length()>0)
+        {
+            qb.addQueryPart("firstName=:firstName", "firstName", firstName + "%");
+        }
+
+        Query q = qb.getQuery(em);
+
+        return q.getResultList();
     }
 }

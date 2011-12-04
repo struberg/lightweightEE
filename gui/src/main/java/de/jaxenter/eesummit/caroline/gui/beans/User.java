@@ -49,6 +49,7 @@ public class User implements Serializable
     private Long userId;
     private boolean admin = false;
     private boolean customer = false;
+    private boolean employee = false;
 
     private String viewName;
 
@@ -99,6 +100,7 @@ public class User implements Serializable
         userId = null;
         admin = false;
         customer = false;
+        employee = false;
         viewName = null;
         login = null;
         password = null;
@@ -126,10 +128,9 @@ public class User implements Serializable
             }
             else if (usr instanceof Employee)
             {
-                Employee employee = (Employee) usr;
-                loggedIn = true;
-                admin = employee.isAdmin();
-                customer = false;
+                Employee emp = (Employee) usr;
+                admin = emp.isAdmin();
+                employee = true;
             }
         }
         else
@@ -159,12 +160,12 @@ public class User implements Serializable
 
     public boolean isEmployee()
     {
-        return admin;
+        return employee;
     }
 
-    public void setAdmin(boolean admin)
+    public boolean isAdmin()
     {
-        this.admin = admin;
+        return admin;
     }
 
     public boolean isCustomer()
@@ -172,19 +173,9 @@ public class User implements Serializable
         return customer;
     }
 
-    public void setCustomer(boolean customer)
-    {
-        this.customer = customer;
-    }
-
     public String getViewName()
     {
         return viewName;
-    }
-
-    public void setViewName(String viewName)
-    {
-        this.viewName = viewName;
     }
 
     public String getLogin()

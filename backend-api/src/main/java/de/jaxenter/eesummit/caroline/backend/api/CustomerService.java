@@ -45,6 +45,13 @@ public interface CustomerService extends GenericService<Customer>
     public List<Customer> getCustomers();
 
     /**
+     * @param lastName or <code>null</code> for all
+     * @param firstName or <code>null</code> for all
+     * @return all customers with the given lastName and firstName
+     */
+    public List<Customer> searchCustomers(String lastName, String firstName);
+
+    /**
      * Create a customer
      */
     public Customer createCustomer(Customer c);

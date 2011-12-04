@@ -133,6 +133,21 @@ h1 {
 
 /* --------------- nice dialogues without tables --------------- */
 
+ol, ul {
+    list-style: none outside none;
+}
+
+fieldset {
+    position: relative;
+    margin-top: 3px;
+    margin-bottom: 12px;
+    border: none;
+    border-top: 1px solid #E6E6E6;
+    margin-left: 0px;
+    background: white;
+    padding: 0 0 6px 0;
+}
+
 fieldset.styledFieldset {
     background: #F5FAFD;
     border-bottom: 1px solid #E6E6E6;
@@ -140,12 +155,72 @@ fieldset.styledFieldset {
     margin-bottom: 18px;
 }
 
-fieldset ul, fieldset ol {
+fieldset.nonStyledFieldset {
+    border: none;
+    margin-top: 0px;
+}
+
+fieldset ul,
+fieldset ol {
     padding: 6px 0 0 225px;
 }
 
-ol, ul {
-    list-style: none outside none;
+fieldset ul ul,
+fieldset ol ul,
+fieldset ol ol,
+fieldset ul ol{
+    padding: 0px;
+}
+
+legend {
+    padding: 0 0 2px 0;
+    font-weight: bold;
+    font-size: 1.2em;
+    display: block;
+    width: 100%;
+    color: #494949;
+    border-bottom: 1px solid #E6E6E6;
+}
+
+fieldset.styledFieldset legend,
+fieldset.tableFilter legend{
+    background: white;
+}
+
+.fieldDescription {
+    color: gray;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+fieldset li {
+    color: #494949;
+    margin: 8px 0;
+    position: relative;
+    line-height: 1.4em;
+}
+
+fieldset ul .leftBlock,
+fieldset ol .leftBlock {
+    margin-left: -225px;
+}
+
+fieldset .leftBlock label:first-child{
+    margin-left: 0px;
+    float: none;
+    text-align: left;
+    width: auto;
+}
+
+fieldset .leftBlock label {
+    font-weight: bold;
+}
+
+fieldset li:after {
+    content: ".";
+    visibility: hidden;
+    clear: both;
+    display: block;
+    height: 1px;
 }
 
 fieldset li label:first-child {
@@ -184,7 +259,14 @@ fieldset li label.required:after {
     color: #004f77;
 }
 
-
+.invalid {
+    color: #EA1818;
+    display: block;
+    font-weight: bold;
+    font-size: 10px;
+    padding-bottom: 3px;
+    padding-top: 3px;
+}
 
 /* --------------- /toolBarGroup --------------- */
 

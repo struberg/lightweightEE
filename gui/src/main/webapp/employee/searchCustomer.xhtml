@@ -20,20 +20,25 @@
                     <fieldset class="styledFieldset">
                         <ol>
                             <li>
+                                <h:outputLabel for="lastName" value="Nachname"/>
+                                <h:inputText id="lastName" maxlength="50"
+                                             value="#{customerSearch.lastName}"
+                                             label="Nachname"/>
+                                <h:message for="lastName" errorClass="invalid" />
+                            </li>
+                            <li>
                                 <h:outputLabel for="firstName" value="Vorname"/>
                                 <h:inputText id="firstName" maxlength="50"
                                              value="#{customerSearch.firstName}"
-                                             required="true"
                                              label="Vorname"/>
                                 <h:message for="firstName" errorClass="invalid" />
                             </li>
                             <li>
-                                <h:outputLabel for="lastName" value="Nachname"/>
-                                <h:inputText id="lastName" maxlength="50"
-                                             value="#{customerSearch.lastName}"
-                                             required="true"
-                                             label="Nachname"/>
-                                <h:message for="lastName" errorClass="invalid" />
+                                <h:commandButton id="searchBtn" value="#{txt.search}"
+                                             action="#{customerSearch.searchCustomer}"/>
+
+                                <h:commandButton id="createBtn" value="#{txt.create}"
+                                             action="#{customerSearch.createCustomer}"/>
                             </li>
                         </ol>
                     </fieldset>

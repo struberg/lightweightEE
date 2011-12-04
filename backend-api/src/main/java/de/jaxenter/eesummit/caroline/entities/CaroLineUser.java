@@ -47,29 +47,28 @@ public abstract class CaroLineUser implements BaseEntity
 
     @Id
     @GeneratedValue
-    private Long id;
+    protected Long id;
 
     @Version
-    private Integer optlock;
+    protected Integer optlock;
 
-    @NotNull
-    @Column(unique = true)
-    private String loginId;
+    @Column(unique = true, length = 20)
+    protected String loginId;
 
-    @NotNull
-    private String loginHash;
+    @Column(length = 40)
+    protected String loginHash;
 
     /** only active users can login */
     @NotNull
-    private Boolean active;
+    protected Boolean active;
 
     @NotNull
     @Column(length = 50)
-    private String firstName;
+    protected String firstName;
 
     @NotNull
     @Column(length = 50)
-    private String lastName;
+    protected String lastName;
 
     public Long getId()
     {
