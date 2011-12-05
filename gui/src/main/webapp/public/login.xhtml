@@ -22,7 +22,7 @@
                         <ol>
                             <li>
                                 <h:outputLabel for="loginId" value="#{txt.username}"/>
-                                <h:inputText id="loginId" size="20" maxlength="20"
+                                <h:inputText id="loginId" size="30" maxlength="30"
                                              value="#{user.login}"
                                              required="true"
                                              label="#{txt.username}"/>
@@ -31,7 +31,7 @@
                             <li>
                                 <h:outputLabel for="pwd" value="#{txt.password}"/>
                                 <h:inputSecret id="pwd" value="#{user.password}"
-                                               size="20" maxlength="20"
+                                               size="30" maxlength="30"
                                                required="true"
                                                label="#{txt.password}"/>
                                 <h:message for="pwd" errorClass="invalid" />

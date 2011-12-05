@@ -14,7 +14,6 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.event.ComponentSystemEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.Serializable;
 
 /**
  * Backing bean for creating and editing customers.
@@ -23,7 +22,7 @@ import java.io.Serializable;
  */
 @RequestScoped
 @Named("editCustomer")
-public class EditCustomerView implements Serializable
+public class EditCustomerView
 {
     private Customer customer = new Customer();
     private Long customerId = null;
@@ -44,7 +43,7 @@ public class EditCustomerView implements Serializable
             customer = customerSvc.getById(customerId);
             if (customer == null)
             {
-                Message msg = messageContext.message().text("{customer_doesnt_exist}").
+                messageContext.message().text("{customer_doesnt_exist}").
                         namedArgument("customerId", customerId).
                         payload(MessageSeverity.ERROR).add();
             }

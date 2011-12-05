@@ -5,9 +5,13 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.prime.com.tr/ui">
-    <f:view locale="de-at">
+    <f:view locale="#{user.locale}">
         <ui:insert name="metadata"/>
         <ui:insert name="activeMenu">#{menu.activateMenuItem(activeMenu)}</ui:insert>
+        <h:outputScript library="js" name="windowId.js"/>
+        <script type="text/javascript">
+            assertWindowId()
+        </script>
         <h:head>
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
             <link href="#{resource['images:favicon.ico']}" rel="shortcut icon" type="image/vnd.microsoft.icon"/>
@@ -33,10 +37,10 @@
 
                         <div id="appContainer">
                             <div id="menuContainer">
-<!--
                                 <ui:include src="menu.xhtml"/>
--->
+                            <!-- Enable this line to use the PrimeFaces menu
                                 <p:menu model="#{primeMenu.model}" rendered="#{primeMenu.showMenu}"/>
+                            -->
                             </div>
                             <!-- real content on the white-board. -->
                             <div id="contentContainer">

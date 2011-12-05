@@ -28,16 +28,19 @@ import org.apache.myfaces.extensions.cdi.jsf.api.config.view.Page;
 /**
  * This class contains the {@link ViewConfig}s of all public pages.
  */
-@Page(basePath = "public")
-public interface PublicPages extends ViewConfig {
+@Page(basePath = "public", navigation = Page.NavigationMode.REDIRECT)
+public interface PublicPages extends ViewConfig
+{
 
     @Page
-    public class Login extends DefaultErrorView implements PublicPages {
+    public class Login extends DefaultErrorView implements PublicPages
+    {
     }
 
-    @Page(navigation = Page.NavigationMode.REDIRECT)
+    @Page
     @Secured(CustomerAccessVoter.class)
-    public class Customer implements PublicPages {
+    public class Customer implements PublicPages
+    {
     }
 
 }

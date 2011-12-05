@@ -28,22 +28,22 @@ import org.apache.myfaces.extensions.cdi.jsf.api.config.view.Page;
  * This class contains the {@link org.apache.myfaces.extensions.cdi.core.api.config.view.ViewConfig}s
  * of all emplyoee pages.
  */
-@Page(basePath = "employee")
+@Page(basePath = "employee", navigation = Page.NavigationMode.REDIRECT)
 public interface EmployeePages extends ViewConfig {
 
-    @Page(navigation = Page.NavigationMode.REDIRECT)
+    @Page
     @Secured(EmployeeAccessVoter.class)
     public class Overview implements EmployeePages
     {
     }
 
-    @Page(navigation = Page.NavigationMode.REDIRECT)
+    @Page
     @Secured(EmployeeAccessVoter.class)
     public class SearchCustomer implements EmployeePages
     {
     }
 
-    @Page(navigation = Page.NavigationMode.REDIRECT, viewParams = Page.ViewParameterMode.INCLUDE)
+    @Page(viewParams = Page.ViewParameterMode.INCLUDE)
     @Secured(EmployeeAccessVoter.class)
     public class EditCustomer implements EmployeePages
     {

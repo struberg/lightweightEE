@@ -54,7 +54,8 @@ public class PrimeMenu implements Serializable
     private boolean showMenu = false;
 
     private @Inject MenuService menuSvc;
-    private @Inject User usr;
+    private @Inject
+    UserController usr;
     private @Inject @Jsf MessageContext messageContext;
 
 

@@ -20,7 +20,7 @@ package de.jaxenter.eesummit.caroline.gui.beans.pub;
 
 import de.jaxenter.eesummit.caroline.backend.api.CustomerService;
 import de.jaxenter.eesummit.caroline.entities.Customer;
-import de.jaxenter.eesummit.caroline.gui.beans.User;
+import de.jaxenter.eesummit.caroline.gui.beans.UserController;
 import org.apache.myfaces.extensions.cdi.jsf.api.Jsf;
 import org.apache.myfaces.extensions.cdi.message.api.MessageContext;
 
@@ -38,7 +38,7 @@ import java.io.Serializable;
 public class CustomerView implements Serializable {
 
     private @Inject
-    User usr;
+    UserController usr;
     private @Inject CustomerService custSvc;
 
     private @Inject @Jsf MessageContext messageContext;

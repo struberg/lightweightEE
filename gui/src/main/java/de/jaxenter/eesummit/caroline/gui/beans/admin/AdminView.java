@@ -22,10 +22,10 @@ package de.jaxenter.eesummit.caroline.gui.beans.admin;
 import de.jaxenter.eesummit.caroline.backend.api.CustomerService;
 import de.jaxenter.eesummit.caroline.entities.Customer;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -33,18 +33,19 @@ import java.util.List;
  */
 @RequestScoped
 @Named
-public class AdminView implements Serializable {
+public class AdminView {
 
-    private @Inject
-    CustomerService custSvc;
+    private @Inject CustomerService custSvc;
 
     private List<Customer> customers;
 
-    public List<Customer> getCustomers() {
-        if (customers == null) {
-            customers = custSvc.getCustomers();
-        }
+    @PostConstruct
+    protected void init()
+    {
+        customers = custSvc.getCustomers();
+    }
 
+    public List<Customer> getCustomers() {
         return customers;
     }
 

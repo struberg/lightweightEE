@@ -12,6 +12,7 @@ HTML {
     background-color: #ffffff;
     FONT-FAMILY: Verdana, Helvetica, Geneva, sans-serif;
     color: #000000;
+    font-size: 12px;
 }
 
 BODY {
@@ -75,7 +76,7 @@ IMG {
     BOTTOM: 0px;
     HEIGHT: 16px;
     position: relative;
-    top: 80px;
+    top: 50px;
     color: #000000;
     font-size: 14px;
     font-weight: normal;
@@ -83,7 +84,7 @@ IMG {
 }
 
 #menuContainer {
-    MARGIN: 15px 2px 2px 2px;
+    MARGIN: 20px 2px 2px 2px;
     FLOAT: left;
     display: block;
     left: 0px;
@@ -93,8 +94,11 @@ IMG {
     text-decoration: none;
     z-index: 1;
     font-size: 10px;
-    border-right-width: 1px;
-    border-right-style: solid;
+    border-width: 1px;
+    border-style: none;
+/*
+    background-color: #EDEDED;
+*/
 }
 
 #contentContainer {
@@ -104,7 +108,8 @@ IMG {
     display: block;
     border: none;
     border-color: #666666;
-    border-width: 2px;
+    border-width: 1px;
+    border-style: none;
     padding: 10px 15px;
     background-color: #ffffff;
 }
@@ -270,6 +275,46 @@ fieldset li label.required:after {
     padding-bottom: 3px;
     padding-top: 3px;
 }
+
+/* various messages */
+#globalMessagesPanel .infoMessage,
+#globalMessagesPanel .errorMessage,
+#globalMessagesPanel .warnMessage,
+#globalMessagesPanel .successMessage
+ {
+    padding: 11px 10px 11px 49px;
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 16px;
+    margin: 8px 0;
+    background-position: 14px 7px;
+    display: block;
+}
+
+.infoMessage {
+    color: #395878;
+    border: 1px solid #6e93ba;
+    background:url(#{resource[ 'images:message-info.png' ]}) no-repeat #d9e6f2;
+}
+
+.errorMessage {
+    color: #843f3f !important;
+    border: 1px solid #ba6e6e;
+    background:url(#{resource[ 'images:message-cross.png' ]}) no-repeat #d9e6f2;
+}
+
+.warnMessage {
+    color: #734f21 !important;
+    border: 1px solid #c69e23;
+    background:url(#{resource[ 'images:message-warning.png' ]}) no-repeat #d9e6f2;
+}
+
+.successMessage {
+    color: #447839;
+    border: 1px solid #7bba6e;
+    background:url(#{resource[ 'images:message-tick.png' ]}) no-repeat #d9e6f2;
+}
+
 
 /* Input & Textarea]
 -------------------------------------------------------------------*/

@@ -18,7 +18,7 @@
  */
 package de.jaxenter.eesummit.caroline.gui.security;
 
-import de.jaxenter.eesummit.caroline.gui.beans.User;
+import de.jaxenter.eesummit.caroline.gui.beans.UserController;
 import org.apache.myfaces.extensions.cdi.core.api.security.AbstractAccessDecisionVoter;
 import org.apache.myfaces.extensions.cdi.core.api.security.SecurityViolation;
 import org.apache.myfaces.extensions.cdi.jsf.api.Jsf;
@@ -39,7 +39,8 @@ public class EmployeeAccessVoter extends AbstractAccessDecisionVoter
     private static final long serialVersionUID = -3321616879108078874L;
 
     private @Inject @Jsf MessageContext messageContext;
-    private @Inject User user;
+    private @Inject
+    UserController user;
 
     public void checkPermission(InvocationContext invocationContext, Set<SecurityViolation> violations)
     {

@@ -21,7 +21,7 @@ package de.jaxenter.eesummit.caroline.gui.beans;
 import java.io.Serializable;
 
 /**
- * Event which gets fired when the {@link User } got changed.
+ * Event which gets fired when the {@link UserController } got changed.
  *
  * This may be observed by all parties which may e.g. update it's
  * rendering on a language change, etc

@@ -31,15 +31,7 @@
     <filter-mapping>
         <filter-name>LogFilter</filter-name>
         <url-pattern>*.xhtml</url-pattern>
-        <url-pattern>/terminal/*</url-pattern>
     </filter-mapping>
-
-    <!--
-        <filter-mapping>
-            <filter-name>SecurityFilterProxy</filter-name>
-            <url-pattern>/*</url-pattern>
-        </filter-mapping>
-    -->
 
     <!-- this setting is needed to make JSR-303 validation detect empty fields -->
     <context-param>

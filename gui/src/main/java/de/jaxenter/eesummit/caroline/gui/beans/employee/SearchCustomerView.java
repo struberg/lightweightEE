@@ -24,6 +24,9 @@ import de.jaxenter.eesummit.caroline.entities.Customer;
 import de.jaxenter.eesummit.caroline.gui.viewconfig.EmployeePages;
 import org.apache.myfaces.extensions.cdi.core.api.config.view.ViewConfig;
 import org.apache.myfaces.extensions.cdi.core.api.scope.conversation.WindowScoped;
+import org.apache.myfaces.extensions.cdi.jsf.api.Jsf;
+import org.apache.myfaces.extensions.cdi.message.api.MessageContext;
+import org.apache.myfaces.extensions.cdi.message.api.payload.MessageSeverity;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -39,6 +42,7 @@ public class SearchCustomerView implements Serializable
 {
 
     private @Inject CustomerService custSvc;
+    private @Inject @Jsf MessageContext messageContext;
 
     private List<Customer> customers;
 
@@ -81,6 +85,12 @@ public class SearchCustomerView implements Serializable
     public Class<? extends ViewConfig> searchCustomer()
     {
         customers = custSvc.searchCustomers(lastName, firstName);
+
+        if (customers == null || customers.size() == 0)
+        {
+            messageContext.message().text("{nothing_found}").
+                    payload(MessageSeverity.INFO).add();
+        }
 
         return null;
     }

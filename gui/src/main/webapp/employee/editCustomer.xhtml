@@ -18,7 +18,7 @@
 
     <ui:define name="content">
         <h:form>
-            <div id="overview">
+            <div>
                 <h1>Employee - Edit Customer</h1>
                 <h:panelGroup>
                     <fieldset>
@@ -81,6 +81,7 @@
                             <li>
                                 <h:commandButton value="#{txt.save}" action="#{editCustomer.saveCustomer}"/>
                                 <h:commandButton value="Reset Password" action="#{editCustomer.resetPassword}" rendered="#{editCustomer.edit}"/>
+                                <h:commandLink value="Back" action="searchCustomer" />
                             </li>
                         </ol>
                     </fieldset>

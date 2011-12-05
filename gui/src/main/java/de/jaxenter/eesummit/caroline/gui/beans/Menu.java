@@ -51,7 +51,8 @@ public class Menu implements Serializable
     private String servletPath;
 
     private @Inject MenuService menuSvc;
-    private @Inject User usr;
+    private @Inject
+    UserController usr;
     private @Inject @Jsf MessageContext messageContext;
 
 

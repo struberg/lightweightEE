@@ -35,14 +35,15 @@ import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.util.Locale;
 
 /**
  * Backing bean which represents a user.
  * @author <a href="mailto:struberg@yahoo.de">Mark Struberg</a>
  */
 @SessionScoped
-@Named
-public class User implements Serializable
+@Named("user")
+public class UserController implements Serializable
 {
     private boolean loggedIn = false;
 
@@ -55,6 +56,9 @@ public class User implements Serializable
 
     private String login;
     private String password;
+
+    /** could change dynamically */
+    private Locale locale = Locale.GERMAN;
 
 
     private @Inject @Jsf MessageContext messageContext;
@@ -122,7 +126,6 @@ public class User implements Serializable
 
             if (usr instanceof Customer)
             {
-                Customer c = (Customer) usr;
                 customer = true;
                 admin = false;
             }
@@ -212,4 +215,8 @@ public class User implements Serializable
         return null;
     }
 
+    public Locale getLocale()
+    {
+        return locale;
+    }
 }
