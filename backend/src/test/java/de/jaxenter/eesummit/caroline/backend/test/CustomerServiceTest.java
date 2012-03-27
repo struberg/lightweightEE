@@ -34,7 +34,7 @@ import javax.persistence.Query;
 /**
  * @author <a href="mailto:struberg@yahoo.de">Mark Struberg</a>
  */
-public class CustomerServiceTest extends CarolineTest
+public class CustomerServiceTest extends CdiContainerTest
 {
     private @Inject CustomerService custSvc;
     private @Inject UserService usrSvc;

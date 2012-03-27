@@ -64,9 +64,9 @@
             </plugin>
 
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
+                <groupId>org.apache.openjpa</groupId>
                 <artifactId>openjpa-maven-plugin</artifactId>
-                <version>1.2</version>
+                <version>${openjpa.version}</version>
                 <configuration>
                     <includes>
                         de/jaxenter/eesummit/caroline/entities/*
@@ -97,11 +97,7 @@
                 </executions>
 
                 <dependencies>
-                    <dependency>
-                        <groupId>org.apache.openjpa</groupId>
-                        <artifactId>openjpa</artifactId>
-                        <version>${openjpa.version}</version>
-                    </dependency>
+
                     <dependency>
                         <groupId>net.sourceforge.cobertura</groupId>
                         <artifactId>cobertura</artifactId>

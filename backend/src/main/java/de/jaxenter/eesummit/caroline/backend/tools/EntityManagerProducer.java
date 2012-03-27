@@ -23,7 +23,8 @@ import javax.enterprise.inject.Default;
 import javax.enterprise.inject.Disposes;
 import javax.enterprise.inject.Produces;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceUnit;
 
 /**
  * @author <a href="mailto:struberg@yahoo.de">Mark Struberg</a>
@@ -31,15 +32,15 @@ import javax.persistence.PersistenceContext;
 public class EntityManagerProducer
 {
 
-    @PersistenceContext(unitName = "CaroLine")
-    private EntityManager entityManager;
+    @PersistenceUnit(unitName = "CaroLine")
+    private EntityManagerFactory entityManagerFactory;
 
     @Produces
     @Default
     @RequestScoped
     public EntityManager createEntityManager()
     {
-        return entityManager;
+        return entityManagerFactory.createEntityManager();
     }
 
     public void dispose(@Disposes @Default EntityManager entityManager)
@@ -53,7 +54,7 @@ public class EntityManagerProducer
     @RequestScoped
     public EntityManager createTransactionAwareEntityManager()
     {
-        return entityManager;
+        return entityManagerFactory.createEntityManager();
     }
 
     public void disposeTransactionAware(@Disposes @TransactionAware EntityManager entityManager)

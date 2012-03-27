@@ -34,7 +34,7 @@ import javax.persistence.Query;
 /**
  * @author <a href="mailto:struberg@yahoo.de">Mark Struberg</a>
  */
-public class EmployeeServiceTest extends CarolineTest
+public class EmployeeServiceTest extends CdiContainerTest
 {
     public static final String TEST_PREFIX = "TEST_EMP_";
 

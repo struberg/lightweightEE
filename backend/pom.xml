@@ -17,6 +17,10 @@
         legacy system connectors.
     </description>
 
+    <properties>
+        <deltaspike.version>0.2-incubating-SNAPSHOT</deltaspike.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>de.jaxenter.eesummit.caroline</groupId>
@@ -27,6 +31,19 @@
             <groupId>de.jaxenter.eesummit.caroline</groupId>
             <artifactId>util</artifactId>
             <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.deltaspike.cdictrl</groupId>
+            <artifactId>deltaspike-cdictrl-api</artifactId>
+            <version>${deltaspike.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.deltaspike.cdictrl</groupId>
+            <artifactId>deltaspike-cdictrl-owb</artifactId>
+            <version>${deltaspike.version}</version>
+            <scope>test</scope>
         </dependency>
 
 

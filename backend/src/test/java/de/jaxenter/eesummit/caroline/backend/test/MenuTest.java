@@ -34,7 +34,7 @@ import javax.persistence.Query;
  *
  * @author <a href="mailto:struberg@yahoo.de">Mark Struberg</a>
  */
-public class MenuTest extends CarolineTest
+public class MenuTest extends CdiContainerTest
 {
     private @Inject MenuService menuSvc;
     private @Inject MenuAdminService menuAdminSvc;
