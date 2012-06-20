@@ -9,8 +9,9 @@ import javax.enterprise.inject.spi.InjectionTarget;
 
 import org.apache.deltaspike.cdise.api.CdiContainer;
 import org.apache.deltaspike.cdise.api.CdiContainerLoader;
-import org.apache.myfaces.extensions.cdi.core.api.projectstage.ProjectStage;
-import org.apache.myfaces.extensions.cdi.core.impl.projectstage.ProjectStageProducer;
+import org.apache.deltaspike.core.api.projectstage.ProjectStage;
+
+import org.apache.deltaspike.core.util.ProjectStageProducer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.AfterMethod;
@@ -28,7 +29,9 @@ import org.testng.annotations.BeforeMethod;
 public abstract class CdiContainerTest {
     private static Logger log = LoggerFactory.getLogger(CdiContainerTest.class);
 
-    private static CdiContainer cdiContainer;
+    protected static CdiContainer cdiContainer;
+
+    // nice to know, since testng executes tests in parallel.
     protected static int containerRefCount = 0;
 
     protected ProjectStage runInProjectStage() {

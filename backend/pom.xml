@@ -17,10 +17,6 @@
         legacy system connectors.
     </description>
 
-    <properties>
-        <deltaspike.version>0.2-incubating-SNAPSHOT</deltaspike.version>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>de.jaxenter.eesummit.caroline</groupId>
@@ -48,17 +44,14 @@
 
 
         <dependency>
-            <groupId>org.apache.myfaces.extensions.cdi.modules</groupId>
-            <artifactId>myfaces-extcdi-jpa1-module-api</artifactId>
+            <groupId>org.apache.deltaspike.modules</groupId>
+            <artifactId>deltaspike-jpa-module-api</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.apache.myfaces.extensions.cdi.modules</groupId>
-            <artifactId>myfaces-extcdi-jpa1-module-impl</artifactId>
+            <groupId>org.apache.deltaspike.modules</groupId>
+            <artifactId>deltaspike-jpa-module-impl</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.apache.geronimo.specs</groupId>
-            <artifactId>geronimo-servlet_2.5_spec</artifactId>
-        </dependency>
+
     </dependencies>
 
     <build>

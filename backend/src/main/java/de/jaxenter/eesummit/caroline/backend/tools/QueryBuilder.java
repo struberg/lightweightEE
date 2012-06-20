@@ -40,26 +40,17 @@ public class QueryBuilder
     {
         Validate.notNull(initial);
         sb = new StringBuilder(initial);
-    }
 
-    /**
-     * ct with initial query part and boolean if a WHERE already got added.
-     * @param initial
-     * @param whereUsed <code>true</code> if the initial query already contains a WHERE
-     */
-    public QueryBuilder(String initial, boolean whereUsed)
-    {
-        Validate.notNull(initial);
-        sb = new StringBuilder(initial);
-        this.whereUsed = whereUsed;
-        this.firstAnd = !whereUsed;
+        // check if the initial String already contains a 'where clause'
+        whereUsed = (initial + " ").toUpperCase().contains(" WHERE ");
+        firstAnd = !whereUsed;
     }
 
     /**
      * add "AND" query part with parameter <br/>
      * e.g. "u.name = :name", "name" , username
      */
-    public void addQueryPart(String queryPart, String paramName, Object paramValue)
+    public QueryBuilder addQueryPart(String queryPart, String paramName, Object paramValue)
     {
         Validate.isTrue(!finished);
         Validate.notEmpty(queryPart);
@@ -67,12 +58,14 @@ public class QueryBuilder
         Validate.notNull(paramValue);
         addQueryPart(queryPart);
         parms.put(paramName, paramValue);
+
+        return this;
     }
 
     /**
      * add "AND" query part without parameter
      */
-    public void addQueryPart(String queryPart)
+    public QueryBuilder addQueryPart(String queryPart)
     {
         Validate.isTrue(!finished);
         Validate.notEmpty(queryPart);
@@ -86,11 +79,13 @@ public class QueryBuilder
         {
             firstAnd = false;
         }
-        else if (!queryPart.contains("ORDER BY"))
+        else if (!queryPart.toUpperCase().trim().startsWith("ORDER BY"))
         {
             sb.append(" AND");
         }
         sb.append(' ').append(queryPart);
+
+        return this;
     }
 
     /**

@@ -20,7 +20,7 @@
 
         <properties>
             <property name="openjpa.ConnectionDriverName"
-                      value="org.apache.myfaces.extensions.cdi.jpa.impl.datasource.ConfigurableDataSource"/>
+                      value="org.apache.deltaspike.jpa.impl.datasource.ConfigurableDataSource"/>
             <property name="openjpa.ConnectionProperties"
                       value="connectionId=core"/>
 

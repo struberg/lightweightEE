@@ -26,22 +26,13 @@
         </dependency>
 
         <dependency>
-            <groupId>org.apache.myfaces.extensions.cdi.core</groupId>
-            <artifactId>myfaces-extcdi-core-api</artifactId>
+            <groupId>org.apache.deltaspike.modules</groupId>
+            <artifactId>deltaspike-jpa-module-api</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.apache.myfaces.extensions.cdi.core</groupId>
-            <artifactId>myfaces-extcdi-core-impl</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.myfaces.extensions.cdi.modules</groupId>
-            <artifactId>myfaces-extcdi-jpa1-module-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.myfaces.extensions.cdi.modules</groupId>
-            <artifactId>myfaces-extcdi-jpa1-module-impl</artifactId>
-            <scope>provided</scope>
+            <groupId>org.apache.deltaspike.modules</groupId>
+            <artifactId>deltaspike-jpa-module-impl</artifactId>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 

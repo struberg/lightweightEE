@@ -22,7 +22,8 @@ package de.jaxenter.eesummit.caroline.backend.impl;
 import de.jaxenter.eesummit.caroline.backend.api.CustomerService;
 import de.jaxenter.eesummit.caroline.backend.tools.QueryBuilder;
 import de.jaxenter.eesummit.caroline.entities.Customer;
-import org.apache.myfaces.extensions.cdi.jpa.api.Transactional;
+import org.apache.deltaspike.jpa.api.Transactional;
+
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;

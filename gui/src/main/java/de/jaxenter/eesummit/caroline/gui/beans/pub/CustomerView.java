@@ -20,6 +20,7 @@ package de.jaxenter.eesummit.caroline.gui.beans.pub;
 
 import de.jaxenter.eesummit.caroline.backend.api.CustomerService;
 import de.jaxenter.eesummit.caroline.entities.Customer;
+import de.jaxenter.eesummit.caroline.entities.Tyre;
 import de.jaxenter.eesummit.caroline.gui.beans.UserController;
 import org.apache.myfaces.extensions.cdi.jsf.api.Jsf;
 import org.apache.myfaces.extensions.cdi.message.api.MessageContext;
@@ -28,6 +29,8 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Backing bean for the public customer view.
@@ -43,12 +46,18 @@ public class CustomerView implements Serializable {
 
     private @Inject @Jsf MessageContext messageContext;
 
+    private List<Tyre> tyres = new ArrayList<Tyre>();
 
-    private Integer saldoCents;
 
     public Customer getCustomer() {
         return usr.getCustomer();
     }
 
+    public List<Tyre> getTyres() {
+        return tyres;
+    }
 
+    public void setTyres(List<Tyre> tyres) {
+        this.tyres = tyres;
+    }
 }

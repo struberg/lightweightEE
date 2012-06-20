@@ -18,18 +18,22 @@
  */
 package de.jaxenter.eesummit.caroline.backend.config;
 
-import org.apache.myfaces.extensions.cdi.core.api.projectstage.ProjectStage;
-import org.apache.myfaces.extensions.cdi.jpa.api.datasource.DataSourceConfig;
+import org.apache.deltaspike.core.api.projectstage.ProjectStage;
+import org.apache.deltaspike.jpa.api.datasource.DataSourceConfig;
 
+import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
+
 import java.util.Properties;
 
 /**
  * @author <a href="mailto:struberg@yahoo.de">Mark Struberg</a> 
  */
+@Dependent
 public class CaroLineDataSourceConfig implements DataSourceConfig
 {
-    private @Inject ProjectStage projectStage;
+    private @Inject
+    ProjectStage projectStage;
 
     @Override
     public String getJndiResourceName(String connectionId)

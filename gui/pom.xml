@@ -17,7 +17,7 @@
     </description>
 
     <properties>
-        <jetty-version>6.1.22</jetty-version>
+        <tomcat.version>7.0.27</tomcat.version>
         <projectStage>Development</projectStage>
     </properties>
 
@@ -33,7 +33,7 @@
     <dependencies>
         <dependency>
             <groupId>org.apache.geronimo.specs</groupId>
-            <artifactId>geronimo-servlet_2.5_spec</artifactId>
+            <artifactId>geronimo-servlet_3.0_spec</artifactId>
         </dependency>
 
         <dependency>
@@ -110,42 +110,21 @@
 
     <profiles>
         <profile>
-            <id>tomcat</id>
+            <id>tc</id>
             <build>
                 <plugins>
                     <plugin>
-                        <groupId>org.apache.tomcat</groupId>
-                        <artifactId>tomcat-maven-plugin</artifactId>
-                        <version>1.1</version>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-
-        <profile>
-            <id>jetty</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.mortbay.jetty</groupId>
-                        <artifactId>maven-jetty-plugin</artifactId>
-                        <version>${jetty-version}</version>
+                        <groupId>org.apache.tomcat.maven</groupId>
+                        <artifactId>tomcat7-maven-plugin</artifactId>
+                        <version>2.0-beta-1</version>
                         <configuration>
-                            <contextPath>/${build.finalName}</contextPath>
-                            <scanIntervalSeconds>10</scanIntervalSeconds>
+                            <path>/${build.finalName}</path>
                             <systemProperties>
-                                <systemProperty>
-                                    <!-- legacy MyFaces style -->
-                                    <name>org.apache.myfaces.PROJECT_STAGE</name>
-                                    <value>${projectStage}</value>
-                                </systemProperty>
-                                <systemProperty>
-                                    <!-- new 'defacto standars' style -->
-                                    <name>faces.PROJECT_STAGE</name>
-                                    <value>${projectStage}</value>
-                                </systemProperty>
+                                <org.apache.myfaces.PROJECT_STAGE>${projectStage}</org.apache.myfaces.PROJECT_STAGE>
+                                <faces.PROJECT_STAGE>${projectStage}</faces.PROJECT_STAGE>
                             </systemProperties>
                         </configuration>
+
                         <dependencies>
                             <dependency>
                                 <groupId>de.odysseus.juel</groupId>
@@ -158,34 +137,131 @@
                                 <version>${juel.version}</version>
                             </dependency>
                             <dependency>
-                                <groupId>org.mortbay.jetty</groupId>
-                                <artifactId>jsp-2.1-jetty</artifactId>
-                                <version>${jetty-version}</version>
-                                <type>jar</type>
-                                <scope>runtime</scope>
-                                <optional>true</optional>
+                                <groupId>de.odysseus.juel</groupId>
+                                <artifactId>juel-spi</artifactId>
+                                <version>${juel.version}</version>
                             </dependency>
                             <dependency>
-                                <groupId>javax.servlet</groupId>
+                                <groupId>jstl</groupId>
                                 <artifactId>jstl</artifactId>
                                 <version>1.2</version>
                             </dependency>
+
+                            <!--
+                                tomcat7-maven-plugin dependencies
+                                We need to add those for specifying the version
+                            -->
+                            <dependency>
+                                <groupId>org.apache.tomcat.embed</groupId>
+                                <artifactId>tomcat-embed-core</artifactId>
+                                <version>${tomcat.version}</version>
+                            </dependency>
+                            <dependency>
+                                <groupId>org.apache.tomcat</groupId>
+                                <artifactId>tomcat-util</artifactId>
+                                <version>${tomcat.version}</version>
+                            </dependency>
+                            <dependency>
+                                <groupId>org.apache.tomcat</groupId>
+                                <artifactId>tomcat-coyote</artifactId>
+                                <version>${tomcat.version}</version>
+                            </dependency>
+                            <dependency>
+                                <groupId>org.apache.tomcat</groupId>
+                                <artifactId>tomcat-api</artifactId>
+                                <version>${tomcat.version}</version>
+                            </dependency>
+
+                            <dependency>
+                                <groupId>org.apache.tomcat</groupId>
+                                <artifactId>tomcat-jdbc</artifactId>
+                                <version>${tomcat.version}</version>
+                            </dependency>
+
+                            <dependency>
+                                <groupId>org.apache.tomcat</groupId>
+                                <artifactId>tomcat-dbcp</artifactId>
+                                <version>${tomcat.version}</version>
+                            </dependency>
+
+                            <dependency>
+                                <groupId>org.apache.tomcat</groupId>
+                                <artifactId>tomcat-servlet-api</artifactId>
+                                <version>${tomcat.version}</version>
+                            </dependency>
+
+                            <dependency>
+                                <groupId>org.apache.tomcat</groupId>
+                                <artifactId>tomcat-jsp-api</artifactId>
+                                <version>${tomcat.version}</version>
+                            </dependency>
+
+                            <dependency>
+                                <groupId>org.apache.tomcat</groupId>
+                                <artifactId>tomcat-jasper</artifactId>
+                                <version>${tomcat.version}</version>
+                            </dependency>
+
+                            <dependency>
+                                <groupId>org.apache.tomcat</groupId>
+                                <artifactId>tomcat-jasper-el</artifactId>
+                                <version>${tomcat.version}</version>
+                            </dependency>
+
+                            <dependency>
+                                <groupId>org.apache.tomcat</groupId>
+                                <artifactId>tomcat-el-api</artifactId>
+                                <version>${tomcat.version}</version>
+                            </dependency>
+
+                            <dependency>
+                                <groupId>org.apache.tomcat</groupId>
+                                <artifactId>tomcat-catalina</artifactId>
+                                <version>${tomcat.version}</version>
+                            </dependency>
+
+                            <dependency>
+                                <groupId>org.apache.tomcat</groupId>
+                                <artifactId>tomcat-tribes</artifactId>
+                                <version>${tomcat.version}</version>
+                            </dependency>
+
+                            <dependency>
+                                <groupId>org.apache.tomcat</groupId>
+                                <artifactId>tomcat-catalina-ha</artifactId>
+                                <version>${tomcat.version}</version>
+                            </dependency>
+
+                            <dependency>
+                                <groupId>org.apache.tomcat</groupId>
+                                <artifactId>tomcat-annotations-api</artifactId>
+                                <version>${tomcat.version}</version>
+                            </dependency>
+
+                            <!-- tomcat i18n too ?? -->
+
+                            <!-- not sure we need that -->
+                            <dependency>
+                                <groupId>org.apache.tomcat</groupId>
+                                <artifactId>tomcat-juli</artifactId>
+                                <version>${tomcat.version}</version>
+                            </dependency>
+
+                            <dependency>
+                                <groupId>org.apache.tomcat.embed</groupId>
+                                <artifactId>tomcat-embed-logging-juli</artifactId>
+                                <version>${tomcat.version}</version>
+                            </dependency>
+                            <dependency>
+                                <groupId>org.apache.tomcat.embed</groupId>
+                                <artifactId>tomcat-embed-logging-log4j</artifactId>
+                                <version>${tomcat.version}</version>
+                            </dependency>
+
                         </dependencies>
                     </plugin>
                 </plugins>
             </build>
-            <dependencies>
-                <dependency>
-                    <groupId>de.odysseus.juel</groupId>
-                    <artifactId>juel-api</artifactId>
-                    <version>${juel.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>de.odysseus.juel</groupId>
-                    <artifactId>juel-impl</artifactId>
-                    <version>${juel.version}</version>
-                </dependency>
-            </dependencies>
         </profile>
 
     </profiles>

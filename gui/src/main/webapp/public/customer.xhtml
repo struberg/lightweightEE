@@ -10,28 +10,11 @@
 
     <ui:define name="content">
         <h:form>
-            <div id="topup">
-                <h1>Konfiguration</h1>
-
-                <p>Tageslimit:
-                    <h:selectOneMenu name="floorvalue" value="#{customerView.customer.dayLimit}">
-                        <f:selectItem itemLabel="20 EUR" itemValue="2000"/>
-                        <f:selectItem itemLabel="30 EUR" itemValue="3000"/>
-                        <f:selectItem itemLabel="50 EUR" itemValue="5000"/>
-                    </h:selectOneMenu>
-                </p>
-
-                <p>Im Moment erfolgt die Abbuchung über einen Einziehungsauftrag.</p>
-
-                <p>
-                    <h:commandButton action="#{customerView.storePreferences}" value="Einstellungen Speichern"/>
-                </p>
-            </div>
-
             <div id="overview">
-                <h1>Kontoübersicht</h1>
+                <h1>#{txt.reifenuebersicht}</h1>
 
-                <h:dataTable id="transactions" value="#{customerView.transactions}" var="trans"
+<!-- TODO
+                <h:dataTable id="tyres" value="#{customerView.tyres}" var="tyre"
                              columnClasses="date, description, credit">
                     <h:column footerClass="date saldo">
                         <f:facet name="header">Datum</f:facet>
@@ -59,6 +42,7 @@
                         </f:facet>
                     </h:column>
                 </h:dataTable>
+-->
             </div>
         </h:form>
 

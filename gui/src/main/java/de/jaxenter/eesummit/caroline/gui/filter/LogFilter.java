@@ -19,8 +19,6 @@
 package de.jaxenter.eesummit.caroline.gui.filter;
 
 import org.apache.commons.lang.Validate;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -31,8 +29,13 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /*
@@ -68,7 +71,7 @@ import java.util.List;
 public class LogFilter implements Filter
 {
 
-    private static final Logger logger = LoggerFactory.getLogger(LogFilter.class);
+    private static final Logger logger = Logger.getLogger(LogFilter.class.getName());
 
     private List<String> dropUrls = null;
 
@@ -78,6 +81,34 @@ public class LogFilter implements Filter
     private boolean ndcEnabled;
     private boolean ndcSession;
     private boolean ndcAddress;
+
+    @Override
+    public void init(FilterConfig config) throws ServletException
+    {
+
+        dropUrls = new ArrayList<String>();
+        int idx = 0;
+        String dropUrlParam;
+        while ((dropUrlParam = config.getInitParameter("dropurl." + idx)) != null)
+        {
+            logger.info("adding dropUrl " + idx + ": " + dropUrlParam);
+            dropUrls.add(dropUrlParam);
+            idx++;
+        }
+
+        String ndcParam = config.getInitParameter("ndc");
+
+        ndcEnabled = false;
+        if (ndcParam != null)
+        {
+            logger.info("NDC enabled: " + ndcParam);
+            ndcEnabled = true;
+            ndcSession = ndcParam.indexOf("session") != -1;
+            ndcAddress = ndcParam.indexOf("address") != -1;
+        }
+
+    }
+
 
 
     @Override
@@ -122,6 +153,8 @@ public class LogFilter implements Filter
                 }
             }
 
+            HttpSession session = req.getSession(false); // do not create
+
             if (!dropped)
             {
                 if (ndcEnabled)
@@ -140,7 +173,6 @@ public class LogFilter implements Filter
                     }
                     if (ndcSession)
                     {
-                        HttpSession session = req.getSession(false); // do not create
                         if (session != null)
                         {
                             sessionId = session.getId();
@@ -155,7 +187,26 @@ public class LogFilter implements Filter
                 start = System.currentTimeMillis();
             }
 
-            filterChain.doFilter(request, response);
+            if (session != null && !dropped)
+            {
+                synchronized (session)
+                {
+                    long syncTime = System.nanoTime() - start;
+                    if (syncTime > 10000)
+                    {
+                        // heuristic 10us threshold to detect if sync caused delay
+                        logger.log(Level.WARNING, "sync delayed for " + formatNanos(syncTime) + "ms");
+                    }
+
+                    // continue with the filter chain
+                    filterChain.doFilter(request, response);
+                }
+            }
+            else
+            {
+                // continue with the filter chain
+                filterChain.doFilter(request, response);
+            }
         }
         catch (IOException e)
         {
@@ -199,12 +250,12 @@ public class LogFilter implements Filter
                     msg.append(" msg=").append(throwable.getMessage());
                     if (name.equals("ViewExpiredException") || name.equals("ClientAbortException"))
                     {
-                        logger.warn(msg.toString());
+                        logger.log(Level.WARNING, msg.toString());
                     }
                     else
                     {
                         msg.append(" UA=").append(agent);  // also log agent in error case
-                        logger.error(msg.toString());
+                        logger.log(Level.WARNING, msg.toString());
                     }
                 }
             }
@@ -236,31 +287,11 @@ public class LogFilter implements Filter
         return msg;
     }
 
-    @Override
-    public void init(FilterConfig config) throws ServletException
+    private String formatNanos(long nanos)
     {
-
-        dropUrls = new ArrayList<String>();
-        int idx = 0;
-        String dropUrlParam;
-        while ((dropUrlParam = config.getInitParameter("dropurl." + idx)) != null)
-        {
-            logger.info("adding dropUrl " + idx + ": " + dropUrlParam);
-            dropUrls.add(dropUrlParam);
-            idx++;
-        }
-
-        String ndcParam = config.getInitParameter("ndc");
-
-        ndcEnabled = false;
-        if (ndcParam != null)
-        {
-            logger.info("NDC enabled: " + ndcParam);
-            ndcEnabled = true;
-            ndcSession = ndcParam.indexOf("session") != -1;
-            ndcAddress = ndcParam.indexOf("address") != -1;
-        }
-
+        // show millis with 3 digits (i.e. us)
+        return new DecimalFormat("#.###", DecimalFormatSymbols.getInstance(Locale.ENGLISH)).format(nanos / 1000000.0);
     }
+
 
 }

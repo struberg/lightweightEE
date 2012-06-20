@@ -116,6 +116,13 @@ public class UserController implements Serializable
 
     private void authenticate()
     {
+        // first reset all values
+        loggedIn = false;
+        customer = false;
+        admin    = false;
+        viewName = null;
+
+        // perform the actual login
         usr = usrSvc.login(login, password);
 
         if (usr != null)
@@ -135,14 +142,6 @@ public class UserController implements Serializable
                 admin = emp.isAdmin();
                 employee = true;
             }
-        }
-        else
-        {
-            // reset all values
-            loggedIn = false;
-            customer = false;
-            admin    = false;
-            viewName = null;
         }
     }
 

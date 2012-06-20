@@ -22,7 +22,7 @@ package de.jaxenter.eesummit.caroline.backend.impl;
 import de.jaxenter.eesummit.caroline.backend.api.UserService;
 import de.jaxenter.eesummit.caroline.entities.CaroLineUser;
 import org.apache.commons.lang.Validate;
-import org.apache.myfaces.extensions.cdi.jpa.api.Transactional;
+import org.apache.deltaspike.jpa.api.Transactional;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;

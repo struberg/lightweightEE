@@ -1,14 +1,15 @@
 package de.jaxenter.eesummit.caroline.utils;
 
-import org.apache.myfaces.extensions.cdi.jpa.impl.transaction.TransactionalInterceptorStrategy;
-
 import javax.enterprise.context.Dependent;
 import javax.enterprise.inject.Specializes;
 import javax.interceptor.InvocationContext;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+
 import java.util.Arrays;
 import java.util.logging.Logger;
+
+import org.apache.deltaspike.jpa.impl.transaction.ResourceLocalPersistenceStrategy;
 
 
 /**
@@ -16,7 +17,7 @@ import java.util.logging.Logger;
  */
 @Dependent
 @Specializes
-public class CaroLinePersistenceStrategy extends TransactionalInterceptorStrategy
+public class CaroLinePersistenceStrategy extends ResourceLocalPersistenceStrategy
 {
     /** 1 ms  in nanoTime ticks */
     final static long LONG_MILLISECOND = 1000000L;

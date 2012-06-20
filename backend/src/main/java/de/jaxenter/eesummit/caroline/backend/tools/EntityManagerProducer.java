@@ -18,22 +18,24 @@
  */
 package de.jaxenter.eesummit.caroline.backend.tools;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Default;
 import javax.enterprise.inject.Disposes;
 import javax.enterprise.inject.Produces;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.persistence.PersistenceUnit;
 
 /**
  * @author <a href="mailto:struberg@yahoo.de">Mark Struberg</a>
  */
+@ApplicationScoped
 public class EntityManagerProducer
 {
 
-    @PersistenceUnit(unitName = "CaroLine")
-    private EntityManagerFactory entityManagerFactory;
+    private EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("CaroLine");
 
     @Produces
     @Default
