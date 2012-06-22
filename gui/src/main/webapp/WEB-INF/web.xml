@@ -78,9 +78,12 @@
         <param-name>org.apache.myfaces.ERROR_HANDLING</param-name>
         <param-value>true</param-value>
     </context-param>
-
     <error-page>
         <error-code>500</error-code>
+        <location>/redirect?dest=public/errorPage.xhtml</location>
+    </error-page>
+    <error-page>
+        <exception-type>javax.faces.application.ViewExpiredException</exception-type>
         <location>/redirect?dest=public/errorPage.xhtml</location>
     </error-page>
     <error-page>
