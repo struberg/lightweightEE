@@ -23,7 +23,7 @@ import de.jaxenter.eesummit.caroline.entities.Employee;
 import de.jaxenter.eesummit.caroline.entities.MenuItem;
 import de.jaxenter.eesummit.caroline.backend.api.MenuService;
 import de.jaxenter.eesummit.caroline.entities.CaroLineUser;
-import org.apache.deltaspike.jpa.api.Transactional;
+import org.apache.deltaspike.jpa.api.transaction.Transactional;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;

@@ -21,7 +21,7 @@ package de.jaxenter.eesummit.caroline.backend.impl;
 
 import de.jaxenter.eesummit.caroline.backend.api.EmployeeService;
 import de.jaxenter.eesummit.caroline.entities.Employee;
-import org.apache.deltaspike.jpa.api.Transactional;
+import org.apache.deltaspike.jpa.api.transaction.Transactional;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;

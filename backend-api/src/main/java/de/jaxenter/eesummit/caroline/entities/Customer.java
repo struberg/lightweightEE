@@ -21,6 +21,7 @@ package de.jaxenter.eesummit.caroline.entities;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -49,6 +50,7 @@ public class Customer extends CaroLineUser
     private StorageSlot storageSlot;
 
     @OneToMany
+    @JoinColumn(name = "CUSTOMER_ID")
     private List<Tyre> mountedTyres;
 
 

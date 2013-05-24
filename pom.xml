@@ -22,17 +22,17 @@
     <properties>
         <!-- required for maven2 -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <owb.version>1.1.4</owb.version>
-        <myfaces.version>2.1.8</myfaces.version>
-        <openjpa.version>2.2.0</openjpa.version>
-        <bval.version>0.3-incubating</bval.version>
+        <owb.version>1.2.0</owb.version>
+        <myfaces.version>2.1.11</myfaces.version>
+        <openjpa.version>2.2.2</openjpa.version>
+        <bval.version>0.5</bval.version>
         <el.version>2.2</el.version>
         <extcdi.version>1.0.5</extcdi.version>
-        <deltaspike.version>0.3-incubating-SNAPSHOT</deltaspike.version>
+        <deltaspike.version>0.4-incubating-SNAPSHOT</deltaspike.version>
         <mysql-connector.version>5.1.18</mysql-connector.version>
         <juel.version>2.2.4</juel.version>
         <testng.version>6.4</testng.version>
-        <arquillian.version>1.0.0.Final</arquillian.version>
+        <arquillian.version>1.0.2.Final</arquillian.version>
 
         <!-- needed for the database support -->
         <database.driver.name>com.mysql.jdbc.Driver</database.driver.name>
@@ -196,11 +196,6 @@
             <artifactId>openwebbeans-resource</artifactId>
             <version>${owb.version}</version>
         </dependency>
-        <dependency>
-            <groupId>javassist</groupId>
-            <artifactId>javassist</artifactId>
-            <version>3.12.0.GA</version>
-        </dependency>
 
 
         <!-- for JSR-303 Bean Validation -->
@@ -256,6 +251,12 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>${mysql-connector.version}</version>
             <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.1</version>
         </dependency>
 
         <!-- for unit testing -->

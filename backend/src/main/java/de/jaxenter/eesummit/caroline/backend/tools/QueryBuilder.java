@@ -1,7 +1,7 @@
 package de.jaxenter.eesummit.caroline.backend.tools;
 
 
-import org.apache.commons.lang.Validate;
+import org.apache.commons.lang3.Validate;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.HashMap;

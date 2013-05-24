@@ -18,9 +18,6 @@
  */
 package de.jaxenter.eesummit.caroline.gui.redirect;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import javax.enterprise.context.NonexistentConversationException;
 import javax.faces.application.ViewExpiredException;
 import javax.servlet.ServletConfig;
@@ -31,6 +28,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Logger;
 
 /**
  * <p>Sadly we need to do the redirect via a servlet because
@@ -60,7 +58,7 @@ public class RedirectServlet extends HttpServlet {
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        log = LoggerFactory.getLogger(this.getClass());
+        log = Logger.getLogger(getClass().getName());
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -81,8 +79,6 @@ public class RedirectServlet extends HttpServlet {
         Object typeObj = request.getAttribute("javax.servlet.error.exception_type");
         String type = typeObj != null ? ((Class<? extends Throwable>) typeObj).getName() : null;
 
-//        Throwable throwable = (Throwable) request.getAttribute("javax.servlet.error.exception");  TODO unused?
-
         String uri = (String) request.getAttribute("javax.servlet.error.request_uri");
 
         StringBuilder msg = new StringBuilder();
@@ -92,7 +88,7 @@ public class RedirectServlet extends HttpServlet {
         msg.append(" error=").append(message);
 
         // it's important to know what resources are missing!
-        log.warn(msg.toString());
+        log.warning(msg.toString());
 
         // help us from getting into cyclic redirects
         String alreadyRedirected = request.getParameter(REDICRECT_DONE_PARAM);

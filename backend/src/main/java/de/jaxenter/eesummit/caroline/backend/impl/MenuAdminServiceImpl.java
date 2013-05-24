@@ -20,7 +20,7 @@ package de.jaxenter.eesummit.caroline.backend.impl;
 
 import de.jaxenter.eesummit.caroline.backend.api.MenuAdminService;
 import de.jaxenter.eesummit.caroline.entities.MenuItem;
-import org.apache.deltaspike.jpa.api.Transactional;
+import org.apache.deltaspike.jpa.api.transaction.Transactional;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Typed;

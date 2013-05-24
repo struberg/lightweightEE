@@ -21,8 +21,8 @@ package de.jaxenter.eesummit.caroline.backend.impl;
 
 import de.jaxenter.eesummit.caroline.backend.api.UserService;
 import de.jaxenter.eesummit.caroline.entities.CaroLineUser;
-import org.apache.commons.lang.Validate;
-import org.apache.deltaspike.jpa.api.Transactional;
+import org.apache.commons.lang3.Validate;
+import org.apache.deltaspike.jpa.api.transaction.Transactional;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;

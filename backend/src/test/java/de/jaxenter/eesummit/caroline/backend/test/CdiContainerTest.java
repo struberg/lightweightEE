@@ -12,8 +12,6 @@ import org.apache.deltaspike.cdise.api.CdiContainerLoader;
 import org.apache.deltaspike.core.api.projectstage.ProjectStage;
 
 import org.apache.deltaspike.core.util.ProjectStageProducer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
@@ -27,7 +25,6 @@ import org.testng.annotations.BeforeMethod;
  * @author <a href="mailto:struberg@yahoo.de">Mark Struberg</a>
  */
 public abstract class CdiContainerTest {
-    private static Logger log = LoggerFactory.getLogger(CdiContainerTest.class);
 
     protected static CdiContainer cdiContainer;
 

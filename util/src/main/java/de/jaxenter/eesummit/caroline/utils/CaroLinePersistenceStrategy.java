@@ -9,7 +9,7 @@ import javax.validation.ConstraintViolationException;
 import java.util.Arrays;
 import java.util.logging.Logger;
 
-import org.apache.deltaspike.jpa.impl.transaction.ResourceLocalPersistenceStrategy;
+import org.apache.deltaspike.jpa.impl.transaction.ResourceLocalTransactionStrategy;
 
 
 /**
@@ -17,7 +17,7 @@ import org.apache.deltaspike.jpa.impl.transaction.ResourceLocalPersistenceStrate
  */
 @Dependent
 @Specializes
-public class CaroLinePersistenceStrategy extends ResourceLocalPersistenceStrategy
+public class CaroLinePersistenceStrategy extends ResourceLocalTransactionStrategy
 {
     /** 1 ms  in nanoTime ticks */
     final static long LONG_MILLISECOND = 1000000L;

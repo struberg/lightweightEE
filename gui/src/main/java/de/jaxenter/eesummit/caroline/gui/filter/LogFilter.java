@@ -18,7 +18,7 @@
  */
 package de.jaxenter.eesummit.caroline.gui.filter;
 
-import org.apache.commons.lang.Validate;
+import org.apache.commons.lang3.Validate;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
