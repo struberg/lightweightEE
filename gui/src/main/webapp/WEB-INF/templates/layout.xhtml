@@ -4,14 +4,10 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.prime.com.tr/ui">
+      xmlns:ds="http://deltaspike.apache.org/jsf">
     <f:view locale="#{user.locale}">
         <ui:insert name="metadata"/>
         <ui:insert name="activeMenu">#{menu.activateMenuItem(activeMenu)}</ui:insert>
-        <h:outputScript library="js" name="windowId.js"/>
-        <script type="text/javascript">
-            assertWindowId()
-        </script>
         <h:head>
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
             <link href="#{resource['images:favicon.ico']}" rel="shortcut icon" type="image/vnd.microsoft.icon"/>
@@ -20,6 +16,7 @@
             <title><h:outputText value="Car ó Line - "/><ui:insert name="title"></ui:insert></title>
         </h:head>
         <h:body>
+            <ds:windowId/>
             <div id="caroline">
                 <div id="home">
                     <div id="mainContainer">

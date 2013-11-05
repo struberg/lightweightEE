@@ -3,12 +3,10 @@ package de.jaxenter.eesummit.caroline.gui.beans.employee;
 
 import de.jaxenter.eesummit.caroline.backend.api.CustomerService;
 import de.jaxenter.eesummit.caroline.entities.Customer;
+import de.jaxenter.eesummit.caroline.gui.msg.CarolineMessages;
 import de.jaxenter.eesummit.caroline.gui.viewconfig.EmployeePages;
-import org.apache.myfaces.extensions.cdi.core.api.config.view.ViewConfig;
-import org.apache.myfaces.extensions.cdi.jsf.api.Jsf;
-import org.apache.myfaces.extensions.cdi.message.api.Message;
-import org.apache.myfaces.extensions.cdi.message.api.MessageContext;
-import org.apache.myfaces.extensions.cdi.message.api.payload.MessageSeverity;
+import org.apache.deltaspike.core.api.config.view.ViewConfig;
+import org.apache.deltaspike.jsf.api.message.JsfMessage;
 
 import javax.enterprise.context.RequestScoped;
 import javax.faces.event.ComponentSystemEvent;
@@ -29,7 +27,7 @@ public class EditCustomerView
     private boolean edit = false;
 
     private @Inject CustomerService customerSvc;
-    private @Inject @Jsf MessageContext messageContext;
+    private @Inject JsfMessage<CarolineMessages> messages;
 
 
     /**
@@ -43,9 +41,7 @@ public class EditCustomerView
             customer = customerSvc.getById(customerId);
             if (customer == null)
             {
-                messageContext.message().text("{customer_doesnt_exist}").
-                        namedArgument("customerId", customerId).
-                        payload(MessageSeverity.ERROR).add();
+                messages.addError().customerDoesNotExist(customerId);
             }
             edit = true;
         }

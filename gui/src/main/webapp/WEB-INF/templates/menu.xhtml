@@ -10,7 +10,9 @@
         <ul>
             <!--@elvariable id="skin" type="java.lang.String"-->
             <c:forEach items="#{menu.topLevelMenu.children}" var="menuItem">
-                <ui:include src="menuItem.xhtml"/>
+                <ui:include src="menuItem.xhtml">
+                    <ui:param name="menuItem" value="#{menuItem}"/>
+                </ui:include>
             </c:forEach>
         </ul>
 </ui:composition>

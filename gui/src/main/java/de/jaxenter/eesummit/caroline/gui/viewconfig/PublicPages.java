@@ -20,24 +20,24 @@ package de.jaxenter.eesummit.caroline.gui.viewconfig;
 
 
 import de.jaxenter.eesummit.caroline.gui.security.CustomerAccessVoter;
-import org.apache.myfaces.extensions.cdi.core.api.config.view.DefaultErrorView;
-import org.apache.myfaces.extensions.cdi.core.api.config.view.ViewConfig;
-import org.apache.myfaces.extensions.cdi.core.api.security.Secured;
-import org.apache.myfaces.extensions.cdi.jsf.api.config.view.Page;
+import org.apache.deltaspike.core.api.config.view.DefaultErrorView;
+import org.apache.deltaspike.core.api.config.view.ViewConfig;
+import org.apache.deltaspike.jsf.api.config.view.View;
+import org.apache.deltaspike.security.api.authorization.Secured;
 
 /**
  * This class contains the {@link ViewConfig}s of all public pages.
  */
-@Page(basePath = "public", navigation = Page.NavigationMode.REDIRECT)
+@View(basePath = "public", navigation = View.NavigationMode.REDIRECT)
 public interface PublicPages extends ViewConfig
 {
 
-    @Page
+    @View
     public class Login extends DefaultErrorView implements PublicPages
     {
     }
 
-    @Page
+    @View
     @Secured(CustomerAccessVoter.class)
     public class Customer implements PublicPages
     {

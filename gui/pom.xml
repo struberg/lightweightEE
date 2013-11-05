@@ -18,7 +18,7 @@
 
     <properties>
         <tomcat.version>7.0.27</tomcat.version>
-        <projectStage>Development</projectStage>
+        <tomee.additional.args></tomee.additional.args>
     </properties>
 
     <repositories>
@@ -35,6 +35,11 @@
             <groupId>org.apache.geronimo.specs</groupId>
             <artifactId>geronimo-servlet_3.0_spec</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.apache.myfaces.core</groupId>
+            <artifactId>myfaces-api</artifactId>
+        </dependency>
+
 
         <dependency>
             <groupId>de.jaxenter.eesummit.caroline</groupId>
@@ -47,60 +52,38 @@
             <scope>runtime</scope>
             <version>${project.version}</version>
         </dependency>
-
         <dependency>
-            <groupId>org.apache.myfaces.extensions.cdi.core</groupId>
-            <artifactId>myfaces-extcdi-core-api</artifactId>
+            <groupId>org.apache.deltaspike.modules</groupId>
+            <artifactId>deltaspike-jsf-module-api</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.apache.myfaces.extensions.cdi.core</groupId>
-            <artifactId>myfaces-extcdi-core-impl</artifactId>
+            <groupId>org.apache.deltaspike.modules</groupId>
+            <artifactId>deltaspike-jsf-module-impl</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.apache.myfaces.extensions.cdi.modules</groupId>
-            <artifactId>myfaces-extcdi-jsf20-module-api</artifactId>
+            <groupId>org.apache.deltaspike.modules</groupId>
+            <artifactId>deltaspike-security-module-api</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.apache.myfaces.extensions.cdi.modules</groupId>
-            <artifactId>myfaces-extcdi-jsf20-module-impl</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.myfaces.extensions.cdi.modules</groupId>
-            <artifactId>myfaces-extcdi-message-module-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.myfaces.extensions.cdi.modules</groupId>
-            <artifactId>myfaces-extcdi-message-module-impl</artifactId>
+            <groupId>org.apache.deltaspike.modules</groupId>
+            <artifactId>deltaspike-security-module-impl</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.apache.openwebbeans</groupId>
-            <artifactId>openwebbeans-web</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.openwebbeans</groupId>
-            <artifactId>openwebbeans-jsf</artifactId>
-        </dependency>
-
-
-        <!-- MyFaces 2.x -->
-        <dependency>
-            <groupId>org.apache.myfaces.core</groupId>
-            <artifactId>myfaces-api</artifactId>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.myfaces.core</groupId>
-            <artifactId>myfaces-impl</artifactId>
-            <scope>runtime</scope>
-        </dependency>
 
         <dependency>
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
             <version>2.2.1</version>
         </dependency>
+
+        <!-- side effect of build time enhancement is that we need the class 'PersistenceCapable' on the classpath -->
+        <dependency>
+            <groupId>org.apache.openjpa</groupId>
+            <artifactId>openjpa-kernel</artifactId>
+            <version>${openjpa.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
 
     </dependencies>
 
@@ -110,156 +93,65 @@
 
     <profiles>
         <profile>
-            <id>tc</id>
+            <id>tomee</id>
+
             <build>
                 <plugins>
                     <plugin>
-                        <groupId>org.apache.tomcat.maven</groupId>
-                        <artifactId>tomcat7-maven-plugin</artifactId>
-                        <version>2.0-beta-1</version>
+                        <groupId>org.apache.openejb.maven</groupId>
+                        <artifactId>tomee-maven-plugin</artifactId>
+                        <version>${tomee.mavenplugin.version}</version>
                         <configuration>
-                            <path>/${build.finalName}</path>
-                            <systemProperties>
-                                <org.apache.myfaces.PROJECT_STAGE>${projectStage}</org.apache.myfaces.PROJECT_STAGE>
-                                <faces.PROJECT_STAGE>${projectStage}</faces.PROJECT_STAGE>
-                            </systemProperties>
-                        </configuration>
+                            <tomeeVersion>${tomee.version}</tomeeVersion>
+                            <tomeeClassifier>webprofile</tomeeClassifier>
+                            <synchronization>
+                                <extensions>
+                                    <extension>.class</extension>
+                                    <extension>.properties</extension>
+                                    <!-- monitor css files for daniel valda -->
+                                    <extension>.css</extension>
+                                    <!-- if you want to update each time you build with mvn compile -->
+                                </extensions>
+                                <updateInterval>2</updateInterval>
+                            </synchronization>
+                            <!-- important: for some reason, this has to be false, else reloading does not work! -->
+                            <reloadOnUpdate>false</reloadOnUpdate>
 
+                            <catalinaBase>${project.build.directory}/${tomee-plugin.catalinaBaseDir}</catalinaBase>
+
+                            <!-- removed the .war extension from the "warFile" property, so we can use exploded archives -->
+                            <warFile>${project.build.directory}/${project.build.finalName}</warFile>
+                            <!-- path that is used by tomEE in the tomee:deploy and tomee:undeploy goal -->
+                            <path>${project.build.directory}/apache-tomee/webapps${project.build.finalName}</path>
+                            <!-- memory settings for tomEE; increased PermGen from default 64m to 512m, should allow for more
+                            redeploys without PermGenExceptions -->
+                            <args>-Dorg.apache.deltaspike.ProjectStage=${projectstage} -Dfaces.PROJECT_STAGE=${projectstage} -Dopenejb.classloader.forced-load=org.apache.openjpa -Djava.awt.headless=true -Dfile.encoding=UTF-8 -server -Xms1024m -Xmx1024m -XX:NewSize=512m -XX:MaxNewSize=384m -XX:PermSize=384m -XX:MaxPermSize=512m -XX:+DisableExplicitGC ${tomee.additional.args}
+                            </args>
+                            <libs>
+                                <lib>mysql:mysql-connector-java:${mysql-connector.version}</lib>
+                            </libs>
+                        </configuration>
                         <dependencies>
                             <dependency>
-                                <groupId>de.odysseus.juel</groupId>
-                                <artifactId>juel-api</artifactId>
-                                <version>${juel.version}</version>
-                            </dependency>
-                            <dependency>
-                                <groupId>de.odysseus.juel</groupId>
-                                <artifactId>juel-impl</artifactId>
-                                <version>${juel.version}</version>
-                            </dependency>
-                            <dependency>
-                                <groupId>de.odysseus.juel</groupId>
-                                <artifactId>juel-spi</artifactId>
-                                <version>${juel.version}</version>
-                            </dependency>
-                            <dependency>
-                                <groupId>jstl</groupId>
-                                <artifactId>jstl</artifactId>
-                                <version>1.2</version>
-                            </dependency>
-
-                            <!--
-                                tomcat7-maven-plugin dependencies
-                                We need to add those for specifying the version
-                            -->
-                            <dependency>
-                                <groupId>org.apache.tomcat.embed</groupId>
-                                <artifactId>tomcat-embed-core</artifactId>
-                                <version>${tomcat.version}</version>
-                            </dependency>
-                            <dependency>
-                                <groupId>org.apache.tomcat</groupId>
-                                <artifactId>tomcat-util</artifactId>
-                                <version>${tomcat.version}</version>
-                            </dependency>
-                            <dependency>
-                                <groupId>org.apache.tomcat</groupId>
-                                <artifactId>tomcat-coyote</artifactId>
-                                <version>${tomcat.version}</version>
-                            </dependency>
-                            <dependency>
-                                <groupId>org.apache.tomcat</groupId>
-                                <artifactId>tomcat-api</artifactId>
-                                <version>${tomcat.version}</version>
+                                <groupId>org.apache.openejb</groupId>
+                                <artifactId>apache-tomee</artifactId>
+                                <version>${tomee.version}</version>
+                                <classifier>webprofile</classifier>
+                                <type>zip</type>
+                                <!-- we have to set this to runtime, else it does not work -->
+                                <scope>runtime</scope>
                             </dependency>
 
                             <dependency>
-                                <groupId>org.apache.tomcat</groupId>
-                                <artifactId>tomcat-jdbc</artifactId>
-                                <version>${tomcat.version}</version>
-                            </dependency>
-
-                            <dependency>
-                                <groupId>org.apache.tomcat</groupId>
-                                <artifactId>tomcat-dbcp</artifactId>
-                                <version>${tomcat.version}</version>
-                            </dependency>
-
-                            <dependency>
-                                <groupId>org.apache.tomcat</groupId>
-                                <artifactId>tomcat-servlet-api</artifactId>
-                                <version>${tomcat.version}</version>
-                            </dependency>
-
-                            <dependency>
-                                <groupId>org.apache.tomcat</groupId>
-                                <artifactId>tomcat-jsp-api</artifactId>
-                                <version>${tomcat.version}</version>
-                            </dependency>
-
-                            <dependency>
-                                <groupId>org.apache.tomcat</groupId>
-                                <artifactId>tomcat-jasper</artifactId>
-                                <version>${tomcat.version}</version>
-                            </dependency>
-
-                            <dependency>
-                                <groupId>org.apache.tomcat</groupId>
-                                <artifactId>tomcat-jasper-el</artifactId>
-                                <version>${tomcat.version}</version>
-                            </dependency>
-
-                            <dependency>
-                                <groupId>org.apache.tomcat</groupId>
-                                <artifactId>tomcat-el-api</artifactId>
-                                <version>${tomcat.version}</version>
-                            </dependency>
-
-                            <dependency>
-                                <groupId>org.apache.tomcat</groupId>
-                                <artifactId>tomcat-catalina</artifactId>
-                                <version>${tomcat.version}</version>
-                            </dependency>
-
-                            <dependency>
-                                <groupId>org.apache.tomcat</groupId>
-                                <artifactId>tomcat-tribes</artifactId>
-                                <version>${tomcat.version}</version>
-                            </dependency>
-
-                            <dependency>
-                                <groupId>org.apache.tomcat</groupId>
-                                <artifactId>tomcat-catalina-ha</artifactId>
-                                <version>${tomcat.version}</version>
-                            </dependency>
-
-                            <dependency>
-                                <groupId>org.apache.tomcat</groupId>
-                                <artifactId>tomcat-annotations-api</artifactId>
-                                <version>${tomcat.version}</version>
-                            </dependency>
-
-                            <!-- tomcat i18n too ?? -->
-
-                            <!-- not sure we need that -->
-                            <dependency>
-                                <groupId>org.apache.tomcat</groupId>
-                                <artifactId>tomcat-juli</artifactId>
-                                <version>${tomcat.version}</version>
-                            </dependency>
-
-                            <dependency>
-                                <groupId>org.apache.tomcat.embed</groupId>
-                                <artifactId>tomcat-embed-logging-juli</artifactId>
-                                <version>${tomcat.version}</version>
-                            </dependency>
-                            <dependency>
-                                <groupId>org.apache.tomcat.embed</groupId>
-                                <artifactId>tomcat-embed-logging-log4j</artifactId>
-                                <version>${tomcat.version}</version>
+                                <groupId>mysql</groupId>
+                                <artifactId>mysql-connector-java</artifactId>
+                                <version>${mysql-connector.version}</version>
+                                <scope>runtime</scope>
                             </dependency>
 
                         </dependencies>
                     </plugin>
+
                 </plugins>
             </build>
         </profile>

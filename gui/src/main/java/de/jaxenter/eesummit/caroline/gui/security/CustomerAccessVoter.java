@@ -19,36 +19,45 @@
 package de.jaxenter.eesummit.caroline.gui.security;
 
 import de.jaxenter.eesummit.caroline.gui.beans.UserController;
-import org.apache.myfaces.extensions.cdi.core.api.security.AbstractAccessDecisionVoter;
-import org.apache.myfaces.extensions.cdi.core.api.security.SecurityViolation;
-import org.apache.myfaces.extensions.cdi.jsf.api.Jsf;
-import org.apache.myfaces.extensions.cdi.message.api.MessageContext;
+import de.jaxenter.eesummit.caroline.gui.msg.CarolineMessages;
+import org.apache.deltaspike.security.api.authorization.AccessDecisionVoter;
+import org.apache.deltaspike.security.api.authorization.AccessDecisionVoterContext;
+import org.apache.deltaspike.security.api.authorization.DefaultSecurityViolation;
+import org.apache.deltaspike.security.api.authorization.SecurityViolation;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.interceptor.InvocationContext;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
- * access decission voter for customer pages.
+ * access decision voter for customer pages.
  */
 @ApplicationScoped
-public class CustomerAccessVoter extends AbstractAccessDecisionVoter
+public class CustomerAccessVoter implements AccessDecisionVoter
 {
+    private static final long serialVersionUID = -3321623879108078874L;
 
-    private static final long serialVersionUID = -3321616879108078874L;
 
-    private @Inject @Jsf MessageContext messageContext;
-    private @Inject
-    UserController user;
+    private @Inject CarolineMessages messages;
+    private @Inject UserController user;
 
-    public void checkPermission(InvocationContext invocationContext, Set<SecurityViolation> violations)
+
+    @Override
+    public Set<SecurityViolation> checkPermission(AccessDecisionVoterContext accessDecisionVoterContext)
     {
-        if (!user.isLoggedIn() && !(user.isCustomer() || user.isEmployee()))
+
+        if (!user.isLoggedIn() && !user.isEmployee())
         {
-            String reason = this.messageContext.message().text("{user_violation_customer}").toText();
-            violations.add(newSecurityViolation(reason));
+            String reason = messages.loginRequiredEmployee();
+            Set<SecurityViolation> violations = new HashSet<SecurityViolation>();
+            violations.add(new DefaultSecurityViolation(messages.loginRequiredCustomer()));
+            return violations;
         }
+
+        return Collections.emptySet();
     }
+
 
 }

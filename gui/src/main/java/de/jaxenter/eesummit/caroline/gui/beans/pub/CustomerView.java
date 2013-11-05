@@ -22,8 +22,8 @@ import de.jaxenter.eesummit.caroline.backend.api.CustomerService;
 import de.jaxenter.eesummit.caroline.entities.Customer;
 import de.jaxenter.eesummit.caroline.entities.Tyre;
 import de.jaxenter.eesummit.caroline.gui.beans.UserController;
-import org.apache.myfaces.extensions.cdi.jsf.api.Jsf;
-import org.apache.myfaces.extensions.cdi.message.api.MessageContext;
+import de.jaxenter.eesummit.caroline.gui.msg.CarolineMessages;
+import org.apache.deltaspike.jsf.api.message.JsfMessage;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -44,7 +44,7 @@ public class CustomerView implements Serializable {
     UserController usr;
     private @Inject CustomerService custSvc;
 
-    private @Inject @Jsf MessageContext messageContext;
+    private @Inject JsfMessage<CarolineMessages> messages;
 
     private List<Tyre> tyres = new ArrayList<Tyre>();
 

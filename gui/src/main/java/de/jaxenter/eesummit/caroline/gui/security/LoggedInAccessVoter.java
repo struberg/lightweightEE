@@ -19,36 +19,43 @@
 package de.jaxenter.eesummit.caroline.gui.security;
 
 import de.jaxenter.eesummit.caroline.gui.beans.UserController;
-import org.apache.myfaces.extensions.cdi.core.api.security.AbstractAccessDecisionVoter;
-import org.apache.myfaces.extensions.cdi.core.api.security.SecurityViolation;
-import org.apache.myfaces.extensions.cdi.jsf.api.Jsf;
-import org.apache.myfaces.extensions.cdi.message.api.MessageContext;
+import de.jaxenter.eesummit.caroline.gui.msg.CarolineMessages;
+import org.apache.deltaspike.security.api.authorization.AccessDecisionVoter;
+import org.apache.deltaspike.security.api.authorization.AccessDecisionVoterContext;
+import org.apache.deltaspike.security.api.authorization.DefaultSecurityViolation;
+import org.apache.deltaspike.security.api.authorization.SecurityViolation;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.interceptor.InvocationContext;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
  * access decission voter for 'public' pages where user needs to login.
  */
 @ApplicationScoped
-public class LoggedInAccessVoter extends AbstractAccessDecisionVoter
+public class LoggedInAccessVoter implements AccessDecisionVoter
 {
 
     private static final long serialVersionUID = -3321616879108078874L;
 
-    private @Inject @Jsf MessageContext messageContext;
-    private @Inject
-    UserController user;
+    private @Inject CarolineMessages messages;
+    private @Inject UserController user;
 
-    public void checkPermission(InvocationContext invocationContext, Set<SecurityViolation> violations)
+
+    @Override
+    public Set<SecurityViolation> checkPermission(AccessDecisionVoterContext accessDecisionVoterContext)
     {
-        if (!user.isLoggedIn())
-        {
-            String reason = this.messageContext.message().text("{inactive_user_violation}").toText();
-            violations.add(newSecurityViolation(reason));
-        }
-    }
 
+        if (!user.isLoggedIn() && !user.isEmployee())
+        {
+            String reason = messages.loginRequiredEmployee();
+            Set<SecurityViolation> violations = new HashSet<SecurityViolation>();
+            violations.add(new DefaultSecurityViolation(messages.loginRequired()));
+            return violations;
+        }
+
+        return Collections.emptySet();
+    }
 }

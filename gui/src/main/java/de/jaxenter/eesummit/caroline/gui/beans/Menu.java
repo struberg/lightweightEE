@@ -20,8 +20,8 @@ package de.jaxenter.eesummit.caroline.gui.beans;
 
 import de.jaxenter.eesummit.caroline.backend.api.MenuService;
 import de.jaxenter.eesummit.caroline.entities.MenuItem;
-import org.apache.myfaces.extensions.cdi.jsf.api.Jsf;
-import org.apache.myfaces.extensions.cdi.message.api.MessageContext;
+import de.jaxenter.eesummit.caroline.gui.msg.CarolineMessages;
+import org.apache.deltaspike.core.api.message.MessageContext;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
@@ -51,9 +51,8 @@ public class Menu implements Serializable
     private String servletPath;
 
     private @Inject MenuService menuSvc;
-    private @Inject
-    UserController usr;
-    private @Inject @Jsf MessageContext messageContext;
+    private @Inject UserController usr;
+    private @Inject MessageContext messageContext;
 
 
     @PostConstruct
@@ -80,7 +79,8 @@ public class Menu implements Serializable
 
     public String getText(MenuItem menuItem)
     {
-        return messageContext.message().text("{" + menuItem.getResourceKey() + "}").toText();
+        return messageContext.clone().messageSource(CarolineMessages.class.getName())
+                             .message().template(menuItem.getResourceKey()).toString();
     }
 
     public String getAction(MenuItem menuItem)

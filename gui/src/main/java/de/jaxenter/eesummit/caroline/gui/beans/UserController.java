@@ -22,13 +22,11 @@ import de.jaxenter.eesummit.caroline.backend.api.UserService;
 import de.jaxenter.eesummit.caroline.entities.CaroLineUser;
 import de.jaxenter.eesummit.caroline.entities.Customer;
 import de.jaxenter.eesummit.caroline.entities.Employee;
+import de.jaxenter.eesummit.caroline.gui.msg.CarolineMessages;
 import de.jaxenter.eesummit.caroline.gui.viewconfig.EmployeePages;
 import de.jaxenter.eesummit.caroline.gui.viewconfig.PublicPages;
-import org.apache.myfaces.extensions.cdi.core.api.config.view.ViewConfig;
-import org.apache.myfaces.extensions.cdi.jsf.api.Jsf;
-import org.apache.myfaces.extensions.cdi.message.api.Message;
-import org.apache.myfaces.extensions.cdi.message.api.MessageContext;
-import org.apache.myfaces.extensions.cdi.message.api.payload.MessageSeverity;
+import org.apache.deltaspike.core.api.config.view.ViewConfig;
+import org.apache.deltaspike.jsf.api.message.JsfMessage;
 
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.event.Event;
@@ -61,7 +59,7 @@ public class UserController implements Serializable
     private Locale locale = Locale.GERMAN;
 
 
-    private @Inject @Jsf MessageContext messageContext;
+    private @Inject JsfMessage<CarolineMessages> messages;
 
     private @Inject UserService usrSvc;
 
@@ -91,8 +89,7 @@ public class UserController implements Serializable
         }
 
         // fire an error message
-        Message msg = messageContext.message().text("{unknown_user}").payload(MessageSeverity.ERROR).create();
-        messageContext.addMessage(msg);
+        messages.addError().unknownUser();
 
         return null;
     }

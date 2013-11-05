@@ -20,8 +20,8 @@ package de.jaxenter.eesummit.caroline.gui.beans;
 
 import de.jaxenter.eesummit.caroline.backend.api.MenuService;
 import de.jaxenter.eesummit.caroline.entities.MenuItem;
-import org.apache.myfaces.extensions.cdi.jsf.api.Jsf;
-import org.apache.myfaces.extensions.cdi.message.api.MessageContext;
+import de.jaxenter.eesummit.caroline.gui.msg.CarolineMessages;
+import org.apache.deltaspike.core.api.message.MessageContext;
 import org.primefaces.component.submenu.Submenu;
 import org.primefaces.model.DefaultMenuModel;
 import org.primefaces.model.MenuModel;
@@ -54,10 +54,9 @@ public class PrimeMenu implements Serializable
     private boolean showMenu = false;
 
     private @Inject MenuService menuSvc;
-    private @Inject
-    UserController usr;
-    private @Inject @Jsf MessageContext messageContext;
+    private @Inject UserController usr;
 
+    private @Inject MessageContext messageContext;
 
     @PostConstruct
     public void init()
@@ -144,8 +143,10 @@ public class PrimeMenu implements Serializable
 
     private String getText(MenuItem menuItem)
     {
-        return messageContext.message().text("{" + menuItem.getResourceKey() + "}").toText();
+        return messageContext.clone().messageSource(CarolineMessages.class.getName())
+                             .message().template(menuItem.getResourceKey()).toString();
     }
+
 
     private String getAction(MenuItem menuItem, String servletPath)
     {

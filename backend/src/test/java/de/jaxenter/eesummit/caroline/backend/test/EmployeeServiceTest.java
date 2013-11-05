@@ -22,7 +22,7 @@ import de.jaxenter.eesummit.caroline.backend.api.EmployeeService;
 import de.jaxenter.eesummit.caroline.backend.api.UserService;
 import de.jaxenter.eesummit.caroline.entities.CaroLineUser;
 import de.jaxenter.eesummit.caroline.entities.Employee;
-import org.apache.myfaces.extensions.cdi.core.api.provider.BeanManagerProvider;
+import org.apache.deltaspike.core.api.provider.BeanProvider;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -43,7 +43,7 @@ public class EmployeeServiceTest extends CdiContainerTest
 
     @BeforeClass
     public void cleanUpDb() throws Exception {
-        EntityManager em = BeanManagerProvider.getInstance().getContextualReference(EntityManager.class);
+        EntityManager em = BeanProvider.getContextualReference(EntityManager.class);
         em.getTransaction().begin();
         Query q = em.createQuery("DELETE from Employee AS e where e.lastName LIKE :name", Employee.class);
         q.setParameter("name", TEST_PREFIX + "%");

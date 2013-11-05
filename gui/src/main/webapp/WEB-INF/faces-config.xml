@@ -10,7 +10,11 @@
             <supported-locale>de</supported-locale>
         </locale-config>
 
+
+        <!--
+        This is not needed anymore as we use DeltaSpike @MessageBundle instead
         <message-bundle>de.jaxenter.eesummit.caroline.messages</message-bundle>
+        -->
 
         <resource-bundle>
             <base-name>de.jaxenter.eesummit.caroline.pages</base-name>
