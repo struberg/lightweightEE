@@ -23,6 +23,7 @@ import de.jaxenter.eesummit.caroline.entities.Customer;
 import de.jaxenter.eesummit.caroline.entities.Tyre;
 import de.jaxenter.eesummit.caroline.gui.beans.UserController;
 import de.jaxenter.eesummit.caroline.gui.msg.CarolineMessages;
+import org.apache.deltaspike.core.api.scope.WindowScoped;
 import org.apache.deltaspike.jsf.api.message.JsfMessage;
 
 import javax.enterprise.context.RequestScoped;
@@ -36,7 +37,7 @@ import java.util.List;
  * Backing bean for the public customer view.
  * @author <a href="mailto:struberg@yahoo.de">Mark Struberg</a>
  */
-@RequestScoped
+@WindowScoped
 @Named
 public class CustomerView implements Serializable {
 

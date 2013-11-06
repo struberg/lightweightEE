@@ -80,7 +80,7 @@ public class Menu implements Serializable
     public String getText(MenuItem menuItem)
     {
         return messageContext.clone().messageSource(CarolineMessages.class.getName())
-                             .message().template(menuItem.getResourceKey()).toString();
+                             .message().template("{" + menuItem.getResourceKey() + "}" ).toString();
     }
 
     public String getAction(MenuItem menuItem)

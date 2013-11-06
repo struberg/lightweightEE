@@ -22,22 +22,22 @@ package de.jaxenter.eesummit.caroline.gui.viewconfig;
 import de.jaxenter.eesummit.caroline.gui.security.CustomerAccessVoter;
 import org.apache.deltaspike.core.api.config.view.DefaultErrorView;
 import org.apache.deltaspike.core.api.config.view.ViewConfig;
+import org.apache.deltaspike.jsf.api.config.view.Folder;
 import org.apache.deltaspike.jsf.api.config.view.View;
 import org.apache.deltaspike.security.api.authorization.Secured;
 
 /**
  * This class contains the {@link ViewConfig}s of all public pages.
  */
-@View(basePath = "public", navigation = View.NavigationMode.REDIRECT)
+@Folder(name = "public")
+@View(navigation = View.NavigationMode.REDIRECT)
 public interface PublicPages extends ViewConfig
 {
 
-    @View
     public class Login extends DefaultErrorView implements PublicPages
     {
     }
 
-    @View
     @Secured(CustomerAccessVoter.class)
     public class Customer implements PublicPages
     {

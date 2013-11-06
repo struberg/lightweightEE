@@ -21,6 +21,7 @@ package de.jaxenter.eesummit.caroline.gui.viewconfig;
 
 import de.jaxenter.eesummit.caroline.gui.security.EmployeeAccessVoter;
 import org.apache.deltaspike.core.api.config.view.ViewConfig;
+import org.apache.deltaspike.jsf.api.config.view.Folder;
 import org.apache.deltaspike.jsf.api.config.view.View;
 import org.apache.deltaspike.security.api.authorization.Secured;
 
@@ -28,24 +29,23 @@ import org.apache.deltaspike.security.api.authorization.Secured;
  * This class contains the {@link .ViewConfig}s
  * of all emplyoee pages.
  */
-@View(basePath = "employee", navigation = View.NavigationMode.REDIRECT)
+@Folder(name = "employee")
+@View(navigation = View.NavigationMode.REDIRECT)
+@Secured(EmployeeAccessVoter.class)
 public interface EmployeePages extends ViewConfig
 {
 
     @View
-    @Secured(EmployeeAccessVoter.class)
     public class Overview implements EmployeePages
     {
     }
 
     @View
-    @Secured(EmployeeAccessVoter.class)
     public class SearchCustomer implements EmployeePages
     {
     }
 
     @View(viewParams = View.ViewParameterMode.INCLUDE)
-    @Secured(EmployeeAccessVoter.class)
     public class EditCustomer implements EmployeePages
     {
     }

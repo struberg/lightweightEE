@@ -16,7 +16,9 @@
         <c:if test="${not empty menuItem.children}">
             <ul class="linkBlock">
                 <c:forEach items="#{menuItem.children}" var="menuItem">
-                    <ui:include src="menuItem.xhtml"/>
+                    <ui:include src="menuItem.xhtml">
+                        <ui:param name="menuItem" value="#{menuItem}"/>
+                    </ui:include>
                 </c:forEach>
             </ul>
         </c:if>

@@ -21,28 +21,27 @@ package de.jaxenter.eesummit.caroline.gui.viewconfig;
 
 import de.jaxenter.eesummit.caroline.gui.security.AdminAccessVoter;
 import org.apache.deltaspike.core.api.config.view.ViewConfig;
+import org.apache.deltaspike.jsf.api.config.view.Folder;
 import org.apache.deltaspike.jsf.api.config.view.View;
 import org.apache.deltaspike.security.api.authorization.Secured;
 
 /**
  * This class contains the {@link ViewConfig}s of all admin pages.
  */
-@View(basePath = "admin")
+@Folder(name = "admin")
+@Secured(AdminAccessVoter.class)
 public interface AdminPages extends ViewConfig
 {
 
     @View(navigation = View.NavigationMode.REDIRECT)
-    @Secured(AdminAccessVoter.class)
-    public class Overview implements AdminPages {
+    public class Overview implements AdminPages  {
     }
 
     @View(navigation = View.NavigationMode.REDIRECT)
-    @Secured(AdminAccessVoter.class)
     public class EditCustomer implements AdminPages {
     }
 
     @View
-    @Secured(AdminAccessVoter.class)
     public class EditMerchant implements AdminPages {
     }
 
