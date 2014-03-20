@@ -20,22 +20,19 @@ package de.jaxenter.eesummit.caroline.gui.security;
 
 import de.jaxenter.eesummit.caroline.gui.beans.UserController;
 import de.jaxenter.eesummit.caroline.gui.msg.CarolineMessages;
-import org.apache.deltaspike.security.api.authorization.AccessDecisionVoter;
+import org.apache.deltaspike.security.api.authorization.AbstractAccessDecisionVoter;
 import org.apache.deltaspike.security.api.authorization.AccessDecisionVoterContext;
-import org.apache.deltaspike.security.api.authorization.DefaultSecurityViolation;
 import org.apache.deltaspike.security.api.authorization.SecurityViolation;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.Set;
 
 /**
  * access decission voter for admin pages.
  */
 @ApplicationScoped
-public class AdminAccessVoter implements AccessDecisionVoter
+public class AdminAccessVoter extends AbstractAccessDecisionVoter
 {
     private static final long serialVersionUID = -3321616879108078874L;
 
@@ -44,18 +41,13 @@ public class AdminAccessVoter implements AccessDecisionVoter
 
 
     @Override
-    public Set<SecurityViolation> checkPermission(AccessDecisionVoterContext accessDecisionVoterContext)
+    protected void checkPermission(AccessDecisionVoterContext accessDecisionVoterContext, Set<SecurityViolation> violations)
     {
 
         if (!user.isLoggedIn() && !user.isEmployee())
         {
-            String reason = messages.loginRequiredEmployee();
-            Set<SecurityViolation> violations = new HashSet<SecurityViolation>();
-            violations.add(new DefaultSecurityViolation(messages.loginRequired()));
-            return violations;
+            newSecurityViolation(messages.loginRequiredEmployee());
         }
-
-        return Collections.emptySet();
     }
 
 }
