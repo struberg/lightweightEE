@@ -28,7 +28,7 @@
         <openjpa.version>2.3.0</openjpa.version>
         <myfaces.version>2.1.12</myfaces.version>
         <bval.version>0.5</bval.version>
-        <deltaspike.version>0.6</deltaspike.version>
+        <deltaspike.version>0.7</deltaspike.version>
 
         <el.version>2.2</el.version>
         <mysql-connector.version>5.1.25</mysql-connector.version>
@@ -41,11 +41,16 @@
         <tomee.mavenplugin.version>${tomee.version}</tomee.mavenplugin.version>
         <tomee-plugin.catalinaBaseDir>apache-tomee</tomee-plugin.catalinaBaseDir>
 
+        <batchee.version>0.2-incubating-SNAPSHOT</batchee.version>
+
         <!-- needed for the database support -->
         <database.driver.name>com.mysql.jdbc.Driver</database.driver.name>
         <database.user>root</database.user>
         <database.password />
         <database.connection.url>jdbc:mysql://localhost</database.connection.url>
+
+        <slf4j.version>1.7.2</slf4j.version>
+        <log4j.version>1.2.17</log4j.version>
     </properties>
 
     <!-- needed as we have some ASF snapshots in there -->
@@ -225,6 +230,25 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>3.1</version>
+        </dependency>
+
+        <!-- logging is needed in every module -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>${slf4j.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>${log4j.version}</version>
+            <scope>runtime</scope>
         </dependency>
 
         <!-- for unit testing -->

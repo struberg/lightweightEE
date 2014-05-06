@@ -38,11 +38,8 @@ public interface AdminPages extends ViewConfig
     }
 
     @View(navigation = View.NavigationMode.REDIRECT)
-    public class EditCustomer implements AdminPages {
+    public class EditEmployees implements AdminPages {
     }
 
-    @View
-    public class EditMerchant implements AdminPages {
-    }
 
 }

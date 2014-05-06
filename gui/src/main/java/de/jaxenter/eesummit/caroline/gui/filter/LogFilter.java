@@ -18,8 +18,15 @@
  */
 package de.jaxenter.eesummit.caroline.gui.filter;
 
-import org.apache.commons.lang3.Validate;
 
+
+import de.jaxenter.eesummit.caroline.gui.beans.UserController;
+import org.apache.commons.lang3.Validate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
+
+import javax.inject.Inject;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -27,271 +34,283 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.lang.management.ManagementFactory;
+import java.lang.management.ThreadMXBean;
+import java.net.InetAddress;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-
-/*
-  configure web.xml like this:
-
-    <filter>
-        <filter-name>LogFilter</filter-name>
-        <filter-class>de.jaxenter.eesummit.caroline.gui.filter.LogFilter</filter-class>
-        <init-param>
-            <param-name>ndc</param-name>
-            <param-value>session,address</param-value>
-        </init-param>
-        <init-param>
-            <param-name>dropurl.0</param-name>
-            <param-value>javax.faces.resource</param-value>
-        </init-param>
-        <init-param>
-            <param-name>dropurl.1</param-name>
-            <param-value>primefaces_resource</param-value>
-        </init-param>
-    </filter>
-
-    <filter-mapping>
-        <filter-name>LogFilter</filter-name>
-        <url-pattern>*.xhtml</url-pattern>
-    </filter-mapping>
-
-*/
 
 /**
- * servlet filter that logs all requests and sets sessionId as NDC and sets request encoding
+ * <p>LogFilter logs start and end of each Servlet Requests
+ * and prints out the elapsed time.</p>
+ *
+ * <p>We also set the Encoding to UTF-8.</p>
+ * <p>You can also set the cluster node id with cluster.node</p>
+ *
+ * <p>configure web.xml like this:</p>
+ * <pre>
+ *     &lt;filter&gt;
+ *         &lt;filter-name&gt;LogFilter&lt;/filter-name&gt;
+ *         &lt;filter-class&gt;de.jaxenter.eesummit.caroline.gui.filter.LogFilter&lt;/filter-class&gt;
+ *         &lt;init-param&gt;
+ *             &lt;param-name&gt;dropurl.0&lt;/param-name&gt;
+ *             &lt;param-value&gt;sampleurl_to_ignore&lt;/param-value&gt;
+ *         &lt;/init-param&gt;
+ *     &lt;/filter&gt;
+ *
+ *     &lt;filter-mapping&gt;
+ *         &lt;filter-name&gt;LogFilter&lt;/filter-name&gt;
+ *         &lt;url-pattern&gt;*&lt;/url-pattern&gt;
+ *     &lt;/filter-mapping&gt;
+ * </pre>
+ *
  */
-public class LogFilter implements Filter
-{
+public class LogFilter implements Filter {
 
-    private static final Logger logger = Logger.getLogger(LogFilter.class.getName());
+    public static final String REQUEST_CURRENT_VIEW_URI = "requestCurrentViewURI";
 
+    private static final String REQUEST_ENCODING = "UTF-8";
+    private static final boolean FORCE_REQUEST_ENCODING = true;
+
+    private static final String MDC_SESSION = "sessionId";
+    private static final String MDC_USER = "userId";
+    private static final String MDC_NODE = "nodeId";
+
+    private static final Logger log = LoggerFactory.getLogger(LogFilter.class);
+
+    /**
+     * Cluster node id. Important info if syslogd oder similar gets used.
+     */
+    private String nodeId = null;
+
+    /**
+     * prevent logging of the following URLs
+     */
     private List<String> dropUrls = null;
 
-    private String requestEncoding = "UTF-8";
-    private boolean forceRequestEncoding = false;
+    private ThreadMXBean threadBean;
 
-    private boolean ndcEnabled;
-    private boolean ndcSession;
-    private boolean ndcAddress;
-
-    @Override
-    public void init(FilterConfig config) throws ServletException
-    {
-
-        dropUrls = new ArrayList<String>();
-        int idx = 0;
-        String dropUrlParam;
-        while ((dropUrlParam = config.getInitParameter("dropurl." + idx)) != null)
-        {
-            logger.info("adding dropUrl " + idx + ": " + dropUrlParam);
-            dropUrls.add(dropUrlParam);
-            idx++;
-        }
-
-        String ndcParam = config.getInitParameter("ndc");
-
-        ndcEnabled = false;
-        if (ndcParam != null)
-        {
-            logger.info("NDC enabled: " + ndcParam);
-            ndcEnabled = true;
-            ndcSession = ndcParam.indexOf("session") != -1;
-            ndcAddress = ndcParam.indexOf("address") != -1;
-        }
-
-    }
-
+    private @Inject UserController user;
 
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)
-            throws IOException, ServletException
-    {
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         String remoteAddress = null;
         String sessionId = null;
-        String uid = "0";
+        String userId = null;
 
         long start = 0;
-        String url = "";
-        String method = "";
+        long startCpu = 0;
         Throwable throwable = null;
         boolean dropped = false;
-        String agent = null;
-        try
-        {
-            Validate.isTrue(request instanceof HttpServletRequest, "filter oops?");
-            HttpServletRequest req = (HttpServletRequest) request;
 
-            if (req.getCharacterEncoding() == null || forceRequestEncoding)
-            {
-                req.setCharacterEncoding(requestEncoding);
+        String url = "";
+        String method = "";
+        String agent = null;
+
+        HttpServletRequest httpServletRequest = null;
+        HttpServletResponse res = null;
+
+        try {
+            Validate.isTrue(servletRequest instanceof HttpServletRequest, "filter oops?");
+            httpServletRequest = (HttpServletRequest) servletRequest;
+            Validate.isTrue(servletResponse instanceof HttpServletResponse, "filter oops?");
+            res = (HttpServletResponse) servletResponse;
+
+            if (httpServletRequest.getCharacterEncoding() == null || FORCE_REQUEST_ENCODING) {
+                httpServletRequest.setCharacterEncoding(REQUEST_ENCODING);
+                res.setCharacterEncoding(REQUEST_ENCODING);
             }
 
-            url = req.getRequestURI();
-            method = req.getMethod();
-            String qs = req.getQueryString();
-            agent = req.getHeader("User-Agent");
+            url = httpServletRequest.getRequestURI();
+            method = httpServletRequest.getMethod();
+            String qs = httpServletRequest.getQueryString();
             if (qs != null)
             {
                 url += "?" + qs;
             }
 
-            for (String stopUrl : dropUrls)
-            {  // does any stopUrl match url
-                if (url.indexOf(stopUrl) != -1)
-                {
-                    dropped = true;
-                    break; // stop searching
-                }
-            }
+            agent = httpServletRequest.getHeader("User-Agent");
 
-            HttpSession session = req.getSession(false); // do not create
-
-            if (!dropped)
+            if (user != null)
             {
-                if (ndcEnabled)
-                {
-                    if (ndcAddress)
-                    {
-                        String forwarded = req.getHeader("X-Forwarded-For");
-                        if (forwarded != null)
-                        {
-                            remoteAddress = forwarded;
-                        }
-                        else
-                        {
-                            remoteAddress = request.getRemoteAddr();
-                        }
-                    }
-                    if (ndcSession)
-                    {
-                        if (session != null)
-                        {
-                            sessionId = session.getId();
-                            String sessOID = (String) session.getAttribute("USER_ID_LOG");
-                            uid = sessOID == null ? "0" : sessOID;
-                        }
-                    }
-                }
-                StringBuilder msg = simulateNDC(remoteAddress, sessionId, uid);
-                msg.append("request start ").append(method).append(" ").append(url).append(" UA=").append(agent);
-                logger.info(msg.toString());
-                start = System.currentTimeMillis();
+                userId = user.getLogin();
             }
 
-            if (session != null && !dropped)
-            {
-                synchronized (session)
-                {
-                    long syncTime = System.nanoTime() - start;
-                    if (syncTime > 10000)
-                    {
-                        // heuristic 10us threshold to detect if sync caused delay
-                        logger.log(Level.WARNING, "sync delayed for " + formatNanos(syncTime) + "ms");
-                    }
+            dropped = isDroppedUrl(url);
 
-                    // continue with the filter chain
-                    filterChain.doFilter(request, response);
+            if (!dropped) {
+                // logged details about this very Request
+                StringBuilder msg = new StringBuilder(100);
+
+                remoteAddress = getRemoteAddress(httpServletRequest);
+
+                setupMdc(sessionId, userId);
+
+                msg.append("request start ").append(method).append(' ').append(url)
+                        .append(" remote address:").append(remoteAddress)
+                        .append(" UA=").append(agent);
+                log.info(msg.toString());
+
+                if (threadBean != null) {
+                    startCpu = threadBean.getCurrentThreadCpuTime();
                 }
+                start = System.nanoTime();
             }
-            else
-            {
-                // continue with the filter chain
-                filterChain.doFilter(request, response);
-            }
+
+            // continue with the rest of the request chain
+            filterChain.doFilter(servletRequest, servletResponse);
         }
-        catch (IOException e)
-        {
+        catch (IOException e) {
             throwable = e;
             throw e;
         }
-        catch (ServletException e)
-        {
-            if (e.getRootCause() != null)
-            {
+        catch (ServletException e) {
+            if (e.getRootCause() != null) {
                 throwable = e.getRootCause();
             }
-            else
-            {
+            else {
                 throwable = e;
             }
             throw e;
         }
-        catch (Throwable e)
-        {  // be sure to get all errors
+        catch (Throwable e) {  // be sure to get all errors
             throwable = e;
             throw new ServletException(e);
         }
-        finally
-        {
-            if (!dropped)
-            {
-                long time = System.currentTimeMillis() - start;
-                StringBuilder msg = simulateNDC(remoteAddress, sessionId, uid);
-                msg.append("request done ").append(method).append(" ");
-                msg.append(url).append(" time=").append(time).append("ms");
+        finally {
+            if (!dropped) {
+                String viewUri = (String) httpServletRequest.getAttribute(REQUEST_CURRENT_VIEW_URI);
+                long cpuTime = 0;
+                if (threadBean != null) {
+                    cpuTime = threadBean.getCurrentThreadCpuTime() - startCpu;
+                }
+                long time = System.nanoTime() - start;
 
-                if (throwable == null)
-                {
-                    logger.info(msg.toString());
+                int statusCode = res.getStatus();
+
+                StringBuilder msg = new StringBuilder(100);
+
+                msg.append("request done ").append(url);
+                if (viewUri != null) {
+                    msg.append(" view=").append(viewUri);
                 }
-                else
-                {
-                    String name = throwable.getClass().getSimpleName();
-                    msg.append(" ex=").append(name);
+                msg.append(" code=").append(statusCode).
+                        append(" time=").append(formatNanos(time)).append("ms");
+                if (threadBean != null) {
+                    msg.append(" cpu=").append(formatNanos(cpuTime)).append("ms");
+                }
+
+                if (throwable == null) {
+                    if (statusCode >= HttpServletResponse.SC_INTERNAL_SERVER_ERROR) {
+                        // switch to error in case of code 500 or higher
+                        log.error(msg.toString());
+                    }
+                    else {
+                        log.info(msg.toString());
+                    }
+                }
+                else {
+                    msg.append(" ex=").append(throwable.getClass().getSimpleName());
                     msg.append(" msg=").append(throwable.getMessage());
-                    if (name.equals("ViewExpiredException") || name.equals("ClientAbortException"))
-                    {
-                        logger.log(Level.WARNING, msg.toString());
+                    // also log agent in error/warning case
+                    msg.append(" UA=").append(agent);
+
+                    log.error(msg.toString());
+
+                    // log all (post) parameters in case of warn/error
+                    Enumeration<String> params = httpServletRequest.getParameterNames();
+                    StringBuffer paramsStr = new StringBuffer();
+                    while (params.hasMoreElements()) {
+                        String name = params.nextElement();
+                        paramsStr.append(name).append("=").append(httpServletRequest.getParameter(name)).append(" ");
                     }
-                    else
-                    {
-                        msg.append(" UA=").append(agent);  // also log agent in error case
-                        logger.log(Level.WARNING, msg.toString());
-                    }
+                    log.info("params: " + paramsStr);
                 }
+
+            }
+
+            removeMDC();
+        }
+    }
+
+    private boolean isDroppedUrl(String url) {
+        // does any stopUrl match url
+        for (String stopUrl : dropUrls) {
+            if (url.contains(stopUrl)) {
+                return true;
             }
         }
+
+        return false;
     }
 
-    @Override
-    public void destroy()
-    {
-        // no action needed
+    private void setupMdc(String sessionId, String userId) {
+
+        MDC.put(MDC_SESSION, sessionId != null ? sessionId : "");
+        MDC.put(MDC_USER, userId != null ? userId : "");
+        MDC.put(MDC_NODE, nodeId != null ? nodeId : "local");
     }
 
-    // build fake prefix like NDC. (at least for start/done trace)
-    private StringBuilder simulateNDC(String remoteAddress, String sessionId, String uid)
-    {
-        StringBuilder msg = new StringBuilder();
-        if (uid != null)
-        {
-            msg.append(uid).append(" ");
-        }
-        if (remoteAddress != null)
-        {
-            msg.append(remoteAddress).append(" ");
-        }
-        if (sessionId != null)
-        {
-            msg.append(sessionId).append(" ");
-        }
-        return msg;
+    private void removeMDC() {
+        MDC.remove(MDC_SESSION);
+        MDC.remove(MDC_USER);
+        MDC.remove(MDC_NODE);
     }
 
-    private String formatNanos(long nanos)
-    {
+    private String formatNanos(long nanos) {
         // show millis with 3 digits (i.e. us)
         return new DecimalFormat("#.###", DecimalFormatSymbols.getInstance(Locale.ENGLISH)).format(nanos / 1000000.0);
     }
 
+    private String getRemoteAddress(HttpServletRequest servletRequest) {
+        String forwarded = servletRequest.getHeader("X-Forwarded-For");
+        if (forwarded != null) {
+            return forwarded;
+        }
+        else {
+            return servletRequest.getRemoteAddr();
+        }
+    }
 
+
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+        nodeId = System.getProperty("cluster.node");
+        if (nodeId == null) {
+            try {
+                nodeId = InetAddress.getLocalHost().getHostName();
+                if (nodeId.contains(".")) {
+                    // strip domain if any (e.g. myserver.mydomain.com -> myserver)
+                    nodeId = nodeId.split("\\.")[0];
+                }
+            }
+            catch (Exception e) {
+                log.warn("failed to read host name.", e);
+            }
+        }
+
+        dropUrls = new ArrayList<String>();
+        int i = 0;
+        String dropUrlParam;
+        while ((dropUrlParam = filterConfig.getInitParameter("dropurl." + i)) != null) {
+            log.info("Adding dropurl." + i + " " + dropUrlParam);
+            dropUrls.add(dropUrlParam);
+            i++;
+        }
+
+        threadBean = ManagementFactory.getThreadMXBean();
+    }
+
+
+    @Override
+    public void destroy() {
+        // nothing to do
+    }
 }

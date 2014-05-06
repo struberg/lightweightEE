@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<job id="customerimport" xmlns="http://xmlns.jcp.org/xml/ns/javaee" version="1.0">
+    <step id="import">
+        <chunk>
+            <reader ref="jsefaCsvReader">
+                <properties>
+                    <property name="file" value="#{jobParameters['input.file']}"/>
+                    <property name="objectTypes" value="de.jaxenter.eesummit.caroline.backend.batches.customerimport.CustomerCsv"/>
+                </properties>
+            </reader>
+            <processor ref="customerImportItemProcessor" />
+            <writer ref="customerImportItemWriter" />
+        </chunk>
+    </step>
+</job>

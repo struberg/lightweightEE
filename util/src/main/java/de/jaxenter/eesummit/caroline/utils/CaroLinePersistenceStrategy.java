@@ -7,9 +7,10 @@ import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
 import java.util.Arrays;
-import java.util.logging.Logger;
 
 import org.apache.deltaspike.jpa.impl.transaction.ResourceLocalTransactionStrategy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -25,14 +26,10 @@ public class CaroLinePersistenceStrategy extends ResourceLocalTransactionStrateg
     /** report all service calls which took longer than 200 ms */
     final static long LONG_RUNNING_THRESHOLD = 200L * LONG_MILLISECOND;
 
-    private static Logger logger = Logger.getLogger(CaroLinePersistenceStrategy.class.getName());
+    private static Logger logger = LoggerFactory.getLogger(CaroLinePersistenceStrategy.class);
 
     /**
      * We override the execute to measure the time and log slow services
-     *
-     * @param invocationContext
-     * @return
-     * @throws Exception
      */
     @Override
     public Object execute(InvocationContext invocationContext) throws Exception
@@ -48,7 +45,7 @@ public class CaroLinePersistenceStrategy extends ResourceLocalTransactionStrateg
             long elapsedTime = stopTime - startTime;
             if (elapsedTime > LONG_RUNNING_THRESHOLD)
             {
-                logger.fine("SLOW_SERVICE_DETECTED time = " + elapsedTime / LONG_MILLISECOND +
+                logger.info("SLOW_SERVICE_DETECTED time = " + elapsedTime / LONG_MILLISECOND +
                         "ms method=" + invocationContext.getMethod() +
                         " parms=" + Arrays.toString(invocationContext.getParameters()));
             }

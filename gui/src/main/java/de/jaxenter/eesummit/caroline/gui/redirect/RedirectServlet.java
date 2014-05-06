@@ -28,7 +28,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.logging.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <p>Sadly we need to do the redirect via a servlet because
@@ -58,7 +60,7 @@ public class RedirectServlet extends HttpServlet {
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        log = Logger.getLogger(getClass().getName());
+        log = LoggerFactory.getLogger(getClass());
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -88,7 +90,7 @@ public class RedirectServlet extends HttpServlet {
         msg.append(" error=").append(message);
 
         // it's important to know what resources are missing!
-        log.warning(msg.toString());
+        log.warn(msg.toString());
 
         // help us from getting into cyclic redirects
         String alreadyRedirected = request.getParameter(REDICRECT_DONE_PARAM);
