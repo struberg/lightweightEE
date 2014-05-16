@@ -7,11 +7,17 @@ import javax.enterprise.inject.spi.BeanManager;
 import javax.enterprise.inject.spi.InjectionTarget;
 
 
+import java.util.Properties;
+
 import org.apache.deltaspike.cdise.api.CdiContainer;
 import org.apache.deltaspike.cdise.api.CdiContainerLoader;
+import org.apache.deltaspike.core.api.config.ConfigResolver;
+import org.apache.deltaspike.core.api.config.PropertyLoader;
 import org.apache.deltaspike.core.api.projectstage.ProjectStage;
 
 import org.apache.deltaspike.core.util.ProjectStageProducer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
@@ -25,6 +31,8 @@ import org.testng.annotations.BeforeMethod;
  * @author <a href="mailto:struberg@yahoo.de">Mark Struberg</a>
  */
 public abstract class CdiContainerTest {
+
+    private static final Logger logger = LoggerFactory.getLogger(CdiContainerTest.class);
 
     protected static CdiContainer cdiContainer;
 
@@ -44,10 +52,19 @@ public abstract class CdiContainerTest {
         containerRefCount++;
 
         if (cdiContainer == null) {
-            ProjectStageProducer.setProjectStage(runInProjectStage());
+            ProjectStage projectStage = runInProjectStage();
+            ProjectStageProducer.setProjectStage(projectStage);
+
+            String dbvendor = ConfigResolver.getPropertyValue("dbvendor", "mysql");
+
+            logger.info("Starting OpenEJB with ProjectStage={} and dbvendor={}", projectStage, dbvendor);
+
 
             cdiContainer = CdiContainerLoader.getCdiContainer();
-            cdiContainer.boot();
+
+            Properties bootProperties = PropertyLoader.getProperties("db/db-" + dbvendor + ".properties");
+            cdiContainer.boot(bootProperties);
+
             cdiContainer.getContextControl().startContexts();
         }
         else {

@@ -34,7 +34,6 @@ import java.util.List;
  */
 @Entity
 @DiscriminatorValue("C")
-@Table
 public class Customer extends CaroLineUser
 {
 

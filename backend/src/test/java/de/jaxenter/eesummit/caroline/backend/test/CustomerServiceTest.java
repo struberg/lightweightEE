@@ -23,10 +23,12 @@ import de.jaxenter.eesummit.caroline.backend.api.UserService;
 import de.jaxenter.eesummit.caroline.entities.CaroLineUser;
 import de.jaxenter.eesummit.caroline.entities.Customer;
 import org.apache.deltaspike.core.api.provider.BeanProvider;
+import org.apache.deltaspike.jpa.api.transaction.Transactional;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -39,15 +41,26 @@ public class CustomerServiceTest extends CdiContainerTest
     private @Inject CustomerService custSvc;
     private @Inject UserService usrSvc;
 
+    private @Inject CleanUp cleanUp;
 
     @BeforeClass
     public void cleanUpDb() throws Exception {
-        EntityManager em = BeanProvider.getContextualReference(EntityManager.class);
-        em.getTransaction().begin();
-        Query q = em.createQuery("DELETE from Customer AS c where c.lastName LIKE :name", Customer.class);
-        q.setParameter("name", "UTEST_%");
-        q.executeUpdate();
-        em.getTransaction().commit();
+        cleanUp.cleanUpDb();
+    }
+
+
+    @ApplicationScoped
+    @Transactional
+    public static class CleanUp
+    {
+        private @Inject EntityManager em;
+
+        public void cleanUpDb() throws Exception
+        {
+            Query q = em.createQuery("DELETE from Customer AS c where c.lastName LIKE :name", Customer.class);
+            q.setParameter("name", "UTEST_%");
+            q.executeUpdate();
+        }
     }
 
     /**

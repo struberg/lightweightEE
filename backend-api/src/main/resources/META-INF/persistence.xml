@@ -5,8 +5,8 @@
 
 
     <!-- simply all annotated persistent entities will be part of this unit-->
-    <persistence-unit name="CaroLine">
-        <provider>org.apache.openjpa.persistence.PersistenceProviderImpl</provider>
+    <persistence-unit name="CaroLine" transaction-type="JTA">
+        <jta-data-source>CAROLINE</jta-data-source>
 
         <class>de.jaxenter.eesummit.caroline.entities.CaroLineUser</class>
         <class>de.jaxenter.eesummit.caroline.entities.Customer</class>
@@ -18,12 +18,8 @@
 
         <validation-mode>CALLBACK</validation-mode>
 
-        <properties>
-            <property name="openjpa.ConnectionDriverName"
-                      value="org.apache.deltaspike.jpa.impl.datasource.ConfigurableDataSource"/>
-            <property name="openjpa.ConnectionProperties"
-                      value="connectionId=core"/>
 
+        <properties>
             <!-- disable runtime instrumentation -->
             <property name="openjpa.DynamicEnhancementAgent" value="false"/>
 

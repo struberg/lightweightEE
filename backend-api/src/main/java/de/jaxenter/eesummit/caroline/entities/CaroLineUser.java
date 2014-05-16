@@ -27,6 +27,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
@@ -38,7 +39,7 @@ import javax.validation.constraints.NotNull;
  *
  * @author <a href="mailto:struberg@yahoo.de">Mark Struberg</a>
  */
-@Entity(name = "CaroLineUser")
+@Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(discriminatorType = DiscriminatorType.CHAR)
 @DiscriminatorValue("U")

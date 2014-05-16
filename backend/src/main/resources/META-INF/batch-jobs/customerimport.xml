@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <job id="customerimport" xmlns="http://xmlns.jcp.org/xml/ns/javaee" version="1.0">
     <step id="import">
-        <chunk>
+        <chunk item-count="1000">
             <reader ref="jsefaCsvReader">
                 <properties>
                     <property name="file" value="#{jobParameters['input.file']}"/>

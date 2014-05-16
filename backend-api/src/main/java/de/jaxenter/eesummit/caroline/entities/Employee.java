@@ -29,7 +29,6 @@ import javax.persistence.Table;
  */
 @Entity
 @DiscriminatorValue("E")
-@Table
 public class Employee extends CaroLineUser
 {
 

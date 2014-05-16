@@ -18,7 +18,6 @@
  */
 package de.jaxenter.eesummit.caroline.backend.impl;
 
-import de.jaxenter.eesummit.caroline.backend.tools.TransactionAware;
 import de.jaxenter.eesummit.caroline.entities.Employee;
 import de.jaxenter.eesummit.caroline.entities.MenuItem;
 import de.jaxenter.eesummit.caroline.backend.api.MenuService;
@@ -44,6 +43,8 @@ public class MenuServiceImpl extends AbstractService<MenuItem> implements MenuSe
      * It must later get filtered for roles.
      */
     private volatile List<MenuItem> allMenuItems = null;
+
+    private @Inject EntityManager em;
 
 
     @Override
@@ -154,9 +155,8 @@ public class MenuServiceImpl extends AbstractService<MenuItem> implements MenuSe
      * unfiltered list of all menus
      */
     private @Inject MenuServiceImpl self;
-    private @Inject @TransactionAware EntityManager em;
 
-    @Transactional(qualifier = TransactionAware.class)
+    @Transactional
     public List<MenuItem> loadRootMenu()
     {
         // we order immediately to not have to deal with it later

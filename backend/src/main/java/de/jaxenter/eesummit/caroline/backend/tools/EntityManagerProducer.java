@@ -29,13 +29,18 @@ import javax.persistence.Persistence;
 import javax.persistence.PersistenceUnit;
 
 /**
+ * Attention: this produces a JTA based EntityManager.
+ * This means that you must not call getTransaction().begin() etc on it!
+ *
  * @author <a href="mailto:struberg@yahoo.de">Mark Struberg</a>
  */
-@ApplicationScoped
+@RequestScoped
 public class EntityManagerProducer
 {
 
-    private EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("CaroLine");
+    @PersistenceUnit(unitName = "CAROLINE")
+    private EntityManagerFactory entityManagerFactory;
+
 
     @Produces
     @Default
@@ -51,16 +56,4 @@ public class EntityManagerProducer
     }
 
 
-    @Produces
-    @TransactionAware
-    @RequestScoped
-    public EntityManager createTransactionAwareEntityManager()
-    {
-        return entityManagerFactory.createEntityManager();
-    }
-
-    public void disposeTransactionAware(@Disposes @TransactionAware EntityManager entityManager)
-    {
-        entityManager.close();
-    }
 }

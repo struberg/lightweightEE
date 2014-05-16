@@ -38,7 +38,7 @@
         </dependency>
         <dependency>
             <groupId>org.apache.deltaspike.cdictrl</groupId>
-            <artifactId>deltaspike-cdictrl-owb</artifactId>
+            <artifactId>deltaspike-cdictrl-openejb</artifactId>
             <version>${deltaspike.version}</version>
             <scope>test</scope>
         </dependency>
@@ -88,63 +88,34 @@
             <version>0.9.3.RELEASE</version>
         </dependency>
 
-
-
-        <dependency>
-            <groupId>org.apache.openwebbeans</groupId>
-            <artifactId>openwebbeans-impl</artifactId>
-            <version>${owb.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.openwebbeans</groupId>
-            <artifactId>openwebbeans-spi</artifactId>
-            <version>${owb.version}</version>
-            <scope>test</scope>
-        </dependency>
-
         <dependency>
             <groupId>org.apache.bval</groupId>
             <artifactId>bval-jsr303</artifactId>
             <version>${bval.version}</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
-            <groupId>org.apache.bval</groupId>
-            <artifactId>bval-core</artifactId>
-            <version>${bval.version}</version>
+            <groupId>org.apache.openejb</groupId>
+            <artifactId>openejb-core</artifactId>
+            <version>${openejb.version}</version>
             <scope>test</scope>
         </dependency>
 
         <!-- for OpenJPA -->
-        <dependency>
-            <groupId>org.apache.openjpa</groupId>
-            <artifactId>openjpa-kernel</artifactId>
-            <version>${openjpa.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.openjpa</groupId>
-            <artifactId>openjpa-lib</artifactId>
-            <version>${openjpa.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>junit</groupId>
-                    <artifactId>junit</artifactId>
-                </exclusion>
-            </exclusions>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.openjpa</groupId>
-            <artifactId>openjpa-persistence-jdbc</artifactId>
-            <version>${openjpa.version}</version>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
 
     <build>
-
+        <testResources>
+            <!-- generate the db-*.properties files for ContainerTest -->
+            <testResource>
+                <directory>src/test/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>**/db*.properties</include>
+                </includes>
+            </testResource>
+        </testResources>
     </build>
 
 </project>    
