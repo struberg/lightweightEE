@@ -162,5 +162,24 @@
             </build>
         </profile>
 
+        <profile>
+            <id>invomon</id>
+            <properties>
+                <interdyn.version>1.0-SNAPSHOT</interdyn.version>
+            </properties>
+
+            <dependencies>
+                <dependency>
+                    <groupId>at.struct.devtools.cdi.invomon</groupId>
+                    <artifactId>invomon</artifactId>
+                    <version>${interdyn.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>at.struct.devtools.cdi.interdyn</groupId>
+                    <artifactId>interdyn</artifactId>
+                    <version>${interdyn.version}</version>
+                </dependency>
+            </dependencies>
+        </profile>
     </profiles>
 </project>    
