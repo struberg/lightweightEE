@@ -104,12 +104,43 @@
             <build>
                 <plugins>
                     <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <version>2.6</version>
+                        <executions>
+                            <execution>
+                                <id>copy-tomee-conf</id>
+                                <phase>generate-resources</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <!-- has to be configured as tomee.conf.dir -->
+                                    <outputDirectory>${project.build.directory}/tomee/</outputDirectory>
+                                    <resources>
+                                        <resource>
+                                            <directory>${basedir}/src/main/tomee/</directory>
+                                            <includes>
+                                                <include>**/*.xml</include>
+                                            </includes>
+                                            <!-- filter to correctly set the database connection properties in tomee.xml -->
+                                            <filtering>true</filtering>
+                                        </resource>
+                                    </resources>
+                                    <overwrite>true</overwrite>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <plugin>
                         <groupId>org.apache.openejb.maven</groupId>
                         <artifactId>tomee-maven-plugin</artifactId>
                         <version>${tomee.mavenplugin.version}</version>
                         <configuration>
                             <tomeeVersion>${tomee.version}</tomeeVersion>
                             <tomeeClassifier>webprofile</tomeeClassifier>
+                            <config>${project.build.directory}/tomee/conf</config>
                             <synchronization>
                                 <extensions>
                                     <extension>.class</extension>
@@ -131,10 +162,11 @@
                             <path>${project.build.directory}/apache-tomee/webapps${project.build.finalName}</path>
                             <!-- memory settings for tomEE; increased PermGen from default 64m to 512m, should allow for more
                             redeploys without PermGenExceptions -->
-                            <args>-Dorg.apache.deltaspike.ProjectStage=${projectstage} -Dfaces.PROJECT_STAGE=${projectstage} -Dopenejb.classloader.forced-load=org.apache.openjpa -Djava.awt.headless=true -Dfile.encoding=UTF-8 -server -Xms1024m -Xmx1024m -XX:NewSize=512m -XX:MaxNewSize=384m -XX:PermSize=384m -XX:MaxPermSize=512m -XX:+DisableExplicitGC ${tomee.additional.args}
+                            <args>-Dorg.apache.deltaspike.ProjectStage=${projectstage} -Dfaces.PROJECT_STAGE=${projectstage} -Dopenejb.classloader.forced-load=org.apache.openjpa -Dopenejb.log.factory=log4j -Djava.awt.headless=true -Dfile.encoding=UTF-8 -server -Xms1024m -Xmx1024m -XX:NewSize=512m -XX:MaxNewSize=384m -XX:PermSize=384m -XX:MaxPermSize=512m -XX:+DisableExplicitGC ${tomee.additional.args}
                             </args>
                             <libs>
                                 <lib>mysql:mysql-connector-java:${mysql-connector.version}</lib>
+                                <lib>log4j:log4j:${log4j.version}</lib>
                             </libs>
                         </configuration>
                         <dependencies>

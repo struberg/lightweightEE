@@ -38,7 +38,7 @@ import javax.persistence.PersistenceUnit;
 public class EntityManagerProducer
 {
 
-    @PersistenceUnit(unitName = "CAROLINE")
+    @PersistenceUnit(unitName = "CaroLine")
     private EntityManagerFactory entityManagerFactory;
 
 

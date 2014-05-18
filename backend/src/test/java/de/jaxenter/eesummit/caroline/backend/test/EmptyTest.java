@@ -18,6 +18,7 @@
  */
 package de.jaxenter.eesummit.caroline.backend.test;
 
+import de.jaxenter.eesummit.caroline.backend.test.CdiContainerTest;
 import org.testng.annotations.Test;
 
 /**
@@ -26,7 +27,8 @@ import org.testng.annotations.Test;
  *
  *  I confess to 'abuse' my toy project to do some OWB tuning ;)
  */
-public class EmptyTest extends CdiContainerTest {
+public class EmptyTest extends CdiContainerTest
+{
 
     @Test
     public void testNothin() {

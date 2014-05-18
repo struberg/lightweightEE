@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tomee>
+
+    <!--
+    #
+    #  The <Deployments> element can be used to configure file
+    #  paths where OpenEJB should look for ejb jars or ear files.
+    #
+    #  See http://openejb.apache.org/3.0/deployments.html
+    #
+    #  The below entry is simply a default and can be changed or deleted
+    -->
+
+    <!--
+    # connection details specified in our pom,
+    # use profile to switch if you like to add additional databases
+    # for local testing
+    -->
+    <Resource id="CAROLINE" type="DataSource">
+        JdbcDriver ${database.driver.name}
+        JdbcUrl ${database.connection.url}
+        UserName ${database.user}
+        Password ${database.password}
+        JtaManaged true
+    </Resource>
+</tomee>

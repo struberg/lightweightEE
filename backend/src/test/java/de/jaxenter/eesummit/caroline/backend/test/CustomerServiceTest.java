@@ -22,7 +22,7 @@ import de.jaxenter.eesummit.caroline.backend.api.CustomerService;
 import de.jaxenter.eesummit.caroline.backend.api.UserService;
 import de.jaxenter.eesummit.caroline.entities.CaroLineUser;
 import de.jaxenter.eesummit.caroline.entities.Customer;
-import org.apache.deltaspike.core.api.provider.BeanProvider;
+import de.jaxenter.eesummit.caroline.backend.test.CdiContainerTest;
 import org.apache.deltaspike.jpa.api.transaction.Transactional;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;

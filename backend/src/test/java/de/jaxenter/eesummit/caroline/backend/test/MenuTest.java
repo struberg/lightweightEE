@@ -21,10 +21,13 @@ package de.jaxenter.eesummit.caroline.backend.test;
 import de.jaxenter.eesummit.caroline.backend.api.MenuService;
 import de.jaxenter.eesummit.caroline.backend.api.MenuAdminService;
 import de.jaxenter.eesummit.caroline.entities.MenuItem;
+import de.jaxenter.eesummit.caroline.backend.test.CdiContainerTest;
 import org.apache.deltaspike.core.api.provider.BeanProvider;
+import org.apache.deltaspike.jpa.api.transaction.Transactional;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -40,21 +43,31 @@ public class MenuTest extends CdiContainerTest
     private @Inject MenuAdminService menuAdminSvc;
 
 
+    private @Inject CleanUp cleanUp;
+
     @BeforeClass
     public void cleanUpDb() throws Exception
     {
-        EntityManager em = BeanProvider.getContextualReference(EntityManager.class);
-        em.getTransaction().begin();
+        cleanUp.cleanUpDb();
+    }
 
-        // otherwise we will get problems with the parent contrainst when deleting all menus!
-        Query update = em.createQuery("UPDATE MenuItem AS m set m.parent = null", MenuItem.class);
-        update.executeUpdate();
+    @ApplicationScoped
+    @Transactional
+    public static class CleanUp
+    {
+        private @Inject EntityManager em;
 
-        // now we can easily delete all our menu items, because they have no active parent contraints anymore
-        Query delete = em.createQuery("DELETE from MenuItem AS m", MenuItem.class);
-        delete.executeUpdate();
+        @BeforeClass
+        public void cleanUpDb() throws Exception
+        {
+            // otherwise we will get problems with the parent contrainst when deleting all menus!
+            Query update = em.createQuery("UPDATE MenuItem AS m set m.parent = null", MenuItem.class);
+            update.executeUpdate();
 
-        em.getTransaction().commit();
+            // now we can easily delete all our menu items, because they have no active parent contraints anymore
+            Query delete = em.createQuery("DELETE from MenuItem AS m", MenuItem.class);
+            delete.executeUpdate();
+        }
     }
 
     /**

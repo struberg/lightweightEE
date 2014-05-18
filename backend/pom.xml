@@ -105,6 +105,12 @@
             <artifactId>openejb-core</artifactId>
             <version>${openejb.version}</version>
             <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-jdk14</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- for OpenJPA -->
@@ -116,9 +122,6 @@
             <testResource>
                 <directory>src/test/resources</directory>
                 <filtering>true</filtering>
-                <includes>
-                    <include>**/db*.properties</include>
-                </includes>
             </testResource>
         </testResources>
     </build>

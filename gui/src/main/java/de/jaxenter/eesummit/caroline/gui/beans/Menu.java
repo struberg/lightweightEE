@@ -46,7 +46,7 @@ import java.io.Serializable;
 @Named
 public class Menu implements Serializable
 {
-    private String activeMenuItem;
+    private String activeMenuItem = "none";
     private MenuItem topLevelMenu;
     private String servletPath;
 

@@ -55,14 +55,14 @@ public abstract class CdiContainerTest {
             ProjectStage projectStage = runInProjectStage();
             ProjectStageProducer.setProjectStage(projectStage);
 
-            String dbvendor = ConfigResolver.getPropertyValue("dbvendor", "mysql");
+            String dbVendor = ConfigResolver.getPropertyValue("dbvendor", "mysql");
 
-            logger.info("Starting OpenEJB with ProjectStage={} and dbvendor={}", projectStage, dbvendor);
+            logger.info("Starting OpenEJB with ProjectStage={} and dbvendor={}", projectStage, dbVendor);
 
 
             cdiContainer = CdiContainerLoader.getCdiContainer();
 
-            Properties bootProperties = PropertyLoader.getProperties("db/db-" + dbvendor + ".properties");
+            Properties bootProperties = PropertyLoader.getProperties("db/db-" + dbVendor + ".properties");
             cdiContainer.boot(bootProperties);
 
             cdiContainer.getContextControl().startContexts();
