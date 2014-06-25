@@ -47,7 +47,7 @@ public class CustomerAccessVoter extends AbstractAccessDecisionVoter
 
         if (!user.isLoggedIn() && !user.isEmployee())
         {
-            newSecurityViolation(messages.loginRequiredEmployee());
+            violations.add(newSecurityViolation(messages.loginRequiredEmployee()));
         }
     }
 
