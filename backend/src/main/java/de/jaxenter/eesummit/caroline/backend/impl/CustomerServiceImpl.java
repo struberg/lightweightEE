@@ -22,7 +22,10 @@ package de.jaxenter.eesummit.caroline.backend.impl;
 import de.jaxenter.eesummit.caroline.backend.api.CustomerService;
 import de.jaxenter.eesummit.caroline.backend.tools.QueryBuilder;
 import de.jaxenter.eesummit.caroline.entities.Customer;
+import org.apache.commons.lang3.Validate;
 import org.apache.deltaspike.jpa.api.transaction.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 import javax.enterprise.context.ApplicationScoped;
@@ -40,6 +43,8 @@ import java.util.List;
 @Transactional
 public class CustomerServiceImpl extends AbstractService<Customer> implements CustomerService
 {
+    private static final Logger logger = LoggerFactory.getLogger(CustomerServiceImpl.class);
+
     private @Inject EntityManager em;
 
 
@@ -64,6 +69,9 @@ public class CustomerServiceImpl extends AbstractService<Customer> implements Cu
     @Override
     public Customer createCustomer(Customer c)
     {
+        Validate.notNull(c);
+        logger.info("creating customer {} {}", c.getFirstName(), c.getLastName());
+
         c.setActive(true);
         return create(c);
     }
@@ -77,6 +85,8 @@ public class CustomerServiceImpl extends AbstractService<Customer> implements Cu
     @Override
     public List<Customer> searchCustomers(String lastName, String firstName)
     {
+        logger.info("searching customers  {} {}", firstName, lastName);
+
         QueryBuilder qb = new QueryBuilder("SELECT c from Customer AS c");
         
         if (lastName != null && lastName.length()>0)

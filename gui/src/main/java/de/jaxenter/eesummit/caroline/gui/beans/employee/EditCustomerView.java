@@ -6,22 +6,27 @@ import de.jaxenter.eesummit.caroline.entities.Customer;
 import de.jaxenter.eesummit.caroline.gui.msg.CarolineMessages;
 import de.jaxenter.eesummit.caroline.gui.viewconfig.EmployeePages;
 import org.apache.deltaspike.core.api.config.view.ViewConfig;
+import org.apache.deltaspike.core.api.scope.ViewAccessScoped;
 import org.apache.deltaspike.jsf.api.message.JsfMessage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import javax.enterprise.context.RequestScoped;
 import javax.faces.event.ComponentSystemEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.Serializable;
 
 /**
  * Backing bean for creating and editing customers.
  *
  * @author <a href="mailto:struberg@yahoo.de">Mark Struberg</a> 
  */
-@RequestScoped
+@ViewAccessScoped
 @Named("editCustomer")
-public class EditCustomerView
+public class EditCustomerView implements Serializable
 {
+    private static final Logger logger = LoggerFactory.getLogger(EditCustomerView.class);
+
     private Customer customer = new Customer();
     private Long customerId = null;
     private boolean edit = false;
@@ -38,6 +43,8 @@ public class EditCustomerView
     {
         if (customerId != null)
         {
+            logger.info("loading customer with id {}", customerId);
+
             customer = customerSvc.getById(customerId);
             if (customer == null)
             {

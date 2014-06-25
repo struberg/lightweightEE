@@ -35,6 +35,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
 import java.lang.management.ThreadMXBean;
@@ -151,6 +152,8 @@ public class LogFilter implements Filter {
 
                 remoteAddress = getRemoteAddress(httpServletRequest);
 
+                HttpSession session = httpServletRequest.getSession(false);
+                sessionId = session != null ? session.getId() : "no-session";
                 setupMdc(sessionId, userId);
 
                 msg.append("request start ").append(method).append(' ').append(url)

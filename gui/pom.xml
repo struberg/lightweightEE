@@ -17,7 +17,6 @@
     </description>
 
     <properties>
-        <tomcat.version>7.0.27</tomcat.version>
         <tomee.additional.args></tomee.additional.args>
     </properties>
 
@@ -122,6 +121,7 @@
                                             <directory>${basedir}/src/main/tomee/</directory>
                                             <includes>
                                                 <include>**/*.xml</include>
+                                                <include>**/*.properties</include>
                                             </includes>
                                             <!-- filter to correctly set the database connection properties in tomee.xml -->
                                             <filtering>true</filtering>
@@ -141,6 +141,7 @@
                             <tomeeVersion>${tomee.version}</tomeeVersion>
                             <tomeeClassifier>webprofile</tomeeClassifier>
                             <config>${project.build.directory}/tomee/conf</config>
+                            <deployOpenEjbApplication>true</deployOpenEjbApplication>
                             <synchronization>
                                 <extensions>
                                     <extension>.class</extension>
@@ -151,8 +152,6 @@
                                 </extensions>
                                 <updateInterval>2</updateInterval>
                             </synchronization>
-                            <!-- important: for some reason, this has to be false, else reloading does not work! -->
-                            <reloadOnUpdate>false</reloadOnUpdate>
 
                             <catalinaBase>${project.build.directory}/${tomee-plugin.catalinaBaseDir}</catalinaBase>
 
@@ -162,12 +161,24 @@
                             <path>${project.build.directory}/apache-tomee/webapps${project.build.finalName}</path>
                             <!-- memory settings for tomEE; increased PermGen from default 64m to 512m, should allow for more
                             redeploys without PermGenExceptions -->
-                            <args>-Dorg.apache.deltaspike.ProjectStage=${projectstage} -Dfaces.PROJECT_STAGE=${projectstage} -Dopenejb.classloader.forced-load=org.apache.openjpa -Dopenejb.log.factory=log4j -Djava.awt.headless=true -Dfile.encoding=UTF-8 -server -Xms1024m -Xmx1024m -XX:NewSize=512m -XX:MaxNewSize=384m -XX:PermSize=384m -XX:MaxPermSize=512m -XX:+DisableExplicitGC ${tomee.additional.args}
+                            <args>-Dorg.apache.deltaspike.ProjectStage=${projectstage} -Dfaces.PROJECT_STAGE=${projectstage} -Dopenejb.log.factory=log4j -Djava.awt.headless=true -Dfile.encoding=UTF-8 -server -Xms1024m -Xmx1024m -XX:NewSize=512m -XX:MaxNewSize=384m -XX:PermSize=384m -XX:MaxPermSize=512m -XX:+DisableExplicitGC ${tomee.additional.args}
                             </args>
                             <libs>
+                                <lib>remove:slf4j</lib>
+                                <lib>org.slf4j:slf4j-api:${slf4j.version}</lib>
+                                <lib>org.slf4j:slf4j-log4j12:${slf4j.version}</lib>
+                                <lib>org.slf4j:jul-to-slf4j:${slf4j.version}</lib>
                                 <lib>mysql:mysql-connector-java:${mysql-connector.version}</lib>
                                 <lib>log4j:log4j:${log4j.version}</lib>
                             </libs>
+
+                            <classpaths>
+                                <classpath>${project.build.directory}/${tomee-plugin.catalinaBaseDir}/lib/slf4j-api-${slf4j.version}.jar</classpath>
+                                <classpath>${project.build.directory}/${tomee-plugin.catalinaBaseDir}/lib/jul-to-slf4j-${slf4j.version}.jar</classpath>
+                                <classpath>${project.build.directory}/${tomee-plugin.catalinaBaseDir}/lib/slf4j-log4j12-${slf4j.version}.jar</classpath>
+                                <classpath>${project.build.directory}/${tomee-plugin.catalinaBaseDir}/lib/log4j-${log4j.version}.jar</classpath>
+                                <classpath>${project.build.directory}/${tomee-plugin.catalinaBaseDir}/lib/log4j.xml</classpath>
+                            </classpaths>
                         </configuration>
                         <dependencies>
                             <dependency>
@@ -185,6 +196,11 @@
                                 <artifactId>mysql-connector-java</artifactId>
                                 <version>${mysql-connector.version}</version>
                                 <scope>runtime</scope>
+                            </dependency>
+                            <dependency>
+                                <groupId>org.slf4j</groupId>
+                                <artifactId>jul-to-slf4j</artifactId>
+                                <version>${slf4j.version}</version>
                             </dependency>
 
                         </dependencies>
