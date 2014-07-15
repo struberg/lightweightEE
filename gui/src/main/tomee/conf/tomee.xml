@@ -23,4 +23,13 @@
         Password ${database.password}
         JtaManaged true
     </Resource>
+
+    <Resource id="BATCHEE" type="DataSource">
+        JdbcDriver ${database.driver.name}
+        JdbcUrl ${database.connection.url}
+        UserName ${database.user}
+        Password ${database.password}
+        JtaManaged false
+    </Resource>
+
 </tomee>

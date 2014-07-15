@@ -16,8 +16,8 @@
         <class>de.jaxenter.eesummit.caroline.entities.StorageSlot</class>
         <class>de.jaxenter.eesummit.caroline.entities.MenuItem</class>
 
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <validation-mode>CALLBACK</validation-mode>
-
 
         <properties>
             <!-- disable runtime instrumentation -->
@@ -35,4 +35,13 @@
 
     </persistence-unit>
 
+    <persistence-unit name="batchee" transaction-type="RESOURCE_LOCAL">
+        <non-jta-data-source>BATCHEE</non-jta-data-source>
+
+        <class>org.apache.batchee.container.services.persistence.jpa.domain.CheckpointEntity</class>
+        <class>org.apache.batchee.container.services.persistence.jpa.domain.JobExecutionEntity</class>
+        <class>org.apache.batchee.container.services.persistence.jpa.domain.JobInstanceEntity</class>
+        <class>org.apache.batchee.container.services.persistence.jpa.domain.StepExecutionEntity</class>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+    </persistence-unit>
 </persistence>
