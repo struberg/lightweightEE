@@ -18,6 +18,9 @@
  */
 package de.jaxenter.eesummit.caroline.entities;
 
+import de.jaxenter.eesummit.caroline.entities.enums.SpeedRating;
+import de.jaxenter.eesummit.caroline.entities.enums.Usage;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -57,47 +60,8 @@ public class Tyre implements BaseEntity
     /** in inches */
     private int wheelDiameter;
 
-    /**
-     * max allowed speed
-     *   mpH  kmH
-     * N  87  140
-     * P  93  150
-     * Q  99  160
-     * R 106  170
-     * S 112  180
-     * T 118  190
-     * U 124  200
-     * H 130  210
-     * V 149  240
-     * Z 150+ 240+
-     * W 168  270
-     * Y 186  300
-     */
-    public enum SpeedRating
-    {
-        N,
-        P,
-        Q,
-        R,
-        S,
-        T,
-        U,
-        H,
-        V,
-        Z,
-        W,
-        Y
-    }
-
     @Enumerated(EnumType.STRING)
     private SpeedRating speedRating;
-
-    public enum Usage
-    {
-        WINTER,
-        SUMMER,
-        ALLSEASON
-    }
 
     @Enumerated(EnumType.STRING)
     private Usage usage;
