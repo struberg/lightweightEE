@@ -18,7 +18,8 @@
  */
 package de.jaxenter.eesummit.caroline.entities.enums;
 
-public enum Usage {
+public enum Usage 
+{
    WINTER,
    SUMMER,
    ALLSEASON
