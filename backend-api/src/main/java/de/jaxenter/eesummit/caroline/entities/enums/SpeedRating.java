@@ -34,7 +34,8 @@ package de.jaxenter.eesummit.caroline.entities.enums;
  * W 168  270
  * Y 186  300
  */
-public enum SpeedRating {
+public enum SpeedRating 
+{
    N,
    P,
    Q,
