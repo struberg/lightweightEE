@@ -24,11 +24,11 @@
 
         <!-- required for maven2 -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <owb.version>1.2.2</owb.version>
+        <owb.version>1.5.0-SNAPSHOT</owb.version>
         <openjpa.version>2.3.0</openjpa.version>
         <myfaces.version>2.1.12</myfaces.version>
         <bval.version>0.5</bval.version>
-        <deltaspike.version>0.7</deltaspike.version>
+        <deltaspike.version>1.0.3</deltaspike.version>
 
         <el.version>2.2</el.version>
         <mysql-connector.version>5.1.25</mysql-connector.version>
@@ -179,20 +179,26 @@
         <!-- for OpenWebBeans -->
         <dependency>
             <groupId>org.apache.geronimo.specs</groupId>
+            <artifactId>geronimo-annotation_1.2_spec</artifactId>
+            <version>1.0-alpha-1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.geronimo.specs</groupId>
             <artifactId>geronimo-atinject_1.0_spec</artifactId>
             <version>1.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.geronimo.specs</groupId>
-            <artifactId>geronimo-jcdi_1.0_spec</artifactId>
-            <version>1.0</version>
+            <artifactId>geronimo-jcdi_1.1_spec</artifactId>
+            <version>1.0-alpha-1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.geronimo.specs</groupId>
-            <artifactId>geronimo-interceptor_1.1_spec</artifactId>
-            <version>1.0</version>
+            <artifactId>geronimo-interceptor_1.2_spec</artifactId>
+            <version>1.0-alpha-1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

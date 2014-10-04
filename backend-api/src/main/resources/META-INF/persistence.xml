@@ -19,11 +19,6 @@
         <validation-mode>CALLBACK</validation-mode>
 
         <properties>
-            <property name="openjpa.ConnectionDriverName"
-                      value="org.apache.deltaspike.jpa.impl.datasource.ConfigurableDataSource"/>
-            <property name="openjpa.ConnectionProperties"
-                      value="connectionId=core"/>
-
             <!-- disable runtime instrumentation -->
             <property name="openjpa.DynamicEnhancementAgent" value="false"/>
 

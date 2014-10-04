@@ -29,7 +29,7 @@ import org.testng.annotations.Test;
 public class EmptyTest extends CdiContainerTest {
 
     @Test
-    public void testNothin() {
+    public void testNothing() {
         // wohu, this line should be really quick ;)
     }
 }
