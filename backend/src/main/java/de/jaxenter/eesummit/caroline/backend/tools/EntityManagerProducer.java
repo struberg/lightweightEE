@@ -23,10 +23,11 @@ import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Default;
 import javax.enterprise.inject.Disposes;
 import javax.enterprise.inject.Produces;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.PersistenceUnit;
+
+import org.apache.deltaspike.jpa.api.entitymanager.PersistenceUnitName;
 
 /**
  * @author <a href="mailto:struberg@yahoo.de">Mark Struberg</a>
@@ -35,7 +36,9 @@ import javax.persistence.PersistenceUnit;
 public class EntityManagerProducer
 {
 
-    private EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("CaroLine");
+    @Inject
+    @PersistenceUnitName("CaroLine")
+    private EntityManagerFactory entityManagerFactory;
 
     @Produces
     @Default
