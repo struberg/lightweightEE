@@ -24,11 +24,11 @@
 
         <!-- required for maven2 -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <owb.version>1.2.2</owb.version>
-        <openjpa.version>2.3.0</openjpa.version>
+        <owb.version>1.5.1-SNAPSHOT</owb.version>
+        <openjpa.version>2.4.0</openjpa.version>
         <myfaces.version>2.1.12</myfaces.version>
         <bval.version>0.5</bval.version>
-        <deltaspike.version>1.0.3</deltaspike.version>
+        <deltaspike.version>1.3.0</deltaspike.version>
 
         <el.version>2.2</el.version>
         <mysql-connector.version>5.1.25</mysql-connector.version>
@@ -37,11 +37,7 @@
         <testng.version>6.8.7</testng.version>
         <arquillian.version>1.0.4.Final</arquillian.version>
 
-        <tomee.version>1.6.0</tomee.version>
-        <tomee.mavenplugin.version>${tomee.version}</tomee.mavenplugin.version>
-        <tomee-plugin.catalinaBaseDir>apache-tomee</tomee-plugin.catalinaBaseDir>
-
-        <batchee.version>0.2-incubating-SNAPSHOT</batchee.version>
+        <batchee.version>0.2-incubating</batchee.version>
 
         <!-- needed for the database support -->
         <database.driver.name>com.mysql.jdbc.Driver</database.driver.name>
@@ -102,9 +98,13 @@
                 <groupId>org.apache.myfaces.core</groupId>
                 <artifactId>myfaces-api</artifactId>
                 <version>${myfaces.version}</version>
-                <scope>provided</scope>
             </dependency>
-
+            <dependency>
+                <groupId>org.apache.myfaces.core</groupId>
+                <artifactId>myfaces-impl</artifactId>
+                <version>${myfaces.version}</version>
+                <scope>runtime</scope>
+            </dependency>
             <dependency>
                 <groupId>jstl</groupId>
                 <artifactId>jstl</artifactId>
@@ -158,6 +158,16 @@
                 <scope>runtime</scope>
             </dependency>
 
+            <dependency>
+                <groupId>org.apache.openwebbeans</groupId>
+                <artifactId>openwebbeans-web</artifactId>
+                <version>${owb.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.openwebbeans</groupId>
+                <artifactId>openwebbeans-jsf</artifactId>
+                <version>${owb.version}</version>
+            </dependency>
 
             <!-- this imports all version definitions for Arquillian -->
             <dependency>
@@ -181,19 +191,21 @@
             <groupId>org.apache.geronimo.specs</groupId>
             <artifactId>geronimo-atinject_1.0_spec</artifactId>
             <version>1.0</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.geronimo.specs</groupId>
-            <artifactId>geronimo-jcdi_1.0_spec</artifactId>
+            <artifactId>geronimo-jcdi_1.1_spec</artifactId>
             <version>1.0</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.geronimo.specs</groupId>
-            <artifactId>geronimo-interceptor_1.1_spec</artifactId>
+            <artifactId>geronimo-interceptor_1.2_spec</artifactId>
             <version>1.0</version>
-            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.geronimo.specs</groupId>
+            <artifactId>geronimo-annotation_1.2_spec</artifactId>
+            <version>1.0</version>
         </dependency>
         <dependency>
             <groupId>org.apache.geronimo.specs</groupId>
@@ -205,7 +217,22 @@
             <groupId>org.apache.geronimo.specs</groupId>
             <artifactId>geronimo-jpa_2.0_spec</artifactId>
             <version>1.1</version>
-            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.openwebbeans</groupId>
+            <artifactId>openwebbeans-impl</artifactId>
+            <version>${owb.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.openwebbeans</groupId>
+            <artifactId>openwebbeans-spi</artifactId>
+            <version>${owb.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.openwebbeans</groupId>
+            <artifactId>openwebbeans-resource</artifactId>
+            <version>${owb.version}</version>
         </dependency>
 
 
@@ -214,10 +241,49 @@
             <groupId>org.apache.geronimo.specs</groupId>
             <artifactId>geronimo-validation_1.0_spec</artifactId>
             <version>1.1</version>
-            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.bval</groupId>
+            <artifactId>bval-jsr303</artifactId>
+            <version>${bval.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.bval</groupId>
+            <artifactId>bval-core</artifactId>
+            <version>${bval.version}</version>
         </dependency>
 
         <!-- for OpenJPA -->
+
+        <dependency>
+            <groupId>org.apache.geronimo.specs</groupId>
+            <artifactId>geronimo-jpa_2.0_spec</artifactId>
+            <version>1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.openjpa</groupId>
+            <artifactId>openjpa-kernel</artifactId>
+            <version>${openjpa.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.openjpa</groupId>
+            <artifactId>openjpa-lib</artifactId>
+            <version>${openjpa.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>junit</groupId>
+                    <artifactId>junit</artifactId>
+                </exclusion>
+            </exclusions>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.openjpa</groupId>
+            <artifactId>openjpa-persistence-jdbc</artifactId>
+            <version>${openjpa.version}</version>
+            <scope>compile</scope>
+        </dependency>
 
         <dependency>
             <groupId>mysql</groupId>

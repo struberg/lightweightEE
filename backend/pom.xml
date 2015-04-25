@@ -82,11 +82,6 @@
             <version>${batchee.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.batchee</groupId>
-            <artifactId>batchee-ee6</artifactId>
-            <version>${batchee.version}</version>
-        </dependency>
-        <dependency>
             <!-- used for reading CSV import files -->
             <groupId>org.jsefa</groupId>
             <artifactId>jsefa</artifactId>
