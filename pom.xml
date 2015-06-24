@@ -24,22 +24,21 @@
 
         <!-- required for maven2 -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <openejb.version>4.6.0.2</openejb.version>
         <openjpa.version>2.3.0</openjpa.version>
         <myfaces.version>2.1.12</myfaces.version>
-        <bval.version>0.5</bval.version>
-        <deltaspike.version>1.0.0</deltaspike.version>
+        <bval.version>1.1.0</bval.version>
+        <deltaspike.version>1.4.1</deltaspike.version>
 
         <el.version>2.2</el.version>
         <mysql-connector.version>5.1.25</mysql-connector.version>
 
-        <testng.version>6.8.7</testng.version>
+        <junit.version>4.9</junit.version>
 
-        <tomee.version>1.7.0-SNAPSHOT</tomee.version>
+        <tomee.version>7.0.0-SNAPSHOT</tomee.version>
         <tomee.mavenplugin.version>${tomee.version}</tomee.mavenplugin.version>
         <tomee-plugin.catalinaBaseDir>apache-tomee</tomee-plugin.catalinaBaseDir>
 
-        <batchee.version>0.2-incubating-SNAPSHOT</batchee.version>
+        <batchee.version>0.2-incubating</batchee.version>
 
         <!-- needed for the database support -->
         <database.driver.name>com.mysql.jdbc.Driver</database.driver.name>
@@ -218,7 +217,7 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.1</version>
+            <version>3.4</version>
         </dependency>
 
         <!-- logging is needed in every module -->
@@ -241,13 +240,11 @@
         </dependency>
 
         <!-- for unit testing -->
-         <dependency>
-             <groupId>org.testng</groupId>
-             <artifactId>testng</artifactId>
-             <version>${testng.version}</version>
-             <scope>test</scope>
-         </dependency>
-
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+        </dependency>
         <!-- Apache DeltaSpike -->
         <dependency>
             <groupId>org.apache.deltaspike.core</groupId>

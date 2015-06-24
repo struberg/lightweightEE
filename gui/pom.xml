@@ -134,7 +134,7 @@
                     </plugin>
 
                     <plugin>
-                        <groupId>org.apache.openejb.maven</groupId>
+                        <groupId>org.apache.tomee.maven</groupId>
                         <artifactId>tomee-maven-plugin</artifactId>
                         <version>${tomee.mavenplugin.version}</version>
                         <configuration>
@@ -182,7 +182,7 @@
                         </configuration>
                         <dependencies>
                             <dependency>
-                                <groupId>org.apache.openejb</groupId>
+                                <groupId>org.apache.tomee</groupId>
                                 <artifactId>apache-tomee</artifactId>
                                 <version>${tomee.version}</version>
                                 <classifier>webprofile</classifier>

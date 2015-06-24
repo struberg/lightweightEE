@@ -21,11 +21,11 @@ package de.jaxenter.eesummit.caroline.backend.test;
 import de.jaxenter.eesummit.caroline.backend.api.MenuService;
 import de.jaxenter.eesummit.caroline.backend.api.MenuAdminService;
 import de.jaxenter.eesummit.caroline.entities.MenuItem;
-import de.jaxenter.eesummit.caroline.backend.test.CdiContainerTest;
-import org.apache.deltaspike.core.api.provider.BeanProvider;
 import org.apache.deltaspike.jpa.api.transaction.Transactional;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
+import org.apache.deltaspike.testcontrol.api.junit.CdiTestRunner;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -37,7 +37,8 @@ import javax.persistence.Query;
  *
  * @author <a href="mailto:struberg@yahoo.de">Mark Struberg</a>
  */
-public class MenuTest extends CdiContainerTest
+@RunWith(CdiTestRunner.class)
+public class MenuTest
 {
     private @Inject MenuService menuSvc;
     private @Inject MenuAdminService menuAdminSvc;
@@ -45,7 +46,7 @@ public class MenuTest extends CdiContainerTest
 
     private @Inject CleanUp cleanUp;
 
-    @BeforeClass
+    @Before
     public void cleanUpDb() throws Exception
     {
         cleanUp.cleanUpDb();
@@ -57,7 +58,6 @@ public class MenuTest extends CdiContainerTest
     {
         private @Inject EntityManager em;
 
-        @BeforeClass
         public void cleanUpDb() throws Exception
         {
             // otherwise we will get problems with the parent contrainst when deleting all menus!
@@ -74,7 +74,7 @@ public class MenuTest extends CdiContainerTest
      * This unit test creates our menu!
      *
      */
-    @Test(groups = "createData")
+    @Test
     public void testMenuCreation() throws Exception
     {
         // phase 1: create the menu structure

@@ -18,8 +18,9 @@
  */
 package de.jaxenter.eesummit.caroline.backend.test;
 
-import de.jaxenter.eesummit.caroline.backend.test.CdiContainerTest;
-import org.testng.annotations.Test;
+import org.apache.deltaspike.testcontrol.api.junit.CdiTestRunner;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  *  This is an empty test class for profiling the OpenWebBeans
@@ -27,7 +28,8 @@ import org.testng.annotations.Test;
  *
  *  I confess to 'abuse' my toy project to do some OWB tuning ;)
  */
-public class EmptyTest extends CdiContainerTest
+@RunWith(CdiTestRunner.class)
+public class EmptyTest
 {
 
     @Test

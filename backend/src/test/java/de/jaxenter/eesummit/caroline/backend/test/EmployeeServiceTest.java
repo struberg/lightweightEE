@@ -22,11 +22,12 @@ import de.jaxenter.eesummit.caroline.backend.api.EmployeeService;
 import de.jaxenter.eesummit.caroline.backend.api.UserService;
 import de.jaxenter.eesummit.caroline.entities.CaroLineUser;
 import de.jaxenter.eesummit.caroline.entities.Employee;
-import org.apache.deltaspike.core.api.provider.BeanProvider;
 import org.apache.deltaspike.jpa.api.transaction.Transactional;
-import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
+import org.apache.deltaspike.testcontrol.api.junit.CdiTestRunner;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -36,7 +37,8 @@ import javax.persistence.Query;
 /**
  * @author <a href="mailto:struberg@yahoo.de">Mark Struberg</a>
  */
-public class EmployeeServiceTest extends CdiContainerTest
+@RunWith(CdiTestRunner.class)
+public class EmployeeServiceTest
 {
     public static final String TEST_PREFIX = "TEST_EMP_";
 
@@ -44,7 +46,7 @@ public class EmployeeServiceTest extends CdiContainerTest
     private @Inject UserService usrSvc;
     private @Inject CleanUp cleanUp;
 
-    @BeforeClass
+    @Before
     public void cleanUpDb() throws Exception
     {
         cleanUp.cleanUpDb();
@@ -67,7 +69,7 @@ public class EmployeeServiceTest extends CdiContainerTest
     /**
      * This unit test covers the whole lifecycle of a user creation.
      */
-    @Test(groups = "createData")
+    @Test
     public void testEmployeeCreation() throws Exception {
 
         // step 1: create the emplyoees

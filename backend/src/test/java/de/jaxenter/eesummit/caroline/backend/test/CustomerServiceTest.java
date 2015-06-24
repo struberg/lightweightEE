@@ -22,13 +22,17 @@ import de.jaxenter.eesummit.caroline.backend.api.CustomerService;
 import de.jaxenter.eesummit.caroline.backend.api.UserService;
 import de.jaxenter.eesummit.caroline.entities.CaroLineUser;
 import de.jaxenter.eesummit.caroline.entities.Customer;
-import de.jaxenter.eesummit.caroline.backend.test.CdiContainerTest;
+import org.apache.deltaspike.core.api.projectstage.ProjectStage;
 import org.apache.deltaspike.jpa.api.transaction.Transactional;
-import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
+import org.apache.deltaspike.testcontrol.api.TestControl;
+import org.apache.deltaspike.testcontrol.api.junit.CdiTestRunner;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -36,14 +40,17 @@ import javax.persistence.Query;
 /**
  * @author <a href="mailto:struberg@yahoo.de">Mark Struberg</a>
  */
-public class CustomerServiceTest extends CdiContainerTest
+@RunWith(CdiTestRunner.class)
+@TestControl(projectStage = ProjectStage.UnitTest.class, // is the default anyway, just like to show..
+             startScopes = {ApplicationScoped.class, RequestScoped.class}) // in case you need special scopes
+public class CustomerServiceTest
 {
     private @Inject CustomerService custSvc;
     private @Inject UserService usrSvc;
 
     private @Inject CleanUp cleanUp;
 
-    @BeforeClass
+    @Before
     public void cleanUpDb() throws Exception {
         cleanUp.cleanUpDb();
     }
@@ -66,9 +73,10 @@ public class CustomerServiceTest extends CdiContainerTest
     /**
      * This unit test covers the whole lifecycle of a user creation.
      */
-    @Test(groups = "createData")
+    @Test
     public void testCustomerCreation() throws Exception {
 
+        System.out.println("\n\nHUHUUUU \n\n");
         // step 1: create the customer(s)
         {
             Customer cust1 = new Customer();
