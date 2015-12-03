@@ -32,4 +32,9 @@ public class LightweigthEeConfig implements PropertyFileConfig
     {
         return "lightweightee.properties";
     }
+
+    public boolean isOptional()
+    {
+        return true;
+    }
 }
