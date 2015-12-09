@@ -90,6 +90,26 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- we use Apache Sirona for monitoring -->
+        <dependency>
+            <groupId>org.apache.sirona</groupId>
+            <artifactId>sirona-core</artifactId>
+            <version>${sirona.version}</version>
+        </dependency>
+
+        <!-- REST information -->
+        <dependency>
+            <groupId>org.apache.sirona</groupId>
+            <artifactId>sirona-reporting-webapp</artifactId>
+            <version>${sirona.version}</version>
+            <classifier>classes</classifier>
+        </dependency>
+        <!-- simple webapp statistics-->
+        <dependency>
+            <groupId>org.apache.sirona</groupId>
+            <artifactId>sirona-web</artifactId>
+            <version>${sirona.version}</version>
+        </dependency>
 
     </dependencies>
 
@@ -120,6 +140,11 @@
                                 </extensions>
                                 <updateInterval>2</updateInterval>
                             </synchronization>
+
+                            <javaagents>
+                                <javaagent>org.apache.sirona:sirona-javaagent:${sirona.version}:jar:shaded</javaagent>
+                            </javaagents>
+
                             <!-- important: for some reason, this has to be false, else reloading does not work! -->
                             <reloadOnUpdate>false</reloadOnUpdate>
 

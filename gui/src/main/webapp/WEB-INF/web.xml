@@ -34,7 +34,7 @@
 
     <filter-mapping>
         <filter-name>LogFilter</filter-name>
-        <url-pattern>*.xhtml</url-pattern>
+        <url-pattern>*</url-pattern>
     </filter-mapping>
 
     <!-- this setting is needed to make JSR-303 validation detect empty fields -->
@@ -64,7 +64,7 @@
 
     <context-param>
         <param-name>org.apache.myfaces.USE_ENCRYPTION</param-name>
-        <param-value>false</param-value>
+        <param-value>true</param-value>
     </context-param>
 
 
@@ -78,6 +78,7 @@
         <param-name>org.apache.myfaces.ERROR_HANDLING</param-name>
         <param-value>true</param-value>
     </context-param>
+<!--
     <error-page>
         <error-code>500</error-code>
         <location>/redirect?dest=public/errorPage.xhtml</location>
@@ -106,6 +107,7 @@
         <error-code>400</error-code>
         <location>/redirect?dest=public/errorPage.xhtml</location>
     </error-page>
+-->
 
     <servlet>
         <servlet-name>Redirect Servlet</servlet-name>
@@ -130,5 +132,20 @@
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>/faces/</url-pattern>
     </servlet-mapping>
+
+    <filter>
+        <filter-name>Sirona</filter-name>
+        <filter-class>org.apache.sirona.reporting.web.SironaController</filter-class>
+        <init-param> <!-- should match your filter mapping base -->
+            <param-name>monitoring-mapping</param-name>
+            <param-value>/sirona/</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>Sirona</filter-name>
+        <url-pattern>/sirona/*</url-pattern>
+    </filter-mapping>
+
 
 </web-app>

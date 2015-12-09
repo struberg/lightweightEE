@@ -31,7 +31,7 @@
         <openjpa.version>2.4.0</openjpa.version>
         <myfaces.version>2.2.8</myfaces.version>
         <bval.version>0.5</bval.version>
-        <deltaspike.version>1.5.1</deltaspike.version>
+        <deltaspike.version>1.5.2-SNAPSHOT</deltaspike.version>
 
         <el.version>2.2</el.version>
         <mysql-connector.version>5.1.37</mysql-connector.version>
@@ -54,6 +54,7 @@
 
         <slf4j.version>1.7.13</slf4j.version>
         <log4j.version>1.2.17</log4j.version>
+        <sirona.version>0.3-incubating</sirona.version>
     </properties>
 
     <!-- needed as we have some ASF snapshots in there -->

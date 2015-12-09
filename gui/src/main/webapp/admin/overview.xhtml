@@ -26,9 +26,9 @@
                         <h:outputText value="#{customer.lastName}"/>
                     </h:column>
                     <h:column>
-                        <f:facet name="header">MSISDN</f:facet>
+                        <f:facet name="header">email</f:facet>
                         <h:commandLink action="#{editCustomerView.editCustomer(customer)}">
-                            <h:outputText value="#{customer.msisdn}"/>
+                            <h:outputText value="#{customer.email}"/>
                         </h:commandLink>
                     </h:column>
                 </h:dataTable>
