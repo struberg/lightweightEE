@@ -31,7 +31,7 @@
         <openjpa.version>2.4.0</openjpa.version>
         <myfaces.version>2.2.8</myfaces.version>
         <bval.version>0.5</bval.version>
-        <deltaspike.version>1.5.2-SNAPSHOT</deltaspike.version>
+        <deltaspike.version>1.6.1</deltaspike.version>
 
         <el.version>2.2</el.version>
         <mysql-connector.version>5.1.37</mysql-connector.version>
